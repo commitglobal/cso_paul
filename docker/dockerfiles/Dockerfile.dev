@@ -1,0 +1,81 @@
+ARG NODE_VERSION=22.15.0
+ARG S6_OVERLAY_VERSION=3.2.1.0
+
+FROM node:${NODE_VERSION}-bookworm-slim
+
+ENV PYTHONUNBUFFERED=1
+
+ENV DEBUG=${DEBUG:-True}
+ENV ENVIRONMENT=${ENVIRONMENT:-development}
+
+ENV RUN_MIGRATIONS=${RUN_MIGRATIONS:-True}
+ENV RUN_COMPILE_MESSAGES=${RUN_COMPILE_MESSAGES:-True}
+ENV RUN_COLLECT_STATIC=${RUN_COLLECT_STATIC:-True}
+ENV RUN_CREATE_SUPER_USER=${RUN_CREATE_SUPER_USER:-True}
+ENV RUN_CREATE_ADMIN=${RUN_CREATE_ADMIN:-True}
+ENV RUN_SEED_GROUPS=${RUN_SEED_GROUPS:-True}
+ENV ENABLE_DJANGO_ADMIN=${ENABLE_DJANGO_ADMIN:-True}
+
+ENV IS_CONTAINERIZED=True
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y --no-install-recommends \
+    locales locales-all cron procps \
+    curl ca-certificates \
+    nginx gcc xz-utils gettext python3 python3-pip python3-venv python3-dev postgresql-client libpq-dev && \
+    apt-get clean
+
+# Download the latest UV installer
+ADD ./docker/third-party/uv/installer.sh /uv-installer.sh
+
+# Run the installer then remove it
+RUN sh /uv-installer.sh && rm /uv-installer.sh
+
+# make sure scripts in .local are usable:
+ENV PATH="/root/.local/bin:${PATH}"
+
+ARG S6_OVERLAY_VERSION
+ENV S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0
+
+ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz /tmp
+ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-x86_64.tar.xz /tmp
+RUN tar -C / -Jxpf /tmp/s6-overlay-noarch.tar.xz && \
+    tar -C / -Jxpf /tmp/s6-overlay-x86_64.tar.xz
+
+
+COPY docker/nginx/nginx.conf /etc/nginx/sites-available/default
+COPY docker/s6-rc.d /etc/s6-overlay/s6-rc.d
+
+
+# Python virtualenv paths
+ENV VIRTUAL_ENV=/opt/venv
+RUN uv venv ${VIRTUAL_ENV}
+ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
+
+
+# install the backend libraries:
+COPY ./backend/ /var/www/paul/backend/
+WORKDIR /var/www/paul/backend/
+RUN uv sync --active --locked --compile-bytecode
+
+
+# copy the frontend source code:
+COPY ./frontend/ /var/www/paul/frontend/
+WORKDIR /var/www/paul/frontend
+RUN npm ci
+
+
+# specify a certificate store for the runtime
+# ARG CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+# ENV CURL_CA_BUNDLE=${CURL_CA_BUNDLE}
+
+
+WORKDIR /var/www/paul/
+
+ENTRYPOINT ["/init"]
+
+EXPOSE 8000 3000
