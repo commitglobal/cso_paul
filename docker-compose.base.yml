@@ -4,7 +4,7 @@ services:
     container_name: paul_db_dev
     env_file:
       - .env
-    image: postgres:16.4
+    image: postgres:17.5
     volumes:
       - paul_psql:/var/lib/postgresql/data
     environment:
