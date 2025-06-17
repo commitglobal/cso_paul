@@ -59,7 +59,7 @@ would like the UI to look like if you’re suggesting new UI elements.
 - Python 3.13 with [UV](https://docs.astral.sh/uv/)
   - Install UV with: `curl -LsSf https://astral.sh/uv/install.sh | sh`
 - [NVM](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating) to install and manage Node.js versions
-- a PostgreSQL 16.4 database (can be run with Docker)
+- a PostgreSQL 17 database (can be run with Docker)
 
 1. Go to the root of the project
 2. Run `cp .env.example .env.local` to create the environment file
