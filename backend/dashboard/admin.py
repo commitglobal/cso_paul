@@ -1,8 +1,8 @@
-from unfold.sites import UnfoldAdminSite
+from django.contrib.admin import AdminSite
 from django.utils.translation import gettext_lazy as _
 
 
-class PaulAdminSite(UnfoldAdminSite):
+class PaulAdminSite(AdminSite):
     index_title = _("Welcome to Paul")
     index_template = "dashboard/index.html"
     site_header = _("Paul")
