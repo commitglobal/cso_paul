@@ -1,10 +1,9 @@
 services:
 
   db_base_psql:
-    container_name: paul_db_dev
+    image: postgres:17.5
     env_file:
       - .env
-    image: postgres:17.5
     volumes:
       - paul_psql:/var/lib/postgresql/data
     environment:
@@ -14,30 +13,29 @@ services:
     ports:
       - "${DATABASE_PORT:-5432}:5432"
 
-  backend_base:
-    container_name: paul_backend_dev
+  app_base:
+    build:
+      context: .
+      dockerfile: docker/dockerfiles/Dockerfile
     env_file:
       - .env
     environment:
       DATABASE_ENGINE: "postgresql"
-      DATABASE_HOST: "paul_db_dev"
       DATABASE_PORT: "5432"
       DATABASE_NAME: "${DATABASE_NAME}"
       DATABASE_USER: "${DATABASE_USER}"
       DATABASE_PASSWORD: "${DATABASE_PASSWORD}"
       PYTHONUNBUFFERED: "1"
+    ports:
+      - "${WEBAPP_PORT:-8080}:80"
 
-  backend_dev_base:
+  app_dev_base:
     extends:
-      service: backend_base
+      service: app_base
     build:
-      context: .
       dockerfile: ./docker/dockerfiles/Dockerfile.dev
     volumes:
       - ./backend:/var/www/paul/backend
       - ./frontend/src:/var/www/paul/frontend/src
-    env_file:
-      - .env
     ports:
-      - "${WEBAPP_PORT:-8080}:8000"
       - "${STATIC_PORT:-3000}:3000"

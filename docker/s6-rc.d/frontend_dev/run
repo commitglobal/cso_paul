@@ -1,6 +1,11 @@
 #!/command/with-contenv sh
 set -e
 
-cd /var/www/paul/frontend/
+FRONTEND_DIR="/var/www/paul/frontend/"
 
-[ "${ENVIRONMENT}" = "development" ] && npm run dev
+[ -d "${FRONTEND_DIR}" ] && {
+  [ "${ENVIRONMENT}" = "development" ] && {
+    cd "${FRONTEND_DIR}"
+    npm run dev
+  }
+}
