@@ -1,4 +1,4 @@
-import { useForm, usePage } from '@inertiajs/react';
+import { router, useForm, usePage } from '@inertiajs/react';
 import { FormEventHandler, useCallback } from 'react';
 import { apiPostUrls } from '@/constants/apiUrls';
 import { handleChange } from '@/utils/handleChange';
@@ -19,7 +19,7 @@ export function LoginForm() {
   const {
     props: { errors },
   } = usePage();
-  const { data, setData, post, processing } = useForm<LoginFormData>({
+  const { data, setData, processing } = useForm<LoginFormData>({
     email: '',
     password: '',
     remember: false,
@@ -28,11 +28,13 @@ export function LoginForm() {
   const handleSubmit = useCallback<FormEventHandler>(
     (e) => {
       e.preventDefault();
-      post(apiPostUrls.userLogin, {
-        preserveScroll: true,
-      });
+      router.post(
+        apiPostUrls.userEmailLogin, 
+        { ...data},
+        {preserveScroll: true,}
+      );
     },
-    [post],
+    [data],
   );
 
   const formErrors = errors?.login;

@@ -8,7 +8,14 @@ const datastoreBackend = 'datastore';
 const dashboardBackend = '';
 
 
+function buildUrlFactory(baseUrl: string[]) {
+  return (urlPathStrings: (string | number)[] = []) =>
+    buildUrl(concat(baseUrl, urlPathStrings));
+}
+
+const buildUsersUrl = buildUrlFactory([usersBackend]);
+
 export const apiGetUrls = {}
 export const apiPostUrls = {
-    userEmailLogin: buildUrl([usersBackend, 'login', 'email']),
+    userEmailLogin: buildUsersUrl(['login', 'email']),
 }
