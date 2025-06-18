@@ -40,6 +40,13 @@ def email_login(request: HttpRequest) -> Dict[str, Any] | HttpResponseRedirect:
     if request.user.is_authenticated:
         return redirect(reverse("dashboard:home"))
 
+    if request.method == "GET":
+        return inertia_render(
+            request,
+            "Users/Login/Email",
+            props={},
+        )
+
     login_failed = False
     form = LoginForm(json.loads(request.body))
     if not form.is_valid():
@@ -63,7 +70,7 @@ def email_login(request: HttpRequest) -> Dict[str, Any] | HttpResponseRedirect:
             },
         )
 
-    return {"ok": True}
+    return redirect(reverse("dashboard:home"))
 
 
 @cache_control(private=True)
