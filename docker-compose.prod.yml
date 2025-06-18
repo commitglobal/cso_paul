@@ -18,6 +18,8 @@ services:
     environment:
       ENVIRONMENT: "production"
       DATABASE_HOST: "paul_db"
+    ports:
+      - "${WEBAPP_PORT:-8080}:80"
     depends_on:
       - db
 
