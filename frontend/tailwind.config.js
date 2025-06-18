@@ -32,9 +32,7 @@ module.exports = {
         error: '#C65C4A',
       },
       fontFamily: {
-        sans: ['Amalia-Regular', 'sans-serif'],
-        'amalia-medium': ['Amalia-Medium', 'sans-serif'],
-        'amalia-bold': ['Amalia-Bold', 'sans-serif'],
+        sans: ['sans-serif'],
       },
       fontSize: {
         '2xs': '0.625rem',

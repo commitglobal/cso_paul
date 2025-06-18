@@ -31,19 +31,19 @@ export function Fallback({ error }: { error: Error }) {
                     className='border-l-4 border-l-error px-4 py-2 rounded-md shadow-md flex flex-col gap-1'
                   >
                     <div className='flex gap-2'>
-                      <div className='font-amalia-medium'>Message:</div>
+                      <div className='font-medium'>Message:</div>
                       <pre className='text-error'>{e.message}</pre>
                     </div>
                     <div className='flex gap-2'>
-                      <div className='font-amalia-medium'>Property:</div>
+                      <div className='font-medium'>Property:</div>
                       <pre className='bg-slate-100 rounded'>{e.key}</pre>
                     </div>
                     <div className='flex gap-2'>
-                      <div className='font-amalia-medium'>Type:</div>
+                      <div className='font-medium'>Type:</div>
                       <pre className='bg-slate-100 rounded'>{e.type}</pre>
                     </div>
                     <div className='flex gap-2'>
-                      <div className='font-amalia-medium'>Received value:</div>
+                      <div className='font-medium'>Received value:</div>
                       <pre className='bg-slate-100 rounded break-all whitespace-normal'>
                         {e.value
                           ? JSON.stringify(e.value)

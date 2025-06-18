@@ -1,5 +1,5 @@
+import { LoginForm } from '@/components/LoginForm';
 import LayoutDefault from '@/layouts/LayoutDefault';
-import { InternalLink } from '@/components/InternalLink';
 
 
 export default function Index() {
@@ -9,7 +9,8 @@ export default function Index() {
         <h1 className='font-bold text-4xl text-black mb-6'>
           Email Login
         </h1>
-        <InternalLink name='Log in' to='/app/user/login/' />.
+        
+        <LoginForm />
       </div>
     </>
   );
