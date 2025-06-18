@@ -4,38 +4,40 @@ version = "2.0.0a1"
 requires-python = ">=3.13"
 
 dependencies = [
-    "django~=5.2.0",
-    "django-allauth[socialaccount]~=65.9.0",
-    "django-auditlog~=3.1.2",
-    "django-cors-headers~=4.7.0",
-    "django-environ~=0.12.0",
-    "django-localflavor~=4.0.0",
-    "django-vite~=3.1.0",
-    "inertia-django~=1.2.0",
-    "unidecode~=1.4.0",
-    "django-q2~=1.8.0",
-    "blessed~=1.21.0",
-    "psutil~=7.0.0",
-    "django-recaptcha~=4.1.0",
-    "django-ses~=4.4.0",
-    "django-storages[azure,s3]~=1.14.6",
-    "sentry-sdk[django]~=2.30.0",
-    "requests~=2.32.3",
-    "psycopg2-binary~=2.9.10",
-    "gevent~=25.5.1",
-    "gunicorn~=23.0.0",
-    "whitenoise~=6.9.0",
-    "ngohub~=0.1.0",
+  "django~=5.2.0",
+  "django-allauth[socialaccount]~=65.9.0",
+  "django-auditlog~=3.1.2",
+  "django-cors-headers~=4.7.0",
+  "django-environ~=0.12.0",
+  "django-localflavor~=4.0.0",
+  "django-vite~=3.1.0",
+  "inertia-django~=1.2.0",
+  "unidecode~=1.4.0",
+  "django-q2~=1.8.0",
+  "blessed~=1.21.0",
+  "psutil~=7.0.0",
+  "django-recaptcha~=4.1.0",
+  "django-ses~=4.4.0",
+  "django-storages[azure,s3]~=1.14.6",
+  "sentry-sdk[django]~=2.30.0",
+  "requests~=2.32.3",
+  "psycopg2-binary~=2.9.10",
+  "gevent~=25.5.1",
+  "gunicorn~=23.0.0",
+  "whitenoise~=6.9.0",
+  "ngohub~=0.1.0",
 ]
 
 
 [dependency-groups]
+ruff = ["ruff~=0.11.8"]
+black = ["black==25.1.0"]
 dev = [
-    "faker~=37.1.0",
-    "pre-commit~=4.2.0",
-    "ruff==0.11.8",
-    "black==25.1.0",
-    "debugpy~=1.8.14",
+  "faker~=37.1.0",
+  "pre-commit~=4.2.0",
+  "debugpy~=1.8.14",
+  { include-group = "ruff" },
+  { include-group = "black" },
 ]
 
 
@@ -45,12 +47,12 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 ignore = []
 
 select = [
-    "DJ",   # Flake8-Django - https://docs.astral.sh/ruff/rules/#flake8-django-dj
-    "E",    # Pycodestyle errors - https://docs.astral.sh/ruff/rules/#error-e
-    "W",    # Pycodestyle warnings - https://docs.astral.sh/ruff/rules/#warning-w
-    "F",    # Pyflakes - https://docs.astral.sh/ruff/rules/#pyflakes-f
-    "T10",  # Debugger - https://docs.astral.sh/ruff/rules/#flake8-debugger-t10
-    "T20",  # Remove print/pprint statements - https://docs.astral.sh/ruff/rules/#flake8-print-t20
+  "DJ", # Flake8-Django - https://docs.astral.sh/ruff/rules/#flake8-django-dj
+  "E", # Pycodestyle errors - https://docs.astral.sh/ruff/rules/#error-e
+  "W", # Pycodestyle warnings - https://docs.astral.sh/ruff/rules/#warning-w
+  "F", # Pyflakes - https://docs.astral.sh/ruff/rules/#pyflakes-f
+  "T10", # Debugger - https://docs.astral.sh/ruff/rules/#flake8-debugger-t10
+  "T20", # Remove print/pprint statements - https://docs.astral.sh/ruff/rules/#flake8-print-t20
 ]
 # Allow autofix for all enabled rules (when `--fix`) is provided.
 fixable = ["A", "B", "C", "D", "E", "F", "G", "I", "N", "Q", "S", "T", "W", "ANN", "ARG", "BLE", "COM", "DJ", "DTZ", "EM", "ERA", "EXE", "FBT", "ICN", "INP", "ISC", "NPY", "PD", "PGH", "PIE", "PL", "PT", "PTH", "PYI", "RET", "RSE", "RUF", "SIM", "SLF", "TCH", "TID", "TRY", "UP", "YTT"]
@@ -73,29 +75,29 @@ extend-exclude = '''
 
 # Exclude a variety of commonly ignored directories.
 exclude = [
-    ".bzr",
-    ".direnv",
-    ".eggs",
-    ".git",
-    ".git-rewrite",
-    ".hg",
-    ".mypy_cache",
-    ".nox",
-    ".pants.d",
-    ".pytype",
-    ".ruff_cache",
-    ".svn",
-    ".tox",
-    ".venv",
-    ".vscode",
-    "__pypackages__",
-    "_build",
-    "buck-out",
-    "build",
-    "dist",
-    "venv",
-    "migrations",
-    "_legacy_v1",
+  ".bzr",
+  ".direnv",
+  ".eggs",
+  ".git",
+  ".git-rewrite",
+  ".hg",
+  ".mypy_cache",
+  ".nox",
+  ".pants.d",
+  ".pytype",
+  ".ruff_cache",
+  ".svn",
+  ".tox",
+  ".venv",
+  ".vscode",
+  "__pypackages__",
+  "_build",
+  "buck-out",
+  "build",
+  "dist",
+  "venv",
+  "migrations",
+  "_legacy_v1",
 ]
 
 # Same as Black.
