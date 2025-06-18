@@ -1,9 +1,9 @@
 from django.contrib import admin
+from django.contrib.admin import ModelAdmin
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.admin import GroupAdmin as BaseGroupAdmin, UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import Group
 from django.contrib.admin.exceptions import NotRegistered
-from unfold.admin import ModelAdmin
 
 from dashboard.admin import dashboard_site
 from .models import User
