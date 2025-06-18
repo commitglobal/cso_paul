@@ -101,10 +101,10 @@ jobs:
         uv sync
 
     - name: Check for migrations
+      working-directory: ./backend
       run: |
         set -a
-        . ./.env.example
-        uv run ./backend/manage.py makemigrations --check --dry-run
+        uv run ./manage.py makemigrations --check --dry-run
         set +a
 
 
