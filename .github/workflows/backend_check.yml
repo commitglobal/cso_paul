@@ -36,7 +36,7 @@ jobs:
     - name: Install uv
       uses: astral-sh/setup-uv@v5
 
-    - name: Set up Python 3.13
+    - name: Set up Python
       uses: actions/setup-python@v5
       with:
         python-version-file: "./backend/pyproject.toml"
@@ -52,130 +52,130 @@ jobs:
         uv run black --check .
 
 
-#  linting_with_ruff:
-#    name: Run Ruff linting check
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#    - name: Check out Git repository
-#      uses: actions/checkout@v4
-#
-#    - name: Set up Python 3.13
-#      uses: actions/setup-python@v5
-#      with:
-#        python-version-file: "./backend/pyproject.toml"
-#
-#    - name: Install uv
-#      uses: astral-sh/setup-uv@v5
-#
-#    - name: Install Black & Ruff with uv
-#      working-directory: ./backend
-#      run: |
-#        uv sync --only-group ruff
-#
-#    - name: Lint files using Ruff
-#      working-directory: ./backend
-#      run: |
-#        ruff check .
+  linting_with_ruff:
+    name: Run Ruff linting check
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out Git repository
+      uses: actions/checkout@v4
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v5
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version-file: "./backend/pyproject.toml"
+
+    - name: Install Black & Ruff with uv
+      working-directory: ./backend
+      run: |
+        uv sync --only-group ruff
+
+    - name: Lint files using Ruff
+      working-directory: ./backend
+      run: |
+        uv run ruff check .
 
 
-#  checking_migrations:
-#    name: Check for migrations
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#    - name: Check out Git repository
-#      uses: actions/checkout@v4
-#
-#    - name: Set up Python 3.13
-#      uses: actions/setup-python@v5
-#      with:
-#        python-version-file: "./backend/pyproject.toml"
-#
-#    - name: Install uv
-#      uses: astral-sh/setup-uv@v5
-#
-#    - name: Install dependencies
-#      working-directory: ./backend
-#      run: |
-#        uv sync
-#
-#    - name: Check for migrations
-#      run: |
-#        set -a
-#        . ./.env.example
-#        python ./backend/manage.py makemigrations --check --dry-run
-#        set +a
+  checking_migrations:
+    name: Check for migrations
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out Git repository
+      uses: actions/checkout@v4
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v5
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version-file: "./backend/pyproject.toml"
+
+    - name: Install dependencies
+      working-directory: ./backend
+      run: |
+        uv sync
+
+    - name: Check for migrations
+      run: |
+        set -a
+        . ./.env.example
+        uv run ./backend/manage.py makemigrations --check --dry-run
+        set +a
 
 
-#  tests:
-#    name: Run backend tests
-#    runs-on: ubuntu-latest
-#    timeout-minutes: 5
-#
-#    services:
-#      postgres:
-#        image: postgres:17.5
-#        env:
-#          POSTGRES_DB: paul
-#          POSTGRES_USER: user
-#          POSTGRES_PASSWORD: password
-#        ports:
-#          - 5432:5432
-#
-#    steps:
-#    - name: Check out Git repository
-#      uses: actions/checkout@v4
-#
-#    - name: Set up Python 3.13
-#      uses: actions/setup-python@v5
-#      with:
-#        python-version-file: "./backend/pyproject.toml"
-#
-#    - name: Install uv
-#      uses: astral-sh/setup-uv@v5
-#
-#    - name: Install dependencies
-#      env:
-#        ENV_FILE_NAME: .env.test
-#      working-directory: ./backend
-#      run: |
-#        cp ./.env.example ./.env.test
-#        uv sync
-#        sudo apt-get install gettext
-#        ./backend/manage.py compilemessages
-#
-#    - name: Run tests
-#      env:
-#        ENV_FILE_NAME: .env.test
-#        DATABASE_NAME: paul
-#        DATABASE_USER: user
-#        DATABASE_PASSWORD: password
-#        DATABASE_HOST: 127.0.0.1
-#        DATABASE_PORT: 5432
-#      run: |
-#        cd ./backend
-#        python3 manage.py wait_for_db
-#        ./manage.py test
+  tests:
+    name: Run backend tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    services:
+      postgres:
+        image: postgres:17.5
+        env:
+          POSTGRES_DB: paul
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: password
+        ports:
+          - 5432:5432
+
+    steps:
+    - name: Check out Git repository
+      uses: actions/checkout@v4
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v5
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version-file: "./backend/pyproject.toml"
+
+    - name: Install dependencies
+      env:
+        ENV_FILE_NAME: .env.test
+      working-directory: ./backend
+      run: |
+        cp ./.env.example ./.env.test
+        uv sync
+        sudo apt-get install gettext
+        ./backend/manage.py compilemessages
+
+    - name: Run tests
+      env:
+        ENV_FILE_NAME: .env.test
+        DATABASE_NAME: paul
+        DATABASE_USER: user
+        DATABASE_PASSWORD: password
+        DATABASE_HOST: 127.0.0.1
+        DATABASE_PORT: 5432
+      working-directory: ./backend
+      run: |
+        uv run ./manage.py wait_for_db
+        uv run ./manage.py test
 
 
-#  codeql_analysis:
-#    name: Analyze code using CodeQL
-#    runs-on: ubuntu-latest
-#
-#    strategy:
-#      fail-fast: false
-#      matrix:
-#        language: [ 'python' ]
-#
-#    steps:
-#      - name: Checkout repository
-#        uses: actions/checkout@v4
-#
-#      - name: Initialize CodeQL
-#        uses: github/codeql-action/init@v3
-#        with:
-#          languages: ${{ matrix.language }}
-#
-#      - name: Perform CodeQL Analysis
-#        uses: github/codeql-action/analyze@v3
+  codeql_analysis:
+    name: Analyze code using CodeQL
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'python' ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
