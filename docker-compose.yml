@@ -3,24 +3,23 @@ name: paul_dev
 services:
 
   db:
+    container_name: paul_db_dev
     extends:
       file: docker-compose.base.yml
       service: db_base_psql
 
-  backend:
+  app:
+    container_name: paul_app_dev
     extends:
       file: docker-compose.base.yml
-      service: backend_dev_base
-    build:
-      context: .
-      dockerfile: docker/dockerfiles/Dockerfile.dev
-    volumes:
-      - ./backend:/var/www/paul/backend
+      service: app_dev_base
+    environment:
+      DATABASE_HOST: "paul_db_dev"
+    ports:
+      - "${APP_DEBUG_PORT:-5678}:5678"
+      - "${Q_DEBUG_PORT:-5677}:5677"
     depends_on:
       - db
-    ports:
-      - "5678:5678"
-      - "5677:5677"
 
 volumes:
   paul_psql:
