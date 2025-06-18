@@ -2,6 +2,7 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
 from django.db.models.functions import Lower
+from django.forms.models import model_to_dict
 from django.utils.translation import gettext as _
 
 
@@ -63,3 +64,6 @@ class User(AbstractUser):
         constraints = [
             models.UniqueConstraint(Lower("email"), name="email_unique"),
         ]
+
+    def to_dict(self):
+        return model_to_dict(self, exclude=("password", "is_superuser", "is_staff", "groups", "user_permissions"))

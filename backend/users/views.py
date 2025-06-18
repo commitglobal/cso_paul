@@ -47,20 +47,19 @@ def email_login(request: HttpRequest) -> Dict[str, Any] | HttpResponseRedirect:
             props={},
         )
 
-    login_failed = False
+    login_user = None
     form = LoginForm(json.loads(request.body))
-    if not form.is_valid():
-        login_failed = True
-    else:
+    if form.is_valid():
         email = form.cleaned_data.get("email")
         login_user = auth.authenticate(email=email, password=form.cleaned_data.get("password"))
         if login_user is None:
-            login_failed = True
             failed_login_message = _("The identification data could not be confirmed")
             form.add_error("email", failed_login_message)
             form.add_error("password", failed_login_message)
 
-    if login_failed:
+    remember: bool = form.cleaned_data.get("remember", False)
+
+    if not login_user:
         return inertia_render(
             request,
             "Users/Login/Email",
@@ -69,6 +68,10 @@ def email_login(request: HttpRequest) -> Dict[str, Any] | HttpResponseRedirect:
                 # "re_captcha_key": settings.RECAPTCHA_PUBLIC_KEY,
             },
         )
+    else:
+        auth.login(request, login_user)
+        if not remember:
+            request.session.set_expiry(0)
 
     return redirect(reverse("dashboard:home"))
 
