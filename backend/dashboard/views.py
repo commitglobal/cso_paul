@@ -2,9 +2,9 @@
 from typing import Any, Dict
 
 from django.conf import settings
-from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpRequest
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views.decorators.cache import cache_control, never_cache
 from inertia import inertia
