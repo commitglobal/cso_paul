@@ -261,7 +261,8 @@ INSTALLED_APPS = [
     "localflavor",
     "storages",
     # paul apps:
-    "hello",
+    "dashboard",
+    "datastore",
     "users",
 ]
 

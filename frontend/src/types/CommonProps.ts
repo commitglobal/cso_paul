@@ -13,10 +13,10 @@ import { FlashMessage } from './FlashMessage';
 export type CommonProps = Infer<typeof CommonProps>;
 
 export const CommonProps = object({
-  is_authenticated: boolean(),
-  user: optional(nullable(User)),
+  errors: optional(nullable(any())),
+  flash_messages: optional(array(FlashMessage)),
   has_add_permission: optional(boolean()),
   has_change_permission: optional(boolean()),
-  flash_messages: optional(array(FlashMessage)),
-  errors: optional(nullable(any())),
+  is_authenticated: boolean(),
+  user: optional(nullable(User)),
 });

@@ -1,4 +1,3 @@
-
 from inertia.utils import InertiaJsonEncoder
 
 

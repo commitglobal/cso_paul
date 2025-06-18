@@ -8,7 +8,7 @@ type DialogTitleProps = {
 export function DialogTitle({ onClose, title }: DialogTitleProps) {
   return (
     <div className='flex justify-between items-center p-6'>
-      <h3 className='font-amalia-bold text-2xl text-black'>{title}</h3>
+      <h3 className='font-bold text-2xl text-black'>{title}</h3>
       <button
         className='h-full w-8 flex shrink-0 items-center'
         onClick={onClose}
