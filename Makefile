@@ -119,46 +119,46 @@ logs-prod:                        ## show the logs of the containers
 
 ## [Django operations]
 makemigrations:                   ## generate migrations in a clean container
-	docker exec paul_backend_dev sh -c "cd ./backend && python3 -Wd ./manage.py makemigrations $(apps)"
+	docker exec paul_app_dev sh -c "cd ./backend && python3 -Wd ./manage.py makemigrations $(apps)"
 
 migrate:                          ## apply migrations in a clean container
-	docker exec paul_backend_dev sh -c "cd ./backend && python3 -Wd ./manage.py migrate $(apps)"
+	docker exec paul_app_dev sh -c "cd ./backend && python3 -Wd ./manage.py migrate $(apps)"
 
 migrations: makemigrations migrate ## generate and apply migrations
 
 makemessages:                     ## generate the strings marked for translation
-	docker exec paul_backend_dev sh -c "cd ./backend && python3 -Wd ./manage.py makemessages -a"
+	docker exec paul_app_dev sh -c "cd ./backend && python3 -Wd ./manage.py makemessages -a"
 
 compilemessages:                  ## compile the translations
-	docker exec paul_backend_dev sh -c "cd ./backend && python3 -Wd ./manage.py compilemessages"
+	docker exec paul_app_dev sh -c "cd ./backend && python3 -Wd ./manage.py compilemessages"
 
 messages: makemessages compilemessages ## generate and compile the translations
 
 collectstatic:                    ## collect the static files
-	docker exec paul_backend_dev sh -c "cd ./backend && python3 -Wd ./manage.py collectstatic --no-input"
+	docker exec paul_app_dev sh -c "cd ./backend && python3 -Wd ./manage.py collectstatic --no-input"
 
 format:                           ## format the code with black & ruff
-	docker exec paul_backend_dev sh -c "black ./backend && ruff check --fix ./backend"
+	docker exec paul_app_dev sh -c "black ./backend && ruff check --fix ./backend"
 
 pyshell:                          ## start a django shell
-	docker exec -it paul_backend_dev sh -c "cd ./backend && python3 -Wd ./manage.py shell"
+	docker exec -it paul_app_dev sh -c "cd ./backend && python3 -Wd ./manage.py shell"
 
 sh:                               ## start a sh shell
-	docker exec -it paul_backend_dev sh -c "sh"
+	docker exec -it paul_app_dev sh -c "sh"
 
 bash:                             ## start a bash shell
-	docker exec -it paul_backend_dev sh -c "bash"
+	docker exec -it paul_app_dev sh -c "bash"
 
 
 ## [Requirements management]
 requirements-build:               ## run uv to build the requirements files using the active venv
-	docker exec paul_backend_dev sh -c " \
+	docker exec paul_app_dev sh -c " \
 		cd ./backend && \
 		uv sync --active \
 	"
 
 requirements-update:              ## run uv with the -U flag to update the requirements files using the active venv
-	docker exec paul_backend_dev sh -c " \
+	docker exec paul_app_dev sh -c " \
 		cd ./backend && \
 		uv sync --active -U \
 	"
@@ -166,10 +166,10 @@ requirements-update:              ## run uv with the -U flag to update the requi
 
 ## [Tests]
 tests:                            ## run the tests
-	docker exec paul_backend_dev sh -c "cd ./backend && pytest -Wd $(apps)"
+	docker exec paul_app_dev sh -c "cd ./backend && pytest -Wd $(apps)"
 
 tests-cover:                      ## run the tests with coverage
-	docker exec paul_backend_dev sh -c "cd ./backend && pytest -Wd  --cov --cov-report=xml --cov-report=term-missing --cov-fail-under=60 $(apps)"
+	docker exec paul_app_dev sh -c "cd ./backend && pytest -Wd  --cov --cov-report=xml --cov-report=term-missing --cov-fail-under=60 $(apps)"
 
 
 ## [Clean-up]
@@ -192,3 +192,7 @@ clean-db:                          ## remove the database files
 	rm -rf ./backend/media ./backend/static ./frontend/dist
 
 clean: clean-docker clean-extras clean-db  ## remove all build, test, coverage and Python artifacts
+
+reset-node-modules:
+	docker exec paul_app_dev sh -c "cd ./frontend && rm -rf node_modules && npm ci"
+	
