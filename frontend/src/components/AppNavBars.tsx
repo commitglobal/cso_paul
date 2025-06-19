@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { CommonProps } from '@/types/CommonProps';
-import { DashboardSidebar } from './DashboardSidebar';
-import { DashboardTopBar } from './DashboardTopBar';
+import { AppSidebar } from './AppSidebar';
+import { AppTopBar } from './AppTopBar';
 import { usePage } from '@inertiajs/react';
 
-export function DashboardNavBars() {
+export function AppNavBars() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const {
@@ -13,9 +13,9 @@ export function DashboardNavBars() {
 
   return (
     <>
-      <DashboardTopBar handleOpenSidebar={() => setSidebarOpen(true)} />
+      <AppTopBar handleOpenSidebar={() => setSidebarOpen(true)} />
       {is_authenticated && (
-        <DashboardSidebar
+        <AppSidebar
           handleClose={() => setSidebarOpen(false)}
           open={sidebarOpen}
         />

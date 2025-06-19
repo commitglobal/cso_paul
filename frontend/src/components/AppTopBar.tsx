@@ -9,11 +9,11 @@ import { CommonProps } from '@/types/CommonProps';
 import { Avatar } from './Avatar';
 // import { PaulLogoSvg } from './PaulLogoSvg';
 
-type DashboardTopBarProps = {
+type AppTopBarProps = {
   handleOpenSidebar: () => void;
 };
 
-export function DashboardTopBar({ handleOpenSidebar }: DashboardTopBarProps) {
+export function AppTopBar({ handleOpenSidebar }: AppTopBarProps) {
   const {
     props: { is_authenticated, user },
   } = usePage<CommonProps>();
@@ -82,22 +82,10 @@ export function DashboardTopBar({ handleOpenSidebar }: DashboardTopBarProps) {
                 >
                   <MenuItems className='absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-hidden'>
                     <MenuItem
-                      as={Link}
-                      className={({ active }) =>
-                        classNames(
-                          active ? 'bg-gray-50' : '',
-                          'block px-3 py-1 text-sm leading-6 text-gray-900',
-                        )
-                      }
-                      href="/to-do/"
-                    >
-                      Settings
-                    </MenuItem>
-                    <MenuItem
                       as='button'
-                      className={({ active }) =>
+                      className={({ focus }) =>
                         classNames(
-                          active ? 'bg-gray-50' : '',
+                          focus ? 'bg-gray-50' : '',
                           'block px-3 py-1 text-sm leading-6 text-gray-900 w-full text-left',
                         )
                       }

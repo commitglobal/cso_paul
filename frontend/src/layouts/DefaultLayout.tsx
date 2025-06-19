@@ -1,5 +1,5 @@
 import { CommonProps } from '@/types/CommonProps';
-import { DashboardNavBars } from '@/components/DashboardNavBars';
+import { AppNavBars } from '@/components/AppNavBars';
 import { Notification } from '@/components/Notification';
 import { Page } from '@inertiajs/core';
 import { ReactNode } from 'react';
@@ -13,7 +13,7 @@ export default function LayoutDefault(page: Page<CommonProps>) {
 
   return (
     <div className='flex flex-col h-full'>
-      <DashboardNavBars />
+      <AppNavBars />
       <main
         className={classNames(
           'grow mt-16 relative',
