@@ -21,8 +21,8 @@ export function SidebarNavMenuItem({
         href={href}
         className={classNames(
           active
-            ? 'bg-yellow-400 text-black'
-            : 'text-black hover:bg-yellow-400',
+            ? 'bg-paul-400 text-black'
+            : 'text-black hover:bg-paul-400',
           'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
         )}
       >

@@ -70,7 +70,7 @@ export function LoginForm() {
           <InternalLink
             color='text-paul-600'
             fontSize='text-sm'
-            name='Forgot your password?'
+            name='Forgot password?'
             to={`/to-do/`}
             underline={false}
           />

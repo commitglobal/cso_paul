@@ -3,7 +3,7 @@ from typing import Any, Dict
 
 from django.shortcuts import redirect
 from django.contrib import auth
-from django.http import HttpResponseRedirect, HttpRequest
+from django.http import HttpResponseRedirect, HttpRequest, Http404, HttpResponse
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
@@ -74,6 +74,20 @@ def email_login(request: HttpRequest) -> Dict[str, Any] | HttpResponseRedirect:
             request.session.set_expiry(0)
 
     return redirect(reverse("dashboard:home"))
+
+
+def logout(request: HttpRequest, is_staff_url: bool = False) -> HttpResponse:
+    """
+    Endpoint for authenticated users to POST a logout request
+
+    The redirect destination is different for staff URLs than for applicants URL
+    """
+
+    if request.method == "POST":
+        auth.logout(request)
+        return redirect("/")
+
+    raise Http404(_("This page does not exist for GET requests"))
 
 
 @cache_control(private=True)
