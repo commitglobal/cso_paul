@@ -136,12 +136,11 @@ jobs:
         python-version-file: "./backend/pyproject.toml"
 
     - name: Install dependencies
-      env:
-        ENV_FILE_NAME: .env.test
       run: |
         set -a
-        source ../.env.example
+        source .env.example
         set +a
+        cd ./backend
         uv sync
         sudo apt-get install gettext
         uv run ./manage.py compilemessages
