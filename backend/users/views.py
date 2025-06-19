@@ -13,7 +13,7 @@ from users.forms import LoginForm
 
 
 @cache_control(private=False)
-@inertia("Users/Login/Choice")
+@inertia("Users/Login/LoginChoice")
 def login_choice(request: HttpRequest) -> Dict[str, Any]:
     """
     Screen for choosing the preferred login method

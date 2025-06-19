@@ -68,7 +68,7 @@ export function LoginForm() {
           />
 
           <InternalLink
-            color='text-purple-600'
+            color='text-paul-600'
             fontSize='text-sm'
             name='Forgot your password?'
             to={`/to-do/`}
@@ -76,6 +76,7 @@ export function LoginForm() {
           />
         </div>
         <Button disabled={processing}>Login</Button>
+        <InternalLink name='Register your organization' color='text-paul-600' fontSize='text-sm' underline={false} to='/to-do/' />
       </form>
     </>
   );
