@@ -11,7 +11,7 @@ on:
       - 'backend/pyproject.toml'
       - 'Dockerfile*'
       - 'docker-compose*.yml'
-      - '.github/workflows/backend_check.yml'
+      - '.github/workflows/check_backend.yml'
   pull_request:
     branches:
       - 'main'
@@ -21,7 +21,7 @@ on:
       - 'backend/pyproject.toml'
       - 'Dockerfile*'
       - 'docker-compose*.yml'
-      - '.github/workflows/backend_check.yml'
+      - '.github/workflows/check_backend.yml'
 
 jobs:
 
