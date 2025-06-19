@@ -2,7 +2,7 @@ import { CommonProps } from '@/types/CommonProps';
 import { DashboardNavBars } from '@/components/DashboardNavBars';
 import { Notification } from '@/components/Notification';
 import { Page } from '@inertiajs/core';
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
 import classNames from 'classnames';
 
 

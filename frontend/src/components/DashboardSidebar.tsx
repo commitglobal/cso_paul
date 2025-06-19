@@ -8,7 +8,6 @@ import { SidebarNavMenuItem } from './SidebarNavMenuItem';
 import { PaulLogoSvg } from './PaulLogoSvg';
 import classNames from 'classnames';
 import { navigation } from '@/constants/staffNavigation';
-import { apiGetUrls } from '@/constants/apiUrls';
 
 type DashboardSidebarProps = {
   handleClose: () => void;
@@ -29,9 +28,9 @@ export function DashboardSidebar({ handleClose, open }: DashboardSidebarProps) {
         .filter((navItem) => navItem.userTypes.includes(userType))
         .filter(
           (navItem) =>
-            !navItem.href?.includes('audit') || user?.is_admin_member,
+            !navItem.href?.includes('audit'),
         ),
-    [user?.is_admin_member, userType],
+    [user?.is_admin_basic, userType],
   );
 
   const navItems = useMemo(
