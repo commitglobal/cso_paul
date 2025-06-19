@@ -86,7 +86,7 @@ def logout(request: HttpRequest, is_staff_url: bool = False) -> HttpResponse:
     if request.method == "POST":
         auth.logout(request)
         return redirect("/")
-    
+
     raise Http404(_("This page does not exist for GET requests"))
 
 
