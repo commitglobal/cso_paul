@@ -13,7 +13,7 @@ jobs:
     name: Build Docker image
     uses: code4romania/.github/.github/workflows/build-push-image.yml@main
     with:
-      images: code4romania/paul
+      images: commitglobal/paul
       context: ./
       dockerfile: ./docker/dockerfiles/Dockerfile
     secrets:
