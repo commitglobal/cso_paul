@@ -1,11 +1,11 @@
 import { useValidatedProps } from '@/hooks/useValidatedProps';
-import LayoutDefault from '@/layouts/LayoutDefault';
 import { InternalLink } from '@/components/InternalLink';
+import { LinkButton } from '@/components/LinkButton';
 import { LoginChoiceProps } from './LoginChoiceProps';
 
 
 
-export default function Choice() {
+export default function LoginChoice() {
   const {
     props: { endpoints },
   } = useValidatedProps<LoginChoiceProps>(LoginChoiceProps);
@@ -14,18 +14,18 @@ export default function Choice() {
     <>
       <div className='flex flex-col gap-y-24 max-w-7xl mx-auto pt-12 lg:pt-32 px-4'>
         <h1 className='font-bold text-4xl text-black mb-6'>
-          Login
+          Login to PAUL
         </h1>
-        {endpoints.email && (
-          <InternalLink name='Log in by email' to={endpoints.email_url} />
-        )}
         {endpoints.ngohub && (
-          <InternalLink name='Log in by NGO Hub' to={endpoints.ngohub_url} />
+          <LinkButton to={endpoints.ngohub_url}>Login with NGO Hub</LinkButton>
         )}
+        {endpoints.email && (
+          <LinkButton to={endpoints.email_url}>Login with email</LinkButton>
+        )}
+        <InternalLink name='Register your organization' to='/to-do/' />
       </div>
-
     </>
   );
 }
 
-Choice.layout = LayoutDefault;
+// LoginChoice.layout = LayoutDefault;
