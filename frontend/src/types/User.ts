@@ -2,7 +2,6 @@ import {
   Infer,
   array,
   boolean,
-  nullable,
   number,
   object,
   optional,
@@ -22,4 +21,10 @@ export const User = object({
   date_joined: optional(string()),
   groups: optional(array()),
   user_permissions: optional(array()),
+  is_admin_super: optional(boolean()),
+  is_admin_basic: optional(boolean()),
+  is_admin_ngo: optional(boolean()),
+  is_user: optional(boolean()),
 });
+
+export type UserType = 'admin_super'  | 'admin_basic' | 'admin_ngo' | 'user';

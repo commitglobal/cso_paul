@@ -4,7 +4,7 @@ import { Bars3Icon } from '@heroicons/react/24/outline';
 import { Link, useForm, usePage } from '@inertiajs/react';
 import classNames from 'classnames';
 import { Fragment, useCallback } from 'react';
-import { apiGetUrls, apiPostUrls } from '@/constants/apiUrls';
+import { apiPostUrls } from '@/constants/apiUrls';
 import { CommonProps } from '@/types/CommonProps';
 import { Avatar } from './Avatar';
 // import { PaulLogoSvg } from './PaulLogoSvg';
@@ -22,10 +22,9 @@ export function DashboardTopBar({ handleOpenSidebar }: DashboardTopBarProps) {
 
   const handleSignOut = useCallback(() => {
     post(
-      "/"
-      // TODO: apiPostUrls.usersLogout(),
+      apiPostUrls.usersLogout(),
     );
-  }, [post, user?.is_staff_member]);
+  }, [post]);
 
   return (
     <div className='fixed top-0 z-40 left-0 right-0'>
