@@ -1,4 +1,4 @@
-import LayoutDefault from '@/layouts/LayoutDefault';
+import DefaultLayout from '@/layouts/DefaultLayout';
 import { InternalLink } from '@/components/InternalLink';
 
 
@@ -15,4 +15,4 @@ export default function Index() {
   );
 }
 
-Index.layout = LayoutDefault;
+Index.layout = DefaultLayout;

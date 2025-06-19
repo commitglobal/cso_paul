@@ -8,4 +8,5 @@ urlpatterns = [
     path("login/", views.login_choice, name="login"),
     path("login/email/", views.email_login, name="login-by-email"),
     path("login/ngohub/", views.ngohub_login, name="login-by-ngohub"),
+    path("logout/", views.logout, name="logout"),
 ]

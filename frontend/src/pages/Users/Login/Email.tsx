@@ -1,19 +1,17 @@
 import { LoginForm } from '@/components/LoginForm';
-import LayoutDefault from '@/layouts/LayoutDefault';
+import LoginLayout from '@/layouts/LoginLayout';
 
 
 export default function Index() {
   return (
-    <>
-      <div className='flex flex-col gap-y-24 max-w-7xl mx-auto pt-12 lg:pt-32 px-4'>
-        <h1 className='font-bold text-4xl text-black mb-6'>
-          Login to PAUL
-        </h1>
-        
-        <LoginForm />
-      </div>
-    </>
+    <div className='flex flex-col gap-y-8 items-center'>
+      <h1 className='font-bold text-xl text-black mb-6'>
+        Login to PAUL
+      </h1>
+      
+      <LoginForm />
+    </div>
   );
 }
 
-Index.layout = LayoutDefault;
+Index.layout = LoginLayout;

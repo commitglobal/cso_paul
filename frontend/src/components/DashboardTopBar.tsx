@@ -63,7 +63,7 @@ export function DashboardTopBar({ handleOpenSidebar }: DashboardTopBarProps) {
                       className='ml-4 text-sm font-semibold leading-6 text-gray-900'
                       aria-hidden='true'
                     >
-                      {user?.first_name} {user?.last_name}
+                      <span className='whitespace-nowrap'>{user?.first_name[0]}{user?.last_name[0]}</span>
                     </span>
                     <ChevronDownIcon
                       className='ml-2 h-5 w-5 text-gray-400'
@@ -89,9 +89,9 @@ export function DashboardTopBar({ handleOpenSidebar }: DashboardTopBarProps) {
                           'block px-3 py-1 text-sm leading-6 text-gray-900',
                         )
                       }
-                      href="/"
+                      href="/to-do/"
                     >
-                      Setări
+                      Settings
                     </MenuItem>
                     <MenuItem
                       as='button'
@@ -103,7 +103,7 @@ export function DashboardTopBar({ handleOpenSidebar }: DashboardTopBarProps) {
                       }
                       onClick={handleSignOut}
                     >
-                      Ieșire
+                      Logout
                     </MenuItem>
                     <MenuItem
                       as='div'

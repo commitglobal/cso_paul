@@ -38,7 +38,7 @@ export function DashboardSidebar({ handleClose, open }: DashboardSidebarProps) {
       filteredNavigation.map((item) =>
         !item.href ? (
           <Disclosure key={item.name}>
-            <DisclosureButton className='group flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold w-full text-black hover:bg-yellow-400'>
+            <DisclosureButton className='group flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold w-full text-black hover:bg-paul-400'>
               <item.icon
                 className='h-6 w-6 shrink-0 group-hover:text-black'
                 aria-hidden='true'
@@ -51,8 +51,8 @@ export function DashboardSidebar({ handleClose, open }: DashboardSidebarProps) {
                 <Link
                   className={classNames(
                     url.split('?')[0].endsWith(subItem.href ?? '')
-                      ? 'bg-yellow-400 text-black'
-                      : 'text-black hover:bg-yellow-400',
+                      ? 'bg-paul-400 text-black'
+                      : 'text-black hover:bg-paul-400',
                     'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
                   )}
                   href={subItem.href ?? ''}
