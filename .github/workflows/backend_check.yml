@@ -5,23 +5,23 @@ on:
     branches:
       - '*'
       - 'main'
-#    paths:
-#      - 'backend/**.py'
-#      - 'backend/uv.lock'
-#      - 'backend/pyproject.toml'
-#      - 'Dockerfile*'
-#      - 'docker-compose*.yml'
-#      - '.github/workflows/backend_check.yml'
+    paths:
+      - 'backend/**.py'
+      - 'backend/uv.lock'
+      - 'backend/pyproject.toml'
+      - 'Dockerfile*'
+      - 'docker-compose*.yml'
+      - '.github/workflows/backend_check.yml'
   pull_request:
     branches:
       - 'main'
-#    paths:
-#      - 'backend/**.py'
-#      - 'backend/uv.lock'
-#      - 'backend/pyproject.toml'
-#      - 'Dockerfile*'
-#      - 'docker-compose*.yml'
-#      - '.github/workflows/backend_check.yml'
+    paths:
+      - 'backend/**.py'
+      - 'backend/uv.lock'
+      - 'backend/pyproject.toml'
+      - 'Dockerfile*'
+      - 'docker-compose*.yml'
+      - '.github/workflows/backend_check.yml'
 
 jobs:
 
