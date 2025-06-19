@@ -58,7 +58,9 @@ FROM python:${PYTHON_VERSION}-slim-bookworm
 ENV PYTHONUNBUFFERED=1
 
 ENV ENVIRONMENT=production
-ENV DEBUG=${DEBUG:-False}
+
+# ENV DEBUG=${DEBUG:-False}  # TODO: make this work without a warning
+ENV DEBUG=False
 
 ENV RUN_MIGRATIONS=True
 ENV RUN_COMPILE_MESSAGES=True
