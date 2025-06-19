@@ -1,8 +1,28 @@
+ARG NODE_VERSION=24.2.0
 ARG PYTHON_VERSION=3.13.5
 ARG S6_OVERLAY_VERSION=3.2.1.0
 
 
-FROM python:${PYTHON_VERSION}-slim-bookworm AS build
+FROM node:${NODE_VERSION}-bookworm-slim AS build_fe
+
+RUN apt-get update && apt-get upgrade -y
+
+WORKDIR /var/www/paul/frontend
+
+COPY ./frontend/ .
+
+ARG VERSION
+ARG REVISION
+
+ENV VITE_VERSION=${VERSION}
+ENV VITE_REVISION=${REVISION}
+
+# install the frontend libraries:
+RUN npm ci --no-audit --ignore-scripts && \
+    npm run prod
+
+
+FROM python:${PYTHON_VERSION}-slim-bookworm AS build_be
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -84,8 +104,11 @@ RUN uv venv ${VIRTUAL_ENV}
 ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
 
 
+# copy the frontend build artifacts from the build stage:
+COPY --from=build_fe /var/www/paul/frontend/dist/ /var/www/paul/frontend/dist/
+
 # copy the backend source code and libraries from the build stage:
-COPY --from=build "${VIRTUAL_ENV}" "${VIRTUAL_ENV}"
+COPY --from=build_be "${VIRTUAL_ENV}" "${VIRTUAL_ENV}"
 
 WORKDIR /var/www/paul/backend/
 COPY ./backend/ /var/www/paul/backend/
