@@ -3,14 +3,14 @@ import classNames from 'classnames';
 import { SvgIcon } from '@/types/SvgIcon';
 
 type SidebarNavMenuItemProps = {
-  active: boolean;
+  focus: boolean;
   href: string;
   icon: SvgIcon;
   name: string;
 };
 
 export function SidebarNavMenuItem({
-  active,
+  focus,
   href,
   icon: Icon,
   name,
@@ -20,7 +20,7 @@ export function SidebarNavMenuItem({
       <Link
         href={href}
         className={classNames(
-          active
+          focus
             ? 'bg-paul-400 text-black'
             : 'text-black hover:bg-paul-400',
           'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold',
@@ -28,7 +28,7 @@ export function SidebarNavMenuItem({
       >
         <Icon
           className={classNames(
-            active ? 'text-black' : 'group-hover:text-black',
+            focus ? 'text-black' : 'group-hover:text-black',
             'h-6 w-6 shrink-0',
           )}
           aria-hidden='true'

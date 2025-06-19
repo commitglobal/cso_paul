@@ -98,3 +98,13 @@ def ngohub_login(request: HttpRequest) -> Dict[str, Any]:
     """
 
     raise NotImplementedError("NGO Hub authentication is not implemented yet")
+
+
+@cache_control(private=True)
+@inertia("Users/Team/Index")
+def manage_team(request: HttpRequest) -> Dict[str, Any]:
+    """
+    Manage the user team
+    """
+
+    return {}

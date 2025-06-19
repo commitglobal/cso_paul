@@ -3,39 +3,26 @@ import { ChevronDownIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Link, usePage } from '@inertiajs/react';
 import { Fragment, useMemo } from 'react';
 import { CommonProps } from '@/types/CommonProps';
-import { getUserType } from '@/utils/userPermissions';
 import { SidebarNavMenuItem } from './SidebarNavMenuItem';
 import { PaulLogoSvg } from './PaulLogoSvg';
 import classNames from 'classnames';
-import { navigation } from '@/constants/staffNavigation';
+import { navigation } from '@/constants/appNavigation';
 
-type DashboardSidebarProps = {
+type AppSidebarProps = {
   handleClose: () => void;
   open: boolean;
 };
 
-export function DashboardSidebar({ handleClose, open }: DashboardSidebarProps) {
+export function AppSidebar({ handleClose, open }: AppSidebarProps) {
   const {
     url,
-    props: { user },
+    props: {},
   } = usePage<CommonProps>();
 
-  const userType = user ? getUserType(user) : 'admin_basic';
-
-  const filteredNavigation = useMemo(
-    () =>
-      navigation
-        .filter((navItem) => navItem.userTypes.includes(userType))
-        .filter(
-          (navItem) =>
-            !navItem.href?.includes('audit'),
-        ),
-    [user?.is_admin_basic, userType],
-  );
 
   const navItems = useMemo(
     () =>
-      filteredNavigation.map((item) =>
+      navigation.map((item) =>
         !item.href ? (
           <Disclosure key={item.name}>
             <DisclosureButton className='group flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold w-full text-black hover:bg-paul-400'>
@@ -80,7 +67,7 @@ export function DashboardSidebar({ handleClose, open }: DashboardSidebarProps) {
           />
         ),
       ),
-    [filteredNavigation, url],
+    [navigation, url],
   );
 
   const homeUrl = "/";
