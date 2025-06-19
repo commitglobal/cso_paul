@@ -3,7 +3,6 @@ import { LoginText } from '@/components/LoginText';
 import { Notification } from '@/components/Notification';
 import { Page } from '@inertiajs/core';
 import { ReactNode } from 'react';
-import classNames from 'classnames';
 
 
 export default function DefaultLayout(page: Page<CommonProps>) {
