@@ -11,17 +11,20 @@ export default function LoginChoice() {
   } = useValidatedProps<LoginChoiceProps>(LoginChoiceProps);
 
   return (
-    <div className='flex flex-col gap-y-8 items-center'>
-      <h1 className='font-bold text-xl text-black mb-6'>
+    <div className='flex flex-col gap-y-8 items-center m-10'>
+      <div className='font-bold text-[24px] text-black w-full'>
         Login to PAUL
-      </h1>
+      </div>
       {endpoints.ngohub && (
-        <LinkButton to={endpoints.ngohub_url}>Login with NGO Hub</LinkButton>
+        <div className='w-full'><LinkButton to={endpoints.ngohub_url} fullWidth={true}>Login with NGO Hub</LinkButton></div>
       )}
       {endpoints.email && (
-        <LinkButton to={endpoints.email_url}>Login with email</LinkButton>
+        <div className='w-full'><LinkButton to={endpoints.email_url} fullWidth={true}>Login with email</LinkButton></div>
       )}
-      <InternalLink name='Register your organization' to='/to-do/' />
+      <div className='w-full text-center text-[16px]'>
+        New here?
+        <InternalLink name='Register your organization' color='text-paul-600' fontSize='text-[16px]' to='/to-do/' />
+      </div>
     </div>
   );
 }

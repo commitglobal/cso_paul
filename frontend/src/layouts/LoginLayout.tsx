@@ -12,7 +12,7 @@ export default function DefaultLayout(page: Page<CommonProps>) {
       <div className='w-1/2 p-20 content-center'>
         <LoginText />
       </div>
-      <div className='w-1/2 p-20 bg-paul-200 content-center'>
+      <div className='w-1/2 p-20 bg-paul-100 content-center'>
         <div className="rounded-xl bg-white shadow">
           <div className="px-4 py-5 sm:p-6">
             {page as unknown as ReactNode}

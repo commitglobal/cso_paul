@@ -40,8 +40,8 @@ export function LoginForm() {
   const formErrors = errors?.login;
 
   return (
-    <>
-      <form className='flex flex-col gap-y-6' onSubmit={handleSubmit}>
+    <form className='flex flex-col gap-y-6 w-full' onSubmit={handleSubmit}>
+      <div className='grid grid-cols-1 gap-y-6 gap-x-10 w-full'>
         <InputField
           errors={formErrors?.email}
           label='Email address'
@@ -72,12 +72,16 @@ export function LoginForm() {
             fontSize='text-sm'
             name='Forgot password?'
             to={`/to-do/`}
-            underline={false}
           />
         </div>
-        <Button disabled={processing}>Login</Button>
-        <InternalLink name='Register your organization' color='text-paul-600' fontSize='text-sm' underline={false} to='/to-do/' />
-      </form>
-    </>
+        <div className='w-full text-center center'>
+          <Button disabled={processing}>Login</Button>
+        </div>
+        <div className='w-full text-center text-[16px]'>
+          New here?
+          <InternalLink name='Register your organization' color='text-paul-600' fontSize='text-[16px]' to='/to-do/' />
+        </div>
+      </div>
+    </form>
   );
 }
