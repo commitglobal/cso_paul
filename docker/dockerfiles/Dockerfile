@@ -30,7 +30,7 @@ ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
 WORKDIR /build
 COPY ./backend/pyproject.toml ./backend/uv.lock /build/
 # Install dependencies
-RUN uv sync --locked --no-install-project --active --no-extra --compile-bytecode
+RUN uv sync --locked --no-install-project --active --no-dev --compile-bytecode
 
 
 FROM python:${PYTHON_VERSION}-slim-bookworm
