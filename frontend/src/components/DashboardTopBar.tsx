@@ -1,4 +1,4 @@
-import { Menu, Transition } from '@headlessui/react';
+import { Menu, MenuItem, MenuItems, MenuButton, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { Bars3Icon } from '@heroicons/react/24/outline';
 import { Link, useForm, usePage } from '@inertiajs/react';
@@ -7,7 +7,7 @@ import { Fragment, useCallback } from 'react';
 import { apiGetUrls, apiPostUrls } from '@/constants/apiUrls';
 import { CommonProps } from '@/types/CommonProps';
 import { Avatar } from './Avatar';
-import { PaulLogoSvg } from './PaulLogoSvg';
+// import { PaulLogoSvg } from './PaulLogoSvg';
 
 type DashboardTopBarProps = {
   handleOpenSidebar: () => void;
@@ -22,7 +22,8 @@ export function DashboardTopBar({ handleOpenSidebar }: DashboardTopBarProps) {
 
   const handleSignOut = useCallback(() => {
     post(
-      apiPostUrls.usersLogout(user?.is_staff_member ? 'staff' : 'applicants'),
+      "/"
+      // TODO: apiPostUrls.usersLogout(),
     );
   }, [post, user?.is_staff_member]);
 
@@ -43,11 +44,10 @@ export function DashboardTopBar({ handleOpenSidebar }: DashboardTopBarProps) {
 
           <Link
             className='flex w-56'
-            href={
-              !user ? '/' : apiGetUrls.dashboard(Boolean(user.is_admin_member))
-            }
+            href="/"
           >
-            <PaulLogoSvg />
+              {/* <PaulLogoSvg /> */}
+              <strong>PAUL</strong>
           </Link>
         </div>
 
@@ -56,7 +56,7 @@ export function DashboardTopBar({ handleOpenSidebar }: DashboardTopBarProps) {
             <div className='flex items-center gap-x-4 xl:gap-x-6'>
               {/* Profile dropdown */}
               <Menu as='div' className='relative'>
-                <Menu.Button className='-m-1.5 flex items-center p-1.5'>
+                <MenuButton className='-m-1.5 flex items-center p-1.5'>
                   <span className='sr-only'>Open user menu</span>
                   <Avatar size='small' src={user?.avatar} />
                   <span className='hidden xl:flex xl:items-center'>
@@ -71,7 +71,7 @@ export function DashboardTopBar({ handleOpenSidebar }: DashboardTopBarProps) {
                       aria-hidden='true'
                     />
                   </span>
-                </Menu.Button>
+                </MenuButton>
                 <Transition
                   as={Fragment}
                   enter='transition ease-out duration-100'
@@ -81,8 +81,8 @@ export function DashboardTopBar({ handleOpenSidebar }: DashboardTopBarProps) {
                   leaveFrom='transform opacity-100 scale-100'
                   leaveTo='transform opacity-0 scale-95'
                 >
-                  <Menu.Items className='absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-hidden'>
-                    <Menu.Item
+                  <MenuItems className='absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-hidden'>
+                    <MenuItem
                       as={Link}
                       className={({ active }) =>
                         classNames(
@@ -90,15 +90,11 @@ export function DashboardTopBar({ handleOpenSidebar }: DashboardTopBarProps) {
                           'block px-3 py-1 text-sm leading-6 text-gray-900',
                         )
                       }
-                      href={
-                        user.is_applicant_member
-                          ? '/applicants/settings/'
-                          : apiGetUrls.usersSettings
-                      }
+                      href="/"
                     >
                       Setări
-                    </Menu.Item>
-                    <Menu.Item
+                    </MenuItem>
+                    <MenuItem
                       as='button'
                       className={({ active }) =>
                         classNames(
@@ -109,15 +105,15 @@ export function DashboardTopBar({ handleOpenSidebar }: DashboardTopBarProps) {
                       onClick={handleSignOut}
                     >
                       Ieșire
-                    </Menu.Item>
-                    <Menu.Item
+                    </MenuItem>
+                    <MenuItem
                       as='div'
                       className='text-xs px-3 py-1 bg-gray-50'
                     >
                       {import.meta.env.VITE_VERSION ?? 'edge'}+
                       {import.meta.env.VITE_REVISION ?? 'develop'}
-                    </Menu.Item>
-                  </Menu.Items>
+                    </MenuItem>
+                  </MenuItems>
                 </Transition>
               </Menu>
             </div>

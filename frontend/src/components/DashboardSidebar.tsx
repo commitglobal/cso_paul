@@ -1,4 +1,4 @@
-import { Dialog, Disclosure, Transition } from '@headlessui/react';
+import { Dialog, DialogPanel, Disclosure, DisclosureButton, DisclosurePanel, Transition, TransitionChild } from '@headlessui/react';
 import { ChevronDownIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Link, usePage } from '@inertiajs/react';
 import { Fragment, useMemo } from 'react';
@@ -39,15 +39,15 @@ export function DashboardSidebar({ handleClose, open }: DashboardSidebarProps) {
       filteredNavigation.map((item) =>
         !item.href ? (
           <Disclosure key={item.name}>
-            <Disclosure.Button className='group flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold w-full text-black hover:bg-yellow-400'>
+            <DisclosureButton className='group flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold w-full text-black hover:bg-yellow-400'>
               <item.icon
                 className='h-6 w-6 shrink-0 group-hover:text-black'
                 aria-hidden='true'
               />
               {item.name}
               <ChevronDownIcon className='h-5 ml-auto' />
-            </Disclosure.Button>
-            <Disclosure.Panel className='flex flex-col pl-10'>
+            </DisclosureButton>
+            <DisclosurePanel className='flex flex-col pl-10'>
               {item.items?.map((subItem) => (
                 <Link
                   className={classNames(
@@ -70,7 +70,7 @@ export function DashboardSidebar({ handleClose, open }: DashboardSidebarProps) {
                   {subItem.name}
                 </Link>
               ))}
-            </Disclosure.Panel>
+            </DisclosurePanel>
           </Disclosure>
         ) : (
           <SidebarNavMenuItem
@@ -84,19 +84,17 @@ export function DashboardSidebar({ handleClose, open }: DashboardSidebarProps) {
     [filteredNavigation, url],
   );
 
-  const homeUrl = !user
-    ? '/'
-    : apiGetUrls.dashboard(Boolean(user.is_admin_member));
+  const homeUrl = "/";
 
   return (
     <>
-      <Transition.Root show={open} as={Fragment}>
+      <Transition show={open} as={Fragment}>
         <Dialog
           as='div'
           className='relative z-50 xl:hidden'
           onClose={handleClose}
         >
-          <Transition.Child
+          <TransitionChild
             as={Fragment}
             enter='transition-opacity ease-linear duration-300'
             enterFrom='opacity-0'
@@ -106,10 +104,10 @@ export function DashboardSidebar({ handleClose, open }: DashboardSidebarProps) {
             leaveTo='opacity-0'
           >
             <div className='fixed inset-0 bg-gray-900/80' />
-          </Transition.Child>
+          </TransitionChild>
 
           <div className='fixed inset-0 flex'>
-            <Transition.Child
+            <TransitionChild
               as={Fragment}
               enter='transition ease-in-out duration-300 transform'
               enterFrom='-translate-x-full'
@@ -118,8 +116,8 @@ export function DashboardSidebar({ handleClose, open }: DashboardSidebarProps) {
               leaveFrom='translate-x-0'
               leaveTo='-translate-x-full'
             >
-              <Dialog.Panel className='relative mr-16 flex w-full max-w-xs flex-1'>
-                <Transition.Child
+              <DialogPanel className='relative mr-16 flex w-full max-w-xs flex-1'>
+                <TransitionChild
                   as={Fragment}
                   enter='ease-in-out duration-300'
                   enterFrom='opacity-0'
@@ -141,7 +139,7 @@ export function DashboardSidebar({ handleClose, open }: DashboardSidebarProps) {
                       />
                     </button>
                   </div>
-                </Transition.Child>
+                </TransitionChild>
 
                 {/* Sidebar component, swap this element with another sidebar if you like */}
                 <div className='flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-4'>
@@ -158,11 +156,11 @@ export function DashboardSidebar({ handleClose, open }: DashboardSidebarProps) {
                     </ul>
                   </nav>
                 </div>
-              </Dialog.Panel>
-            </Transition.Child>
+              </DialogPanel>
+            </TransitionChild>
           </div>
         </Dialog>
-      </Transition.Root>
+      </Transition>
 
       {/* Static sidebar for desktop */}
       <div className='hidden xl:fixed xl:inset-y-0 xl:z-50 xl:flex xl:w-72 xl:flex-col'>
@@ -170,7 +168,8 @@ export function DashboardSidebar({ handleClose, open }: DashboardSidebarProps) {
         <div className='flex grow flex-col overflow-y-auto  border-gray-200 bg-white  pb-4'>
           <div className='flex h-16 shrink-0 items-center border-b px-6'>
             <Link href={homeUrl} className='inline-block w-full'>
-              <PaulLogoSvg />
+              {/* <PaulLogoSvg /> */}
+              <strong>PAUL</strong>
             </Link>
           </div>
           <nav className='flex flex-1 flex-col px-6 border-r pt-5'>

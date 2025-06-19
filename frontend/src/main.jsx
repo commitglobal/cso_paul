@@ -3,7 +3,7 @@ import React from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { createRoot } from 'react-dom/client';
 import { Fallback } from './components/Fallback';
-import LayoutBackOffice from './layouts/LayoutBackOffice';
+import LayoutDefault from './layouts/LayoutDefault';
 import './index.css';
 
 const pages = import.meta.glob('./pages/**/*.tsx');
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   createInertiaApp({
     resolve: async (name) => {
       const page = (await pages[`./pages/${name}.tsx`]()).default;
-      page.layout = page.layout || LayoutBackOffice;
+      page.layout = page.layout || LayoutDefault;
 
       return page;
     },
