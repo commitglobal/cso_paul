@@ -138,12 +138,13 @@ jobs:
     - name: Install dependencies
       env:
         ENV_FILE_NAME: .env.test
-      working-directory: ./backend
       run: |
-        cp ./.env.example ./.env.test
+        set -a
+        source ../.env.example
+        set +a
         uv sync
         sudo apt-get install gettext
-        ./backend/manage.py compilemessages
+        uv run ./manage.py compilemessages
 
     - name: Run tests
       env:
