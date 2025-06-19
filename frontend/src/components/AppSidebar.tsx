@@ -60,7 +60,7 @@ export function AppSidebar({ handleClose, open }: AppSidebarProps) {
           </Disclosure>
         ) : (
           <SidebarNavMenuItem
-            active={url.split('?')[0].endsWith(item.href)}
+            focus={url.split('?')[0].endsWith(item.href)}
             key={item.name}
             href={item.href}
             {...item}
