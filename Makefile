@@ -194,5 +194,5 @@ clean-db:                          ## remove the database files
 clean: clean-docker clean-extras clean-db  ## remove all build, test, coverage and Python artifacts
 
 reset-node-modules:
-	docker exec paul_app_dev sh -c "cd ./frontend && rm -rf node_modules && npm i package-lock.json"
+	docker exec paul_app_dev sh -c "cd ./frontend && rm -rf node_modules && npm ci"
 	
