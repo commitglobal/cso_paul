@@ -115,5 +115,5 @@ def manage_team(request: HttpRequest) -> InertiaResponse:
     return inertia_render(
         request,
         "Users/Team/Index",
-        props={"ok": True},
+        props={"users": []},
     )
