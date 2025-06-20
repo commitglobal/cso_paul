@@ -2,10 +2,10 @@
 Django settings for the backend project.
 
 For more information on this file, see
-https://docs.djangoproject.com/en/4.2/topics/settings/
+https://docs.djangoproject.com/en/5.2/topics/settings/
 
 For the full list of settings and their values, see
-https://docs.djangoproject.com/en/4.2/ref/settings/
+https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 import hashlib
@@ -311,7 +311,7 @@ WSGI_APPLICATION = "paul.wsgi.application"
 
 
 # Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASE_ENGINE = env("DATABASE_ENGINE")
 
@@ -360,7 +360,7 @@ else:
     }
 
 # Password validation
-# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
+# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -422,7 +422,7 @@ MAX_RESET_ATTEMPTS = 5
 MAX_LOGIN_ATTEMPTS = 5
 
 # Internationalization
-# https://docs.djangoproject.com/en/4.2/topics/i18n/
+# https://docs.djangoproject.com/en/5.2/topics/i18n/
 
 LANGUAGE_CODE = env("LANGUAGE_CODE")
 
@@ -436,7 +436,7 @@ LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
+# https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 public_static_location = "static"
 public_media_location = "media"
@@ -577,7 +577,7 @@ INERTIA_SSR_ENABLED = env.bool("INERTIA_SSR_ENABLED", default=django_vite_dev_mo
 
 
 # Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
