@@ -1,33 +1,37 @@
-# Create your views here.
-from typing import Any, Dict
-
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpRequest
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views.decorators.cache import cache_control, never_cache
-from inertia import inertia
+from inertia import render as inertia_render, InertiaResponse
 
 
 @cache_control(private=True)
 @login_required(login_url=reverse_lazy("users:login"))
-@inertia("Dashboard/Home")
-def home(request: HttpRequest) -> Dict[str, Any]:
+def home(request: HttpRequest) -> InertiaResponse:
     """
     Main app dashboard
     """
 
-    return {}
+    return inertia_render(
+        request,
+        "Dashboard/Home",
+        props={"ok": True},
+    )
 
 
 @cache_control(private=False)
-@inertia("Dashboard/TestMenu")
-def test_menu(request: HttpRequest) -> Dict[str, Any]:
+def test_menu(request: HttpRequest) -> InertiaResponse:
     """
     TODO: Remove this test page once the menu is implemented
     """
-    return {"ok": True}
+
+    return inertia_render(
+        request,
+        "Dashboard/TestMenu",
+        props={"ok": True},
+    )
 
 
 @never_cache
