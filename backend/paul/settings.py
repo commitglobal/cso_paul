@@ -570,7 +570,7 @@ DJANGO_VITE: Dict[str, Dict] = {
 
 INERTIA_JSON_ENCODER = CustomJsonEncoder
 
-INERTIA_VERSION = "1.0"  # defaults to '1.0'
+INERTIA_VERSION = "2.0"  # defaults to '1.0'
 INERTIA_LAYOUT = "base.html"  # required and has no default
 INERTIA_SSR_URL = env.str("INERTIA_SSR_URL", default="http://localhost:13714")
 INERTIA_SSR_ENABLED = env.bool("INERTIA_SSR_ENABLED", default=django_vite_dev_mode)
