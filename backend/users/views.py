@@ -3,13 +3,14 @@ from typing import Any, Dict
 
 from django.shortcuts import redirect
 from django.contrib import auth
-from django.http import HttpResponseRedirect, HttpRequest, Http404, HttpResponse
+from django.http import HttpRequest, Http404, HttpResponse
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
-from inertia import inertia, render as inertia_render
+from inertia import inertia, render as inertia_render, InertiaResponse
 
 from users.forms import LoginForm
+from utils.types import RedirectionResponse
 
 
 @cache_control(private=False)
@@ -31,7 +32,7 @@ def login_choice(request: HttpRequest) -> Dict[str, Any]:
 
 @cache_control(private=True)
 @inertia("Users/Login/Email")
-def email_login(request: HttpRequest) -> Dict[str, Any] | HttpResponseRedirect:
+def email_login(request: HttpRequest) -> RedirectionResponse | InertiaResponse:
     """
     Login by using the email and password
     """
@@ -76,7 +77,8 @@ def email_login(request: HttpRequest) -> Dict[str, Any] | HttpResponseRedirect:
     return redirect(reverse("dashboard:home"))
 
 
-def logout(request: HttpRequest, is_staff_url: bool = False) -> HttpResponse:
+@cache_control(private=True)
+def logout(request: HttpRequest) -> HttpResponse:
     """
     Endpoint for authenticated users to POST a logout request
 
@@ -91,20 +93,27 @@ def logout(request: HttpRequest, is_staff_url: bool = False) -> HttpResponse:
 
 
 @cache_control(private=True)
-@inertia("Users/Login/Ngohub")
-def ngohub_login(request: HttpRequest) -> Dict[str, Any]:
+def ngohub_login(request: HttpRequest) -> InertiaResponse:
     """
     Login by using NGO Hub
     """
 
     raise NotImplementedError("NGO Hub authentication is not implemented yet")
+    # return inertia_render(
+    #     request,
+    #     "Users/Login/Ngohub",
+    #     props={},
+    # )
 
 
 @cache_control(private=True)
-@inertia("Users/Team/Index")
-def manage_team(request: HttpRequest) -> Dict[str, Any]:
+def manage_team(request: HttpRequest) -> InertiaResponse:
     """
     Manage the user team
     """
 
-    return {}
+    return inertia_render(
+        request,
+        "Users/Team/Index",
+        props={"ok": True},
+    )

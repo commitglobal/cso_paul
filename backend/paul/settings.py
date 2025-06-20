@@ -19,7 +19,7 @@ import sentry_sdk
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from utils.encoder import CustomJsonEncoder
+from utils.encoders import CustomJsonEncoder
 
 
 # Constants for memory sizes
