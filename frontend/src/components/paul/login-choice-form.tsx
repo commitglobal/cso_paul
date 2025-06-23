@@ -4,9 +4,7 @@ import { LoginChoiceProps } from '@/pages/Users/Login/LoginChoiceProps';
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card"
 
 export function LoginChoiceForm({
