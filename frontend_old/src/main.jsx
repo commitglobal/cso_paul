@@ -2,8 +2,8 @@ import { createInertiaApp } from '@inertiajs/react';
 import React from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { createRoot } from 'react-dom/client';
-import { Fallback } from './components/paul/fallback';
-// import DefaultLayout from './layouts/DefaultLayout';
+import { Fallback } from './components/Fallback';
+import DefaultLayout from './layouts/DefaultLayout';
 import './index.css';
 
 const pages = import.meta.glob('./pages/**/*.tsx');
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   createInertiaApp({
     resolve: async (name) => {
       const page = (await pages[`./pages/${name}.tsx`]()).default;
-      // page.layout = page.layout || DefaultLayout;
+      page.layout = page.layout || DefaultLayout;
 
       return page;
     },

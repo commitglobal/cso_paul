@@ -1,8 +1,7 @@
 import { useValidatedProps } from '@/hooks/useValidatedProps';
-import { InternalLink } from '@/components/InternalLink';
-import { LinkButton } from '@/components/LinkButton';
+import { LoginChoiceForm } from "@/components/paul/login-choice-form"
 import { LoginChoiceProps } from './LoginChoiceProps';
-import LoginLayout from '@/layouts/LoginLayout';
+
 
 
 export default function LoginChoice() {
@@ -11,22 +10,21 @@ export default function LoginChoice() {
   } = useValidatedProps<LoginChoiceProps>(LoginChoiceProps);
 
   return (
-    <div className='flex flex-col gap-y-8 items-center m-10'>
-      <div className='font-bold text-[24px] text-black w-full'>
-        Login to PAUL
+    <div className="grid min-h-svh lg:grid-cols-2">
+      <div className="relative hidden lg:block">
+        <img
+          src="/placeholder.svg"
+          alt="Image"
+          className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+        />
       </div>
-      {endpoints.ngohub && (
-        <div className='w-full'><LinkButton to={endpoints.ngohub_url} fullWidth={true}>Login with NGO Hub</LinkButton></div>
-      )}
-      {endpoints.email && (
-        <div className='w-full'><LinkButton to={endpoints.email_url} fullWidth={true}>Login with email</LinkButton></div>
-      )}
-      <div className='flex gap-x-2 justify-center w-full text-center text-[16px]'>
-        <div>New here?</div>
-        <div><InternalLink name='Register your organization' color='text-paul-600' fontSize='text-[16px]' to='/to-do/' /></div>
+      <div className="bg-muted flex flex-col gap-4 p-6 md:p-10">
+        <div className="flex flex-1 items-center justify-center">
+          <div className="w-full max-w-3/4">
+            <LoginChoiceForm endpoints={endpoints} />
+          </div>
+        </div>
       </div>
     </div>
-  );
+  )
 }
-
-LoginChoice.layout = LoginLayout;
