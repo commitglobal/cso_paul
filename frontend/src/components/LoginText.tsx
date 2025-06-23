@@ -5,7 +5,7 @@ export function LoginText() {
     <>
         <p className='font-bold text-[40px] text-black mb-6 text-center'>Welcome back to PAUL</p>
         <p className='text-[24px] text-black text-center'>
-            Login to manage your NGO's data in one
+            Login to manage your NGO&apos;s data in one
             place, from beneficiaries and donors to
             events and reports.
         </p>

@@ -15,8 +15,7 @@ type AppSidebarProps = {
 
 export function AppSidebar({ handleClose, open }: AppSidebarProps) {
   const {
-    url,
-    props: {},
+    url
   } = usePage<CommonProps>();
 
 
@@ -67,6 +66,7 @@ export function AppSidebar({ handleClose, open }: AppSidebarProps) {
           />
         ),
       ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [navigation, url],
   );
 
