@@ -53,12 +53,10 @@ jobs:
         run: |
           npm ci
 
-#      TODO: Fix ES Lint before enabling this step
-#      https://eslint.org/docs/latest/use/configure/migration-guide
-#      - name: Lint the project
-#        working-directory: frontend
-#        run: |
-#          npm run lint
+      - name: Lint the project
+        working-directory: frontend
+        run: |
+          npm run lint
 
       - name: Build frontend
         working-directory: frontend
