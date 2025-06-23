@@ -3,7 +3,38 @@
 
 @custom-variant dark (&:is(.dark *));
 
+
 @theme inline {
+  --color-primary-light: #fff0a6;
+  --color-primary-main: #c997db;
+  --color-primary-dark: #ffd403;
+
+  --color-secondary-main: #e3f1ea;
+
+  --color-paul-50: #f9f7fc;
+  --color-paul-100: #f6edfa;
+  --color-paul-200: #ebdbf3;
+  --color-paul-300: #ddbee9;
+  --color-paul-400: #c997db;
+  --color-paul-500: #b06ec7;
+  --color-paul-600: #8f4ca5;
+  --color-paul-700: #7b3e8d;
+  --color-paul-800: #1f2937;
+  --color-paul-900: #111827;
+
+  --color-black: #2b2d33;
+  --color-warm-grey: #f1ede6;
+  --color-off-black: #2b2d33;
+  --color-green-highlight: #a3e2cc;
+  --color-green-mid-tone: #67d0ab;
+  --color-purple-highlight: #9d88d9;
+  --color-purple-mid-tone: #6a4cad;
+  --color-error: #c65c4a;
+
+  --text-2xs: 0.625rem;
+  --text-xs: 0.75rem;
+
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -49,11 +80,11 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
+  --primary: theme(--color-paul-600);
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
+  --muted: theme(--color-paul-100);
   --muted-foreground: oklch(0.556 0 0);
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
