@@ -21,9 +21,9 @@ export default function LoginChoice() {
       {endpoints.email && (
         <div className='w-full'><LinkButton to={endpoints.email_url} fullWidth={true}>Login with email</LinkButton></div>
       )}
-      <div className='w-full text-center text-[16px]'>
-        New here?
-        <InternalLink name='Register your organization' color='text-paul-600' fontSize='text-[16px]' to='/to-do/' />
+      <div className='flex gap-x-2 justify-center w-full text-center text-[16px]'>
+        <div>New here?</div>
+        <div><InternalLink name='Register your organization' color='text-paul-600' fontSize='text-[16px]' to='/to-do/' /></div>
       </div>
     </div>
   );
