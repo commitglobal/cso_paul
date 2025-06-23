@@ -46,7 +46,7 @@ export default function Index() {
                 <TableCell>{user.id}</TableCell>
                 <TableCell>
                   <UserCell
-                    itsYou={user.email === auth.user?.email ? true : false}
+                    itsYou={false}
                     name={`${user.last_name} ${user.first_name}`}
                     />
                   {user.email}
