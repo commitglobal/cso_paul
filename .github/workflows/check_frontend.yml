@@ -1,0 +1,66 @@
+name: Frontend Check
+
+on:
+  push:
+    branches:
+      - '*'
+      - 'main'
+    paths:
+      - 'frontend/**.jsx?'
+      - 'frontend/**.tsx?'
+      - 'frontend/**.css'
+      - 'frontend/**.json'
+      - 'Dockerfile*'
+      - 'docker-compose*.yml'
+      - '.github/workflows/check_frontend.yml'
+  pull_request:
+    branches:
+      - 'main'
+    paths:
+      - 'frontend/**.jsx?'
+      - 'frontend/**.tsx?'
+      - 'frontend/**.css'
+      - 'frontend/**.json'
+      - 'Dockerfile*'
+      - 'docker-compose*.yml'
+      - '.github/workflows/check_frontend.yml'
+
+jobs:
+  npm_prod:
+    name: Run `npm run prod` in production mode
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v4
+
+      - name: Set-up Node.js according to .nvmrc
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: frontend/.nvmrc
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Cache npm
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: |
+          npm ci
+
+#      TODO: Fix ES Lint before enabling this step
+#      https://eslint.org/docs/latest/use/configure/migration-guide
+#      - name: Lint the project
+#        working-directory: frontend
+#        run: |
+#          npm run lint
+
+      - name: Build frontend
+        working-directory: frontend
+        run: |
+          npm run prod
