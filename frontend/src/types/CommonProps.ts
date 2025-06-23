@@ -17,6 +17,6 @@ export const CommonProps = object({
   flash_messages: optional(array(FlashMessage)),
   has_add_permission: optional(boolean()),
   has_change_permission: optional(boolean()),
-  is_authenticated: boolean(),
+  is_authenticated: optional(boolean()),
   user: optional(nullable(User)),
 });
