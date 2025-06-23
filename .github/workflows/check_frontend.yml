@@ -5,31 +5,25 @@ on:
     branches:
       - '*'
       - 'main'
-#    paths:
-#      - 'frontend/**.js'
-#      - 'frontend/**.jsx'
-#      - 'frontend/**.ts'
-#      - 'frontend/**.tsx'
-#      - 'frontend/**.css'
-#      - 'frontend/**.json'
-#      - 'frontend/package*.json'
-#      - 'Dockerfile*'
-#      - 'docker-compose*.yml'
-#      - '.github/workflows/check_frontend.yml'
+    paths:
+      - 'frontend/**.jsx?'
+      - 'frontend/**.tsx?'
+      - 'frontend/**.css'
+      - 'frontend/**.json'
+      - 'Dockerfile*'
+      - 'docker-compose*.yml'
+      - '.github/workflows/check_frontend.yml'
   pull_request:
     branches:
       - 'main'
-#    paths:
-#      - 'frontend/**.js'
-#      - 'frontend/**.jsx'
-#      - 'frontend/**.ts'
-#      - 'frontend/**.tsx'
-#      - 'frontend/**.css'
-#      - 'frontend/**.json'
-#      - 'frontend/package*.json'
-#      - 'Dockerfile*'
-#      - 'docker-compose*.yml'
-#      - '.github/workflows/check_frontend.yml'
+    paths:
+      - 'frontend/**.jsx?'
+      - 'frontend/**.tsx?'
+      - 'frontend/**.css'
+      - 'frontend/**.json'
+      - 'Dockerfile*'
+      - 'docker-compose*.yml'
+      - '.github/workflows/check_frontend.yml'
 
 jobs:
   npm_prod:

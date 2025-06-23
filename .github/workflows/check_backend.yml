@@ -68,7 +68,7 @@ jobs:
       with:
         python-version-file: "./backend/pyproject.toml"
 
-    - name: Install Black & Ruff with uv
+    - name: Install Ruff with uv
       working-directory: ./backend
       run: |
         uv sync --only-group ruff
