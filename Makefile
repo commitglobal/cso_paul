@@ -138,7 +138,18 @@ collectstatic:                    ## collect the static files
 	docker exec paul_app_dev sh -c "cd ./backend && python3 -Wd ./manage.py collectstatic --no-input"
 
 format:                           ## format the code with black & ruff
-	docker exec paul_app_dev sh -c "black ./backend && ruff check --fix ./backend"
+	docker exec paul_app_dev sh -c " \
+		cd ./backend && \
+		black . &&  \
+		ruff check --fix ."
+
+check:
+	docker exec paul_app_dev sh -c " \
+		cd ./backend && \
+		ruff check --fix . && \
+		black --check . && \
+		cd ../frontend && \
+		npm run lint"
 
 pyshell:                          ## start a django shell
 	docker exec -it paul_app_dev sh -c "cd ./backend && python3 -Wd ./manage.py shell"
@@ -195,4 +206,3 @@ clean: clean-docker clean-extras clean-db  ## remove all build, test, coverage a
 
 reset-node-modules:
 	docker exec paul_app_dev sh -c "cd ./frontend && rm -rf node_modules && npm ci"
-	
