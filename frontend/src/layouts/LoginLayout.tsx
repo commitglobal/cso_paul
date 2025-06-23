@@ -8,7 +8,7 @@ import { ReactNode } from 'react';
 export default function DefaultLayout(page: Page<CommonProps>) {
 
   return (
-    <div className='flex h-full'>
+    <div className='flex h-fit'>
       <div className='w-1/2 p-20 content-center'>
         <LoginText />
       </div>

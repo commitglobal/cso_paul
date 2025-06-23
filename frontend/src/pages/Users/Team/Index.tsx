@@ -46,14 +46,14 @@ export default function Index() {
                 <TableCell>{user.id}</TableCell>
                 <TableCell>
                   <UserCell
-                    avatar={user.avatar ?? ''}
+                    itsYou={user.email === auth.user?.email ? true : false}
                     name={`${user.last_name} ${user.first_name}`}
                     />
                   {user.email}
                 </TableCell>
                 <TableCell>{"N/A"}</TableCell>
                 <TableCell>{formatDate(user.date_joined)}</TableCell>
-                <TableCell>{"N/A"}</TableCell>
+                <TableCell>{formatDate(user.last_login)}</TableCell>
                 <TableCell>
                   <div className='flex items-center justify-end'>
                     <Menu as='div' className='relative'>
