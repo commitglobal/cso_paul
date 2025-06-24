@@ -2,16 +2,15 @@ import { createInertiaApp } from '@inertiajs/react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { createRoot } from 'react-dom/client'
 import { Fallback } from './components/paul/Fallback.tsx'
+import type { Page } from '@inertiajs/core'
 import './index.css'
-import * as React from 'react'
 
 const pages = import.meta.glob('./pages/**/*.tsx')
 
 document.addEventListener('DOMContentLoaded', () => {
   createInertiaApp({
-    resolve: async (name) => {
-      return (await (await pages[`./pages/${name}.tsx`]() as Promise<{ default: React.ComponentType<any> }>)).default
-    },
+    resolve: async (name) =>
+      (await pages[`./pages/${name}.tsx`]() as { default: Page }).default,
     setup({ el, App, props }) {
       createRoot(el).render(
         <ErrorBoundary FallbackComponent={Fallback}>
