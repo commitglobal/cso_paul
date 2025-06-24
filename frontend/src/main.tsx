@@ -1,7 +1,7 @@
 import { createInertiaApp } from '@inertiajs/react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { createRoot } from 'react-dom/client'
-import { Fallback } from './components/paul/Fallback.tsx'
+import { Fallback } from './components/paul/fallback.tsx'
 import type { Page } from '@inertiajs/core'
 import './index.css'
 
