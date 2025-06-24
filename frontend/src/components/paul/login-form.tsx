@@ -1,7 +1,6 @@
-import { router, useForm, usePage, Link } from '@inertiajs/react';
+import { router, useForm, Link } from '@inertiajs/react';
 import { type FormEventHandler, useCallback } from 'react';
 import { apiPostUrls } from '@/constants/apiUrls';
-import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -20,13 +19,10 @@ type LoginFormData = {
 };
 
 
-export function LoginForm({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
-  const {
-    props: { errors },
-  } = usePage();
+export function LoginForm() {
+  // const {
+  //   props: { errors },
+  // } = usePage();
   
   const { data, setData, processing } = useForm<LoginFormData>({
     email: '',
@@ -47,7 +43,7 @@ export function LoginForm({
   );
 
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div className="flex flex-col gap-6">
       <Card>
         <CardHeader>
           <h1 className="text-2xl font-bold">Login to PAUL</h1>
@@ -84,7 +80,7 @@ export function LoginForm({
                     Forgot your password?
                   </Link>
               </div>
-              <Button type="submit" className="w-full">
+              <Button type="submit" disabled={processing} className="w-full">
                 Login
               </Button>
             </div>
