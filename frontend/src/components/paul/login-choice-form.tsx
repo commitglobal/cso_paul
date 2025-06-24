@@ -37,7 +37,7 @@ export function LoginChoiceForm({
             )}
 
             {endpoints.email && (
-                <Button asChild type="submit">
+                <Button asChild variant="default">
                     <a href={`${endpoints.email_url}`}>Login with email</a>
                 </Button>
             )}
