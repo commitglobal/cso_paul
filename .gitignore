@@ -41,7 +41,10 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
+
+lib/*
+!frontend/src/lib/  # don't ignore frontend libraries
+
 lib64/
 parts/
 sdist/
