@@ -1,13 +1,9 @@
-import { useValidatedProps } from '@/hooks/useValidatedProps';
-import { LoginChoiceForm } from "@/components/paul/login-choice-form"
+// import { useValidatedProps } from '@/hooks/useValidatedProps';
 import { LoginText } from "@/components/paul/login-text"
-import { LoginChoiceProps } from './LoginChoiceProps';
+import { LoginForm } from "@/components/paul/login-form"
 
 
-export default function LoginChoice() {
-  const {
-    props: { endpoints },
-  } = useValidatedProps<LoginChoiceProps>(LoginChoiceProps);
+export default function EmailLogin() {
 
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
@@ -19,7 +15,7 @@ export default function LoginChoice() {
       <div className="bg-muted flex flex-col gap-4 p-6 md:p-10">
         <div className="flex flex-1 items-center justify-center">
           <div className="w-full max-w-3/4">
-            <LoginChoiceForm endpoints={endpoints} />
+            <LoginForm />
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import { CommonProps } from '@/types/CommonProps';
 import {
-  Infer,
+  type Infer,
   assign,
   object,
   string,

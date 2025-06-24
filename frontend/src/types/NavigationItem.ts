@@ -1,4 +1,4 @@
-import { SvgIcon } from './SvgIcon';
+import { type SvgIcon } from './SvgIcon';
 
 export type NavigationItem = {
   href?: string;

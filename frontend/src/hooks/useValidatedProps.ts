@@ -1,5 +1,5 @@
 import { usePage } from '@inertiajs/react';
-import { PageProps } from '@inertiajs/core';
+import { type PageProps } from '@inertiajs/core';
 import { Struct, validate } from 'superstruct';
 
 export function useValidatedProps<T extends PageProps>(struct: Struct<T>) {

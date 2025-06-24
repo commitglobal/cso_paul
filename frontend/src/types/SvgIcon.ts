@@ -1,4 +1,4 @@
-import { ForwardRefExoticComponent } from 'react';
+import { type ForwardRefExoticComponent } from 'react';
 import * as React from 'react';
 
 export type SvgIcon =

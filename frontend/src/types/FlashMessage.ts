@@ -1,4 +1,4 @@
-import { Infer, enums, object, optional, string } from 'superstruct';
+import { type Infer, enums, object, optional, string } from 'superstruct';
 
 export type FlashMessage = Infer<typeof FlashMessage>;
 
