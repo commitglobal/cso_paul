@@ -29,12 +29,6 @@ RUN apt-get update && \
     nginx gcc xz-utils gettext python3 python3-pip python3-venv python3-dev postgresql-client libpq-dev && \
     apt-get clean
 
-# Download the latest UV installer
-ADD ./docker/third-party/uv/installer.sh /uv-installer.sh
-
-# Run the installer then remove it
-RUN sh /uv-installer.sh && rm /uv-installer.sh
-
 # make sure scripts in .local are usable:
 ENV PATH="/root/.local/bin:${PATH}"
 
@@ -50,18 +44,25 @@ RUN tar -C / -Jxpf /tmp/s6-overlay-noarch.tar.xz && \
 COPY docker/nginx/nginx.conf /etc/nginx/sites-available/default
 COPY docker/s6-rc.d /etc/s6-overlay/s6-rc.d
 
+# Download the latest UV installer
+ADD ./docker/third-party/uv/installer.sh /uv-installer.sh
+
+# Run the installer then remove it
+RUN sh /uv-installer.sh && rm /uv-installer.sh
 
 # Python virtualenv paths
 ENV VIRTUAL_ENV=/opt/venv
 RUN uv venv ${VIRTUAL_ENV}
 ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
 
-
-# install the backend libraries:
-COPY ./backend/ /var/www/paul/backend/
+# install the backend dependencies:
+COPY ./backend/pyproject.toml /var/www/paul/backend/pyproject.toml
+COPY ./backend/uv.lock /var/www/paul/backend/uv.lock
 WORKDIR /var/www/paul/backend/
 RUN uv sync --active --locked --compile-bytecode
 
+# install the backend code:
+COPY ./backend/ /var/www/paul/backend/
 
 # copy the frontend source code:
 COPY ./frontend/ /var/www/paul/frontend/
