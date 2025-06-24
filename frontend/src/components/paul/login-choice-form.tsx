@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { LoginChoiceProps } from '@/pages/Users/Login/LoginChoiceProps';
+import { Link } from '@inertiajs/react';
 import {
   Card,
   CardContent,
@@ -24,7 +25,7 @@ export function LoginChoiceForm({
           <div className="grid gap-6">
             {endpoints.ngohub && (
                 <Button asChild variant="outline">
-                    <a href={`${endpoints.ngohub_url}`}>Login with NGO Hub</a>
+                    <Link href={`${endpoints.ngohub_url}`}>Login with NGO Hub</Link>
                 </Button>
             )}
             
@@ -38,15 +39,15 @@ export function LoginChoiceForm({
 
             {endpoints.email && (
                 <Button asChild variant="default">
-                    <a href={`${endpoints.email_url}`}>Login with email</a>
+                    <Link href={`${endpoints.email_url}`}>Login with email</Link>
                 </Button>
             )}
           </div>
           <div className="text-center text-sm mt-6">
             New here?{" "}
-            <a href="#" className="underline underline-offset-4">
+            <Link href="#" className="underline underline-offset-4">
               Register your organization
-            </a>
+            </Link>
           </div>
         </CardContent>
       </Card>

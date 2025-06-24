@@ -33,7 +33,6 @@ def login_choice(request: HttpRequest) -> Dict[str, Any]:
 
 
 @cache_control(private=True)
-@inertia("Users/Login/Email")
 def email_login(request: HttpRequest) -> RedirectionResponse | InertiaResponse:
     """
     Login by using the email and password
@@ -46,7 +45,7 @@ def email_login(request: HttpRequest) -> RedirectionResponse | InertiaResponse:
     if request.method == "GET":
         return inertia_render(
             request,
-            "Users/Login/Email",
+            "Users/Login/EmailLogin",
             props={},
         )
 
@@ -65,7 +64,7 @@ def email_login(request: HttpRequest) -> RedirectionResponse | InertiaResponse:
     if not login_user:
         return inertia_render(
             request,
-            "Users/Login/Email",
+            "Users/Login/EmailLogin",
             props={
                 "errors": {"login": form.errors},
                 # "re_captcha_key": settings.RECAPTCHA_PUBLIC_KEY,
@@ -103,7 +102,7 @@ def ngohub_login(request: HttpRequest) -> InertiaResponse:
     raise NotImplementedError("NGO Hub authentication is not implemented yet")
     # return inertia_render(
     #     request,
-    #     "Users/Login/Ngohub",
+    #     "Users/Login/NgohubLogin",
     #     props={},
     # )
 
