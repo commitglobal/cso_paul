@@ -8,11 +8,17 @@ export default defineConfig(({ mode, command }) => {
   const env = loadEnv(mode, process.cwd(), '');
 
   return defineConfig({
-    plugins: [react(), tailwindcss()],
+    plugins: [
+      react({
+        include: '**/*.disabled',
+      }),
+      tailwindcss()
+    ],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src')
-      }
+      },
+      // extensions: ['.tsx', '.ts', '.jsx', '.js', '.json']
     },
     root: resolve(__dirname, './src'),
     base: command === 'serve' ? '/static/' : '',
