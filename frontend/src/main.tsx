@@ -5,6 +5,7 @@ import { Fallback } from './components/paul/fallback.tsx'
 import type { Page } from '@inertiajs/core'
 import BaseLayout from './layouts/base-layout';
 import './index.css'
+import './i18n';
 
 const pages = import.meta.glob('./pages/**/*.tsx')
 
