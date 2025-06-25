@@ -5,8 +5,14 @@ import roJSON from './locales/ro.json'
 
 i18n.use(initReactI18next).init({
   resources: {
-    en: { ...enJSON },
-    cn: { ...roJSON }
+    en: { translation: enJSON },
+    ro: { translation: roJSON }
   },
-  lng: 'en'
+  lng: 'en',
+  fallbackLng: 'en',
+  interpolation: {
+    escapeValue: false
+  }
 })
+
+export default i18n;

@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import { handleChange } from '@/utils/handle-change';
 import { LoginChoiceProps } from '@/pages/users/auth/login-choice-props';
 import logomark from '@/assets/paul-logomark.svg';
-import { t } from 'i18next'
+import { useTranslation } from 'react-i18next'
 
 
 type LoginFormData = {
@@ -28,7 +28,9 @@ export function LoginForm({
   }: LoginChoiceProps) {
   const {
     props: { errors },
-  } = usePage();
+   } = usePage();
+
+  const { t } = useTranslation();
   const { data, setData, processing } = useForm<LoginFormData>({
     email: '',
     password: '',
