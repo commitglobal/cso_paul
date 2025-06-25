@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import { handleChange } from '@/utils/handle-change';
 import { LoginChoiceProps } from '@/pages/users/auth/login-choice-props';
 import logomark from '@/assets/paul-logomark.svg';
-import { useTranslation } from 'react-i18next'
+import { LoginRegisterCta } from '@/components/paul/login-register-cta.tsx'
 
 
 type LoginFormData = {
@@ -113,12 +113,7 @@ export function LoginForm({
                 Login
               </Button>
             </div>
-            <div className='flex text-center text-sm mt-6 gap-2 justify-center'>
-              {t('newHere')}
-              <Link href='#' className='underline underline-offset-4'>
-                Register your organization
-              </Link>
-            </div>
+            <LoginRegisterCta />
           </form>
         </CardContent>
       </Card>

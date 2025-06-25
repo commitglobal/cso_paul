@@ -5,7 +5,7 @@ import enJSON from './locales/en.json'
 import roJSON from './locales/ro.json'
 
 i18n
-  .use(LanguageDetector)  // Add this line
+  .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     resources: {
@@ -13,13 +13,11 @@ i18n
       ro: { translation: roJSON }
     },
     fallbackLng: 'en',
-    detection: {
-      order: ['navigator', 'htmlTag', 'path', 'subdomain'],
-      caches: ['localStorage']
-    },
+    load: 'languageOnly',
     interpolation: {
       escapeValue: false
-    }
+    },
+    debug: import.meta.env.DEV,
   })
 
 export default i18n
