@@ -138,13 +138,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader  className="mt-16">
-        <></>
       </SidebarHeader>
       <SidebarContent>
         <DashboardNav items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <DashboardNav items={data.navMore} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
