@@ -1,4 +1,4 @@
-import { router, useForm, Link } from '@inertiajs/react';
+import { router, useForm, Link, usePage } from '@inertiajs/react';
 import { type FormEventHandler, useCallback } from 'react';
 import { apiPostUrls } from '@/constants/apiUrls';
 import { Button } from "@/components/ui/button"
@@ -20,9 +20,9 @@ type LoginFormData = {
 
 
 export function LoginForm() {
-  // const {
-  //   props: { errors },
-  // } = usePage();
+  const {
+    props: { errors },
+  } = usePage();
   
   const { data, setData, processing } = useForm<LoginFormData>({
     email: '',
@@ -60,8 +60,12 @@ export function LoginForm() {
                   placeholder=""
                   required
                   onChange={handleChange<LoginFormData>('email', setData)}
+                  aria-invalid={errors?.login?.email ? "true" : "false"}
+                  aria-describedby={errors?.login?.email ? "email_errors" : ""}
+                  className={errors?.login?.email && "border-destructive"}
                   value={data.email}
                 />
+                {errors?.login?.email && <p id="email_errors" className='text-destructive text-sm'>{errors.login.email}</p>}
               </div>
               <div className="grid gap-3">
                 <Label htmlFor="password">Password</Label>
@@ -70,15 +74,20 @@ export function LoginForm() {
                   name="password" 
                   type="password" 
                   required 
-                  onChange={handleChange<LoginFormData>('password', setData)}
+                  onChange={handleChange<LoginFormData>("password", setData)}
+                  aria-invalid={errors?.login?.password ? "true" : "false"}
+                  aria-describedby={errors?.login?.password ? "password_errors" : ""}
+                  className={errors?.login?.password && "aria-invalid:border-destructive"}
                   value={data.password}
                 />
-                  <Link
-                    href="#"
-                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                  >
-                    Forgot your password?
-                  </Link>
+                {errors?.login?.password && <p id="password_errors" className='text-destructive text-sm'>{errors.login.password}</p>}
+
+                <Link
+                  href="#"
+                  className="ml-auto inline-block text-sm underline-offset-4 underline"
+                >
+                  Forgot your password?
+                </Link>
               </div>
               <Button type="submit" disabled={processing} className="w-full">
                 Login
