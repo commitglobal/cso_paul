@@ -143,6 +143,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <DashboardNav items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
+        <DashboardNav items={data.navMore} />
       </SidebarFooter>
       {/* <SidebarRail /> */}
     </Sidebar>
