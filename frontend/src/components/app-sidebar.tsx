@@ -15,7 +15,7 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
-  // SidebarRail,
+  SidebarRail,
 } from "@/components/ui/sidebar"
 
 // TODO: This is sample data.
@@ -26,17 +26,8 @@ const data = {
       title: "Home",
       url: "#",
       icon: House,
-      isActive: true,
-      items: [
-        {
-          title: "Test1",
-          url: "#",
-        },
-        {
-          title: "Test2",
-          url: "#",
-        }
-      ],
+      // isActive: true,
+      items: [],
     },
     {
       title: "Datasets",
@@ -145,7 +136,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarFooter>
         <DashboardNav items={data.navMore} />
       </SidebarFooter>
-      {/* <SidebarRail /> */}
+      <SidebarRail />
     </Sidebar>
   )
 }

@@ -28,6 +28,11 @@ export default function DashboardHome() {
   return (
     <div className="flex flex-col">
 
+
+
+      <SidebarProvider>
+        <AppSidebar />
+        <SidebarInset>
       <Disclosure as="nav" className="bg-white shadow">
         <div className="mx-auto px-2 sm:px-4 lg:px-8">
           <div className="flex h-16 justify-between ">
@@ -170,10 +175,6 @@ export default function DashboardHome() {
           </div>
         </DisclosurePanel>
       </Disclosure>
-
-      <SidebarProvider>
-        <AppSidebar />
-        <SidebarInset>
           <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
             <div className="flex items-center gap-2 px-4">
               <SidebarTrigger className="-ml-1" />
