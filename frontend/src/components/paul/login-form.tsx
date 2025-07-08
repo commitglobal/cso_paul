@@ -10,16 +10,19 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { handleChange } from '@/utils/handleChange';
-
+import { LoginChoiceProps } from '@/pages/Users/Login/LoginChoiceProps';
 
 type LoginFormData = {
   email: string;
   password: string;
   remember: boolean;
+  next: string | undefined;
 };
 
 
-export function LoginForm() {
+export function LoginForm({
+    next_url,
+  }: LoginChoiceProps) {
   const {
     props: { errors },
   } = usePage();
@@ -28,7 +31,9 @@ export function LoginForm() {
     email: '',
     password: '',
     remember: false,
+    next: next_url,
   });
+  console.log(next_url);
 
   const handleSubmit = useCallback<FormEventHandler>(
     (e) => {
@@ -81,6 +86,14 @@ export function LoginForm() {
                   value={data.password}
                 />
                 {errors?.login?.password && <p id="password_errors" className='text-destructive text-sm'>{errors.login.password}</p>}
+
+                <Input
+                  id="next"
+                  type="hidden"
+                  name="next"
+                  placeholder=""
+                  value={next_url}
+                />
 
                 <Link
                   href="#"

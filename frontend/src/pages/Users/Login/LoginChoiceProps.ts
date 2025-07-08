@@ -2,9 +2,10 @@ import { CommonProps } from '@/types/CommonProps';
 import {
   type Infer,
   assign,
-  object,
-  string,
   boolean,
+  object,
+  optional,
+  string,
 } from 'superstruct';
 
 
@@ -16,6 +17,7 @@ export const LoginChoiceProps = assign(
       email: boolean(),
       email_url: string(),
     }),
+    next_url: optional(string()),
   }),
   CommonProps,
 );
