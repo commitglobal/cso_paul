@@ -7,6 +7,7 @@ from django.http import HttpRequest, Http404, HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.cache import cache_control
 from inertia import inertia, render as inertia_render, InertiaResponse
 
@@ -16,12 +17,29 @@ from utils.types import RedirectionResponse
 
 
 def _login_endpoints():
+    """
+    Returns the currently available login endpoints
+    """
     return {
         "ngohub": True,
         "ngohub_url": reverse("users:login-by-ngohub"),
         "email": True,
         "email_url": reverse("users:login-by-email"),
     }
+
+
+def _make_next_url_safe(request, next_url):
+    """
+    Make sure that the destination of next_url is on an allowed host
+    """
+    if url_has_allowed_host_and_scheme(
+        url=next_url,
+        allowed_hosts=request.get_host(),
+        require_https=request.is_secure(),
+    ):
+        return next_url
+    else:
+        return reverse("dashboard:home")
 
 
 @cache_control(private=False)
@@ -93,7 +111,7 @@ def email_login(request: HttpRequest) -> RedirectionResponse | InertiaResponse:
             request.session.set_expiry(0)
 
     if next_url:
-        return redirect(next_url)
+        return redirect(_make_next_url_safe(request, next_url))
     else:
         return redirect(reverse("dashboard:home"))
 
