@@ -6,7 +6,9 @@ import {
   Card,
   CardContent,
   CardHeader,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
+import logomark from '@/assets/paul-logomark.svg';
+
 
 export function LoginChoiceForm({
   endpoints,
@@ -15,13 +17,14 @@ export function LoginChoiceForm({
   return (
     <div className={cn("flex flex-col gap-6")}>
       <Card>
+        
         <CardHeader>
-          <div className="flex flex-col items-justify gap-2 text-left">
-            <h1 className="text-2xl font-bold">Login to PAUL</h1>
+          <div className="flex flex-row gap-2">
+            <div className="flex-2/3"><h1 className="text-2xl font-bold">Login to PAUL</h1></div>
+            <div className="flex-1/3"><img alt="PAUL" src={logomark} className="ml-auto h-8 w-auto" /></div>
           </div>
-
-
         </CardHeader>
+
         <CardContent>
           <div className="grid gap-6">
             {endpoints.ngohub && (
