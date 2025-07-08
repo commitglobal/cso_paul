@@ -1,16 +1,18 @@
 import { router, useForm, Link, usePage } from '@inertiajs/react';
 import { type FormEventHandler, useCallback } from 'react';
 import { apiPostUrls } from '@/constants/apiUrls';
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardHeader,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { handleChange } from '@/utils/handleChange';
 import { LoginChoiceProps } from '@/pages/Users/Login/LoginChoiceProps';
+import logomark from '@/assets/paul-logomark.svg';
+
 
 type LoginFormData = {
   email: string;
@@ -50,9 +52,14 @@ export function LoginForm({
   return (
     <div className="flex flex-col gap-6">
       <Card>
+
         <CardHeader>
-          <h1 className="text-2xl font-bold">Login to PAUL</h1>
+          <div className="flex flex-row gap-2">
+            <div className="flex-2/3"><h1 className="text-2xl font-bold">Login to PAUL</h1></div>
+            <div className="flex-1/3"><img alt="PAUL" src={logomark} className="ml-auto h-8 w-auto" /></div>
+          </div>
         </CardHeader>
+
         <CardContent>
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-6">

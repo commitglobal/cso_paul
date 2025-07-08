@@ -1,10 +1,10 @@
-import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
-import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
+import { MagnifyingGlassIcon } from '@heroicons/react/20/solid';
+import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
 import { useValidatedProps } from '@/hooks/useValidatedProps';
 import { DashboardHomeProps } from './DashboardHomeProps';
-import { AppSidebar } from "@/components/app-sidebar"
+import { AppSidebar } from "@/components/app-sidebar";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -12,13 +12,15 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
-import { Separator } from "@/components/ui/separator"
+} from "@/components/ui/breadcrumb";
+import { Separator } from "@/components/ui/separator";
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
+import logo from '@/assets/paul-logo.svg';
+
 
 export default function DashboardHome() {
   const {
@@ -27,8 +29,6 @@ export default function DashboardHome() {
 
   return (
     <div className="flex flex-col">
-
-
 
       <SidebarProvider>
         <AppSidebar />
@@ -39,8 +39,8 @@ export default function DashboardHome() {
             <div className="flex px-2 lg:px-0">
               <div className="flex shrink-0 items-center">
                 <img
-                  alt="Your Company"
-                  src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
+                  alt="PAUL"
+                  src={logo}
                   className="h-8 w-auto"
                 />
               </div>
