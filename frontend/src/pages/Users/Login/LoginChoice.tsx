@@ -6,7 +6,7 @@ import { LoginChoiceProps } from './LoginChoiceProps';
 
 export default function LoginChoice() {
   const {
-    props: { endpoints },
+    props: { endpoints, next_url },
   } = useValidatedProps<LoginChoiceProps>(LoginChoiceProps);
 
   return (
@@ -19,7 +19,7 @@ export default function LoginChoice() {
       <div className="bg-muted flex flex-col gap-4 p-6 md:p-10">
         <div className="flex flex-1 items-center justify-center">
           <div className="w-full max-w-3/4">
-            <LoginChoiceForm endpoints={endpoints} />
+            <LoginChoiceForm endpoints={endpoints} next_url={next_url} />
           </div>
         </div>
       </div>

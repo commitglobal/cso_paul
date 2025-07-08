@@ -87,7 +87,7 @@ export default function DashboardHome() {
                     <span className="sr-only">Open user menu</span>
                     <img
                       alt=""
-                      src=""
+                      // src=""
                       className="size-8 rounded-full"
                     />
                   </MenuButton>

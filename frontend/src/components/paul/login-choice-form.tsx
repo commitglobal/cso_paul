@@ -9,7 +9,8 @@ import {
 } from "@/components/ui/card"
 
 export function LoginChoiceForm({
-  endpoints
+  endpoints,
+  next_url,
 }: LoginChoiceProps) {
   return (
     <div className={cn("flex flex-col gap-6")}>
@@ -25,7 +26,7 @@ export function LoginChoiceForm({
           <div className="grid gap-6">
             {endpoints.ngohub && (
                 <Button asChild variant="outline">
-                    <Link href={`${endpoints.ngohub_url}`}>Login with NGO Hub</Link>
+                    <Link href={`${endpoints.ngohub_url}?next=${next_url}`}>Login with NGO Hub</Link>
                 </Button>
             )}
             
@@ -39,7 +40,7 @@ export function LoginChoiceForm({
 
             {endpoints.email && (
                 <Button asChild variant="default">
-                    <Link href={`${endpoints.email_url}`}>Login with email</Link>
+                    <Link href={`${endpoints.email_url}?next=${next_url}`}>Login with email</Link>
                 </Button>
             )}
           </div>

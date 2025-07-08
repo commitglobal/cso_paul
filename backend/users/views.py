@@ -1,5 +1,5 @@
 import json
-from typing import Any, Dict
+from typing import Any
 
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
@@ -15,20 +15,27 @@ from users.models import User
 from utils.types import RedirectionResponse
 
 
+def _login_endpoints():
+    return {
+        "ngohub": True,
+        "ngohub_url": reverse("users:login-by-ngohub"),
+        "email": True,
+        "email_url": reverse("users:login-by-email"),
+    }
+
+
 @cache_control(private=False)
 @inertia("Users/Login/LoginChoice")
-def login_choice(request: HttpRequest) -> Dict[str, Any]:
+def login_choice(request: HttpRequest) -> dict[str, Any]:
     """
     Screen for choosing the preferred login method
     """
 
+    next_url = request.GET.get("next", "")
+
     return {
-        "endpoints": {
-            "ngohub": True,
-            "ngohub_url": reverse("users:login-by-ngohub"),
-            "email": True,
-            "email_url": reverse("users:login-by-email"),
-        }
+        "endpoints": _login_endpoints(),
+        "next_url": next_url,
     }
 
 
@@ -43,14 +50,23 @@ def email_login(request: HttpRequest) -> RedirectionResponse | InertiaResponse:
         return redirect(reverse("dashboard:home"))
 
     if request.method == "GET":
+        next_url = request.GET.get("next", "")
         return inertia_render(
             request,
             "Users/Login/EmailLogin",
-            props={},
+            props={
+                "endpoints": _login_endpoints(),
+                "next_url": next_url,
+                # "re_captcha_key": settings.RECAPTCHA_PUBLIC_KEY,
+            },
         )
 
     login_user = None
-    form = LoginForm(json.loads(request.body))
+
+    data = json.loads(request.body)
+    next_url = data.get("next", "")
+
+    form = LoginForm(data)
     if form.is_valid():
         email = form.cleaned_data.get("email")
         login_user = auth.authenticate(email=email, password=form.cleaned_data.get("password"))
@@ -67,6 +83,7 @@ def email_login(request: HttpRequest) -> RedirectionResponse | InertiaResponse:
             "Users/Login/EmailLogin",
             props={
                 "errors": {"login": form.errors},
+                "next_url": next_url,
                 # "re_captcha_key": settings.RECAPTCHA_PUBLIC_KEY,
             },
         )
@@ -75,7 +92,10 @@ def email_login(request: HttpRequest) -> RedirectionResponse | InertiaResponse:
         if not remember:
             request.session.set_expiry(0)
 
-    return redirect(reverse("dashboard:home"))
+    if next_url:
+        return redirect(next_url)
+    else:
+        return redirect(reverse("dashboard:home"))
 
 
 @cache_control(private=True)
