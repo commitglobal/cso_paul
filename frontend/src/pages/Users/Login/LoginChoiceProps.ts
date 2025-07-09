@@ -1,4 +1,4 @@
-import { CommonProps } from '@/types/CommonProps';
+import { CommonProps } from '@/types/common-props';
 import {
   type Infer,
   assign,
