@@ -43,7 +43,7 @@ def _make_next_url_safe(request, next_url):
 
 
 @cache_control(private=False)
-@inertia("Users/Login/LoginChoice")
+@inertia("users/auth/login-choice")
 def login_choice(request: HttpRequest) -> dict[str, Any]:
     """
     Screen for choosing the preferred login method
@@ -71,7 +71,7 @@ def email_login(request: HttpRequest) -> RedirectionResponse | InertiaResponse:
         next_url = request.GET.get("next", "")
         return inertia_render(
             request,
-            "Users/Login/EmailLogin",
+            "users/auth/email-login",
             props={
                 "endpoints": _login_endpoints(),
                 "next_url": next_url,
@@ -98,7 +98,7 @@ def email_login(request: HttpRequest) -> RedirectionResponse | InertiaResponse:
     if not login_user:
         return inertia_render(
             request,
-            "Users/Login/EmailLogin",
+            "users/auth/email-login",
             props={
                 "errors": {"login": form.errors},
                 "next_url": next_url,
@@ -140,7 +140,7 @@ def ngohub_login(request: HttpRequest) -> InertiaResponse:
     raise NotImplementedError("NGO Hub authentication is not implemented yet")
     # return inertia_render(
     #     request,
-    #     "Users/Login/NgohubLogin",
+    #     "users/auth/ngohub-login",
     #     props={},
     # )
 
@@ -155,7 +155,7 @@ def manage_team(request: HttpRequest) -> InertiaResponse:
 
     return inertia_render(
         request,
-        "Users/Team/Index",
+        "users/team/index",
         props={
             "users": [
                 {

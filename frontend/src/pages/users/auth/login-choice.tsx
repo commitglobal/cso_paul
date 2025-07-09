@@ -1,7 +1,7 @@
 import { useValidatedProps } from '@/hooks/use-validated-props';
 import { LoginChoiceForm } from "@/components/paul/login-choice-form"
 import { LoginText } from "@/components/paul/login-text"
-import { LoginChoiceProps } from './LoginChoiceProps';
+import { LoginChoiceProps } from './login-choice-props';
 
 
 export default function LoginChoice() {

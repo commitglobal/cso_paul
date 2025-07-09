@@ -1,5 +1,5 @@
 import { useValidatedProps } from '@/hooks/use-validated-props';
-import { DashboardHomeProps } from './DashboardHomeProps';
+import { DashboardHomeProps } from './dashboard-home-props';
 import { AppSidebar } from "@/components/paul/app-sidebar";
 import { AppTopbar } from "@/components/paul/app-topbar";
 import {
