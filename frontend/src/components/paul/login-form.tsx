@@ -1,6 +1,6 @@
 import { router, useForm, Link, usePage } from '@inertiajs/react';
 import { type FormEventHandler, useCallback } from 'react';
-import { apiPostUrls } from '@/constants/apiUrls';
+import { apiPostUrls } from '@/constants/api-urls';
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { handleChange } from '@/utils/handleChange';
+import { handleChange } from '@/utils/handle-change';
 import { LoginChoiceProps } from '@/pages/Users/Login/LoginChoiceProps';
 import logomark from '@/assets/paul-logomark.svg';
 

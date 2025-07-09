@@ -1,4 +1,4 @@
-import { useValidatedProps } from '@/hooks/useValidatedProps';
+import { useValidatedProps } from '@/hooks/use-validated-props';
 import { LoginText } from "@/components/paul/login-text"
 import { LoginForm } from "@/components/paul/login-form"
 import { LoginChoiceProps } from './LoginChoiceProps';

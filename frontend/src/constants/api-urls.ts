@@ -1,4 +1,4 @@
-import { buildUrl } from '@/utils/buildUrl';
+import { buildUrl } from '@/utils/build-url';
 import { concat } from 'lodash';
 
 const usersBackend = 'users';
