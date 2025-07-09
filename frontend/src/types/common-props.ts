@@ -7,8 +7,8 @@ import {
   object,
   optional,
 } from 'superstruct';
-import { User } from './User';
-import { FlashMessage } from './FlashMessage';
+import { User } from './user';
+import { FlashMessage } from './flash-message';
 
 export type CommonProps = Infer<typeof CommonProps>;
 
