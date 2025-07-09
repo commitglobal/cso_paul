@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { LoginChoiceProps } from '@/pages/Users/Login/LoginChoiceProps';
+import { LoginChoiceProps } from '@/pages/users/auth/login-choice-props';
 import { Link } from '@inertiajs/react';
 import {
   Card,

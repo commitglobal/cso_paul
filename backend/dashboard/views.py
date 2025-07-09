@@ -16,20 +16,7 @@ def home(request: HttpRequest) -> InertiaResponse:
 
     return inertia_render(
         request,
-        "Dashboard/Home",
-        props={"ok": True},
-    )
-
-
-@cache_control(private=False)
-def test_menu(request: HttpRequest) -> InertiaResponse:
-    """
-    TODO: Remove this test page once the menu is implemented
-    """
-
-    return inertia_render(
-        request,
-        "Dashboard/TestMenu",
+        "dashboard/home",
         props={"ok": True},
     )
 

@@ -10,7 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { handleChange } from '@/utils/handle-change';
-import { LoginChoiceProps } from '@/pages/Users/Login/LoginChoiceProps';
+import { LoginChoiceProps } from '@/pages/users/auth/login-choice-props';
 import logomark from '@/assets/paul-logomark.svg';
 
 
