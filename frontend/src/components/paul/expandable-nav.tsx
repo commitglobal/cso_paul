@@ -18,7 +18,7 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
 
-export function DashboardNav({
+export function ExpandableNav({
   items,
 }: {
   items: {
