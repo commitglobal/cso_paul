@@ -9,7 +9,8 @@ import {
   Info,
 } from "lucide-react"
 
-import { DashboardNav } from "@/components/paul/dashboard-nav"
+import { ExpandableNav } from "@/components/paul/expandable-nav"
+import { SingleNav } from "@/components/paul/single-nav"
 import {
   Sidebar,
   SidebarContent,
@@ -20,15 +21,14 @@ import {
 
 // TODO: This is sample data.
 const data = {
-
-  navMain: [
+  navHome: [
     {
       title: "Home",
       url: "#",
       icon: House,
-      // isActive: true,
-      items: [],
     },
+  ],
+  navMain: [
     {
       title: "Datasets",
       url: "#",
@@ -131,10 +131,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
       </SidebarHeader>
       <SidebarContent>
-        <DashboardNav items={data.navMain} />
+        <SingleNav items={data.navHome} />
+        <ExpandableNav items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <DashboardNav items={data.navMore} />
+        <ExpandableNav items={data.navMore} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
