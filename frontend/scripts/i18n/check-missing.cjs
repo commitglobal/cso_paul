@@ -8,7 +8,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Configuration
-const LOCALES_DIR = path.join(__dirname, '../src/locales');
+const LOCALES_DIR = path.join(__dirname, '../../src/locales');
 const LANGUAGES = ['en', 'ro'];
 const PRIMARY_LANGUAGE = 'en';
 
