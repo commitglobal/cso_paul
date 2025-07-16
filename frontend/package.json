@@ -7,7 +7,7 @@
     "prod": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "i18n:scan": "i18next-scanner --config i18next-scanner.config.js"
+    "i18n:scan": "i18next-scanner --config i18next-scanner.config.cjs"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.4",

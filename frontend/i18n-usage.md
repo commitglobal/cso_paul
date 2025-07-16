@@ -54,7 +54,7 @@ function MyComponent() {
 
 ## Configuration
 
-The scanner configuration is defined in `i18next-scanner.config.js`. If you need to modify the scanner behavior, such as adding more languages or changing file patterns, edit this file.
+The scanner configuration is defined in `i18next-scanner.config.cjs`. If you need to modify the scanner behavior, such as adding more languages or changing file patterns, edit this file.
 
 ## Best Practices
 
