@@ -2,6 +2,7 @@ import { useValidatedProps } from '@/hooks/use-validated-props';
 import { LoginChoiceForm } from "@/components/paul/login-choice-form"
 import { LoginText } from "@/components/paul/login-text"
 import { LoginChoiceProps } from './login-choice-props';
+import BlankLayout from '@/layouts/blank-layout';
 
 
 export default function LoginChoice() {
@@ -26,3 +27,5 @@ export default function LoginChoice() {
     </div>
   )
 }
+
+LoginChoice.layout = BlankLayout;
