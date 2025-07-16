@@ -3,7 +3,6 @@ import { type ReactNode } from 'react';
 import { type Page } from '@inertiajs/core';
 
 export default function BlankLayout(page: Page<CommonProps>) {
-  const {} = page;
 
   return (
     <main>
