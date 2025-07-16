@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# i18n generated files
+exports/
+i18n.d.ts

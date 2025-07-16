@@ -7,7 +7,12 @@
     "prod": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "i18n:scan": "i18next-scanner --config i18next-scanner.config.cjs"
+    "i18n:scan": "i18next-scanner --config i18next-scanner.config.cjs",
+    "i18n:generate-types": "i18next-resources-for-ts interface -i src/locales -o src/types/i18n.d.ts -c \"This file is generated automatically by i18next-resources-for-ts\"",
+    "i18n:check-missing": "node scripts/i18n/check-missing.cjs",
+    "i18n:validate": "node scripts/i18n/validate.cjs",
+    "i18n:export-csv": "node scripts/i18n/export-csv.cjs",
+    "i18n:import-csv": "node scripts/i18n/import-csv.cjs"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.4",

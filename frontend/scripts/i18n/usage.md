@@ -1,8 +1,12 @@
 # i18n Translation Management
 
-This document explains how to use the i18next-scanner to manage translations in the project.
+This document explains how to use the i18n tools to manage translations in the project.
 
-## Running the Scanner
+## Available Scripts
+
+The project includes several scripts to help manage translations:
+
+### Scanning for Translation Keys
 
 To scan your codebase for translation keys and update the locale files, run:
 
@@ -16,6 +20,72 @@ This command will:
 1. Scan all JS, JSX, TS, and TSX files in the `src` directory
 2. Extract translation keys from t() function calls and Trans components
 3. Update the locale files in `src/locales` (en.json and ro.json)
+
+### Generating TypeScript Types
+
+To generate TypeScript type definitions from your translation files, run:
+
+```bash
+npm run i18n:generate-types
+# or if you're using yarn
+yarn i18n:generate-types
+```
+
+This command will create a TypeScript interface definition file at `src/types/i18n.d.ts` that provides type safety when using translations in your code.
+
+### Checking for Missing Translations
+
+To check for missing or empty translations between language files, run:
+
+```bash
+npm run i18n:check-missing
+# or if you're using yarn
+yarn i18n:check-missing
+```
+
+This command will compare all language files and report:
+- Missing keys (keys in primary language but not in secondary)
+- Empty translations (keys with empty values)
+- Extra keys (keys in secondary language but not in primary)
+
+### Validating Translation Files
+
+To validate translation files for syntax errors and other issues, run:
+
+```bash
+npm run i18n:validate
+# or if you're using yarn
+yarn i18n:validate
+```
+
+This command will check each translation file for:
+- JSON syntax errors
+- Empty keys
+- Interpolation syntax errors (unbalanced braces)
+
+### Exporting Translations to CSV
+
+To export translations to CSV format for easier collaboration with translators, run:
+
+```bash
+npm run i18n:export-csv
+# or if you're using yarn
+yarn i18n:export-csv
+```
+
+This command will create a CSV file at `exports/translations.csv` with columns for the key and each language.
+
+### Importing Translations from CSV
+
+To import translations from CSV back into the JSON files, run:
+
+```bash
+npm run i18n:import-csv [path/to/csv]
+# or if you're using yarn
+yarn i18n:import-csv [path/to/csv]
+```
+
+If no CSV file is specified, it will use the default path (`exports/translations.csv`).
 
 ## How to Use Translations in Your Code
 
