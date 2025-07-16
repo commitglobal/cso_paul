@@ -20,9 +20,6 @@ import {
 
 
 export default function BaseLayout(page: Page<CommonProps>) {
-  const {
-    props: { ok },
-  } = page;
 
   return (
       <SidebarProvider>
@@ -47,7 +44,7 @@ export default function BaseLayout(page: Page<CommonProps>) {
                 <BreadcrumbList>
                   <BreadcrumbItem className="hidden md:block">
                     <BreadcrumbLink href="#">
-                      Dashboard {ok}
+                      Dashboard
                     </BreadcrumbLink>
                   </BreadcrumbItem>
                   <BreadcrumbSeparator className="hidden md:block" />
