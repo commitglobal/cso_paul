@@ -1,6 +1,30 @@
 {
-  "forgotPassword": "Ai uitat parola?",
-  "login": "Login",
-  "newHere": "Ești nou aici?",
-  "registerCta": "Înregistrează-te"
+  "login": {
+    "forgotPassword": "Ai uitat parola?",
+    "loginPrompt": "Conectează-te"
+  },
+  "loginRegister": {
+    "newHere": "Nou aici?",
+    "registerCta": "Înregistrează-te"
+  },
+  "navigation": {
+    "actions": "Acțiuni",
+    "apps": "Aplicații",
+    "datasets": "Seturi de date",
+    "help": "Ajutor",
+    "home": "Acasă",
+    "processedData": "Date procesate",
+    "team": "Echipa",
+    "test1": "Test 1",
+    "test2": "Test 2"
+  },
+  "topbar": {
+    "openMainMenu": "Meniul principal",
+    "openUserMenu": "Meniul utilizatorului",
+    "search": "Caută",
+    "settings": "Setări",
+    "signOut": "Deconectează-te",
+    "viewNotifications": "Vezi notificările",
+    "yourProfile": "Profilul tău"
+  }
 }

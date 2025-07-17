@@ -34,7 +34,7 @@ function validateTranslationFile(language) {
   try {
     // Check if file exists
     if (!fs.existsSync(filePath)) {
-      issues.push(`Translation file for ${language} does not exist`);
+      issues.push(`Translation file ${filePath} for ${language} does not exist`);
       return { valid: false, issues };
     }
 
@@ -43,7 +43,7 @@ function validateTranslationFile(language) {
 
     // Check if file is empty
     if (!content.trim()) {
-      issues.push(`Translation file for ${language} is empty`);
+      issues.push(`Translation file ${filePath} for ${language} is empty`);
       return { valid: false, issues };
     }
 

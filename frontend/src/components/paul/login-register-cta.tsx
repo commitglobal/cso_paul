@@ -7,9 +7,9 @@ export function LoginRegisterCta() {
 
   return (
     <div className='flex text-center text-sm mt-6 gap-2 justify-center'>
-      {t('newHere')}
+      {t('loginRegister.newHere')}
       <Link href='#' className='underline underline-offset-4'>
-        {t('registerCta')}
+        {t('loginRegister.registerCta')}
       </Link>
     </div>
   )

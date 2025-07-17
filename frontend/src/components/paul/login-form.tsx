@@ -107,11 +107,11 @@ export function LoginForm(
                   href='#'
                   className='ml-auto inline-block text-sm underline-offset-4 underline'
                 >
-                  {t('forgotPassword')}
+                  {t('login.forgotPassword')}
                 </Link>
               </div>
               <Button type='submit' disabled={processing} className='w-full'>
-                {t('login')}
+                {t('login.loginPrompt')}
               </Button>
             </div>
             <LoginRegisterCta />

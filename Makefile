@@ -117,7 +117,8 @@ logs-prod:                        ## show the logs of the containers
 	docker logs -f paul_prod
 
 
-## [Django operations]
+## [Operations]
+## Django operations
 makemigrations:                   ## generate migrations in a clean container
 	docker exec paul_app_dev sh -c "cd ./backend && python3 -Wd ./manage.py makemigrations $(apps)"
 
@@ -159,6 +160,19 @@ sh:                               ## start a sh shell
 
 bash:                             ## start a bash shell
 	docker exec -it paul_app_dev sh -c "bash"
+
+## Node.js operations
+i18n-scan:                      ## scan the frontend for i18n strings
+	docker exec paul_app_dev sh -c "cd ./frontend && npm run i18n:scan"
+
+i18n-generate-types:
+	docker exec paul_app_dev sh -c "cd ./frontend && npm run i18n:generate-types"
+
+i18n-check-missing:
+	docker exec paul_app_dev sh -c "cd ./frontend && npm run i18n:check-missing"
+
+i18n-validate:
+	docker exec paul_app_dev sh -c "cd ./frontend && npm run i18n:validate"
 
 
 ## [Requirements management]

@@ -1,6 +1,30 @@
 {
-  "forgotPassword": "Forgot Password?",
-  "login": "Login",
-  "newHere": "Are you new here?",
-  "registerCta": "Register"
+  "login": {
+    "forgotPassword": "Forgot Password?",
+    "loginPrompt": "Login"
+  },
+  "loginRegister": {
+    "newHere": "Are you new here?",
+    "registerCta": "Register"
+  },
+  "navigation": {
+    "actions": "Actions",
+    "apps": "Apps",
+    "datasets": "Datasets",
+    "help": "Help",
+    "home": "Home",
+    "processedData": "Processed Data",
+    "team": "Team",
+    "test1": "Test 1",
+    "test2": "Test 2"
+  },
+  "topbar": {
+    "openMainMenu": "Open main menu",
+    "openUserMenu": "Open user menu",
+    "search": "Search",
+    "settings": "Settings",
+    "signOut": "Sign out",
+    "viewNotifications": "View notifications",
+    "yourProfile": "Your profile"
+  }
 }

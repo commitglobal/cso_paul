@@ -1,133 +1,122 @@
-import * as React from "react"
-import {
-  House,
-  Database,
-  FileChartLine,
-  Zap,
-  Grid2X2Plus,
-  UsersRound,
-  Info,
-} from "lucide-react"
+import * as React from 'react'
+import { Database, FileChartLine, Grid2X2Plus, House, Info, UsersRound, Zap } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
-import { ExpandableNav } from "@/components/paul/expandable-nav"
-import { SingleNav } from "@/components/paul/single-nav"
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarHeader,
-  SidebarRail,
-} from "@/components/ui/sidebar"
+import { ExpandableNav } from '@/components/paul/expandable-nav'
+import { SingleNav } from '@/components/paul/single-nav'
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from '@/components/ui/sidebar'
 
-// TODO: This is sample data.
-const data = {
-  navHome: [
-    {
-      title: "Home",
-      url: "#",
-      icon: House,
-    },
-  ],
-  navMain: [
-    {
-      title: "Datasets",
-      url: "#",
-      icon: Database,
-      items: [
-        {
-          title: "Test1",
-          url: "#",
-        },
-        {
-          title: "Test2",
-          url: "#",
-        }
-      ],
-    },
-    {
-      title: "Processed Data",
-      url: "#",
-      icon: FileChartLine,
-      items: [
-        {
-          title: "Test1",
-          url: "#",
-        },
-        {
-          title: "Test2",
-          url: "#",
-        }
-      ],
-    },
-    {
-      title: "Actions",
-      url: "#",
-      icon: Zap,
-      items: [
-        {
-          title: "Test1",
-          url: "#",
-        },
-        {
-          title: "Test2",
-          url: "#",
-        }
-      ],
-    },
-    {
-      title: "Apps",
-      url: "#",
-      icon: Grid2X2Plus,
-      items: [
-        {
-          title: "Test1",
-          url: "#",
-        },
-        {
-          title: "Test2",
-          url: "#",
-        }
-      ],
-    },
-
-  ],
-  navMore: [
-    {
-      title: "Team",
-      url: "#",
-      icon: UsersRound,
-      items: [
-        {
-          title: "Test1",
-          url: "#",
-        },
-        {
-          title: "Test2",
-          url: "#",
-        }
-      ],
-    },
-    {
-      title: "Help",
-      url: "#",
-      icon: Info,
-      items: [
-        {
-          title: "Test1",
-          url: "#",
-        },
-        {
-          title: "Test2",
-          url: "#",
-        }
-      ],
-    },
-  ],
-}
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { t } = useTranslation()
+
+  // Create data with translated strings
+  const data = {
+    navHome: [
+      {
+        title: t('navigation.home'),
+        url: '#',
+        icon: House
+      }
+    ],
+    navMain: [
+      {
+        title: t('navigation.datasets'),
+        url: '#',
+        icon: Database,
+        items: [
+          {
+            title: t('navigation.test1'),
+            url: '#'
+          },
+          {
+            title: t('navigation.test2'),
+            url: '#'
+          }
+        ]
+      },
+      {
+        title: t('navigation.processedData'),
+        url: '#',
+        icon: FileChartLine,
+        items: [
+          {
+            title: t('navigation.test1'),
+            url: '#'
+          },
+          {
+            title: t('navigation.test2'),
+            url: '#'
+          }
+        ]
+      },
+      {
+        title: t('navigation.actions'),
+        url: '#',
+        icon: Zap,
+        items: [
+          {
+            title: t('navigation.test1'),
+            url: '#'
+          },
+          {
+            title: t('navigation.test2'),
+            url: '#'
+          }
+        ]
+      },
+      {
+        title: t('navigation.apps'),
+        url: '#',
+        icon: Grid2X2Plus,
+        items: [
+          {
+            title: t('navigation.test1'),
+            url: '#'
+          },
+          {
+            title: t('navigation.test2'),
+            url: '#'
+          }
+        ]
+      }
+    ],
+    navMore: [
+      {
+        title: t('navigation.team'),
+        url: '#',
+        icon: UsersRound,
+        items: [
+          {
+            title: t('navigation.test1'),
+            url: '#'
+          },
+          {
+            title: t('navigation.test2'),
+            url: '#'
+          }
+        ]
+      },
+      {
+        title: t('navigation.help'),
+        url: '#',
+        icon: Info,
+        items: [
+          {
+            title: t('navigation.test1'),
+            url: '#'
+          },
+          {
+            title: t('navigation.test2'),
+            url: '#'
+          }
+        ]
+      }
+    ]
+  }
+
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar collapsible='icon' {...props}>
       <SidebarHeader>
       </SidebarHeader>
       <SidebarContent>

@@ -20,6 +20,31 @@ const existingTranslations = {
   en: loadExistingTranslations('en'),
   ro: loadExistingTranslations('ro')
 }
+console.log('Loaded existing translations:', JSON.stringify(existingTranslations, null, 2))
+
+// Utility to get nested value by dot-separated key
+function getNested(obj, key) {
+  return key.split('.').reduce((o, k) => (o && o[k] !== undefined ? o[k] : undefined), obj)
+}
+
+// Deep merge utility for nested objects
+function deepMerge(target, source) {
+  for (const key in source) {
+    if (
+      source[key] &&
+      typeof source[key] === 'object' &&
+      !Array.isArray(source[key])
+    ) {
+      if (!target[key] || typeof target[key] !== 'object') {
+        target[key] = {}
+      }
+      deepMerge(target[key], source[key])
+    } else {
+      target[key] = source[key]
+    }
+  }
+  return target
+}
 
 module.exports = {
   input: [
@@ -29,16 +54,16 @@ module.exports = {
     '!src/**/*.spec.{js,jsx,ts,tsx}',
     '!**/node_modules/**'
   ],
-  output: './src/locales',
+  output: './',
   options: {
     defaultLng: 'en',
     defaultNs: 'translation',
     defaultValue: function(lng, ns, key) {
-      // Check if there's an existing translation
-      if (existingTranslations[lng] && existingTranslations[lng][key]) {
-        return existingTranslations[lng][key]
+      // Use getNested to support nested keys
+      const existing = existingTranslations[lng] && getNested(existingTranslations[lng], key)
+      if (existing !== undefined) {
+        return existing
       }
-      // Return empty string for new keys
       return ''
     },
     func: {
@@ -55,11 +80,26 @@ module.exports = {
     // Use a function to preserve existing translations
     nsSeparator: false,
     removeUnusedKeys: false,
+    // Custom resource handler to merge with existing translations
     resource: {
-      loadPath: '{{lng}}/translation.json',
-      savePath: '{{lng}}/translation.json',
+      loadPath: 'src/locales/{{lng}}/translation.json',
+      savePath: 'src/locales/{{lng}}/translation.json',
       jsonIndent: 2,
-      lineEnding: '\n'
+      lineEnding: '\n',
+      parse: function(data) {
+        // Parse and return existing translations
+        return JSON.parse(data)
+      },
+      stringify: function(resource) {
+        // Deep merge with existing translations before saving
+        const lng = this.options.lngs[0] // Only works for single language at a time
+        const merged = deepMerge(
+          {},
+          existingTranslations[lng] || {}
+        )
+        deepMerge(merged, resource)
+        return JSON.stringify(merged, null, 2)
+      }
     }, // Set to false to disable namespace separator
     sort: true, // Key separator used in translation keys
     trans: {
