@@ -111,7 +111,7 @@ export function LoginForm(
                 </Link>
               </div>
               <Button type='submit' disabled={processing} className='w-full'>
-                Login
+                {t('login')}
               </Button>
             </div>
             <LoginRegisterCta />
