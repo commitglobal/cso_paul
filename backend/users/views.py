@@ -127,7 +127,7 @@ def logout(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
         messages.success(request, _("You have been logged out."))
         auth.logout(request)
-        return redirect("/")
+        return redirect(reverse("users:login"))
 
     raise Http404(_("This page does not exist for GET requests"))
 

@@ -2,13 +2,20 @@ import { useValidatedProps } from '@/hooks/use-validated-props';
 import { LoginChoiceForm } from "@/components/paul/login-choice-form"
 import { LoginText } from "@/components/paul/login-text"
 import { LoginChoiceProps } from './login-choice-props';
+import { useNotifyActions } from '@/stores/use-notify-store';
+
 import BlankLayout from '@/layouts/blank-layout';
 
 
 export default function LoginChoice() {
   const {
-    props: { endpoints, next_url },
+    props: { endpoints, next_url, flash_messages },
   } = useValidatedProps<LoginChoiceProps>(LoginChoiceProps);
+
+  const { notify } = useNotifyActions();
+  if (flash_messages && flash_messages.length > 0) {
+    notify(flash_messages, flash_messages[0].level_tag);
+  }
 
   return (
     <div className="grid min-h-svh lg:grid-cols-2">

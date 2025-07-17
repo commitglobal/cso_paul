@@ -17,6 +17,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { Notification } from '@/components/paul/notification';
 
 
 export default function BaseLayout(page: Page<CommonProps>) {
@@ -61,6 +62,7 @@ export default function BaseLayout(page: Page<CommonProps>) {
             {page as unknown as ReactNode}
           </main>
 
+          <Notification />
         </SidebarInset>
       </SidebarProvider>
   )
