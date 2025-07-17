@@ -15,5 +15,5 @@ const buildUsersUrl = buildUrlFactory([usersBackend]);
 export const apiGetUrls = {};
 export const apiPostUrls = {
   userEmailLogin: buildUsersUrl(['login', 'email']),
-  usersLogout: () => buildUsersUrl(['logout']),
+  userLogout: () => buildUsersUrl(['logout']),
 };

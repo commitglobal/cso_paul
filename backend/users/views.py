@@ -1,7 +1,7 @@
 import json
 from typing import Any
 
-from django.contrib import auth
+from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, Http404, HttpResponse
 from django.shortcuts import redirect
@@ -125,6 +125,7 @@ def logout(request: HttpRequest) -> HttpResponse:
     """
 
     if request.method == "POST":
+        messages.success(request, _("You have been logged out."))
         auth.logout(request)
         return redirect("/")
 
