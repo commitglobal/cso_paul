@@ -28,7 +28,7 @@ const COLORS = {
  * @returns {Object} - Validation results
  */
 function validateTranslationFile(language) {
-  const filePath = path.join(LOCALES_DIR, `${language}.json`);
+  const filePath = path.join(LOCALES_DIR, language, 'translation.json');
   const issues = [];
 
   try {
@@ -52,7 +52,7 @@ function validateTranslationFile(language) {
     try {
       translations = JSON.parse(content);
     } catch (err) {
-      issues.push(`Invalid JSON in ${language}.json: ${err.message}`);
+      issues.push(`Invalid JSON in ${filePath}: ${err.message}`);
       return { valid: false, issues };
     }
 
@@ -65,7 +65,7 @@ function validateTranslationFile(language) {
     // Check for empty keys
     Object.keys(translations).forEach(key => {
       if (!key.trim()) {
-        issues.push(`Empty key found in ${language}.json`);
+        issues.push(`Empty key found in ${filePath}`);
       }
     });
 
@@ -77,7 +77,7 @@ function validateTranslationFile(language) {
         const closeBraces = (value.match(/}}/g) || []).length;
 
         if (openBraces !== closeBraces) {
-          issues.push(`Unbalanced interpolation braces in key "${key}" in ${language}.json`);
+          issues.push(`Unbalanced interpolation braces in key "${key}" in ${filePath}`);
         }
       }
     });
@@ -87,7 +87,7 @@ function validateTranslationFile(language) {
       issues,
     };
   } catch (err) {
-    issues.push(`Error validating ${language}.json: ${err.message}`);
+    issues.push(`Error validating ${filePath}: ${err.message}`);
     return { valid: false, issues };
   }
 }
@@ -106,12 +106,12 @@ function main() {
 
     if (!valid) {
       allValid = false;
-      console.log(`${COLORS.red}Issues found in ${language}.json:${COLORS.reset}`);
+      console.log(`${COLORS.red}Issues found for ${language}:${COLORS.reset}`);
       issues.forEach(issue => {
         console.log(`  - ${issue}`);
       });
     } else {
-      console.log(`${COLORS.green}${language}.json is valid${COLORS.reset}`);
+      console.log(`${COLORS.green}${language} is valid${COLORS.reset}`);
     }
   });
 

@@ -32,7 +32,7 @@ const COLORS = {
  * @returns {Object} - Translation object
  */
 function loadTranslations(language) {
-  const filePath = path.join(LOCALES_DIR, `${language}.json`);
+  const filePath = path.join(LOCALES_DIR, language, 'translation.json')
   try {
     if (fs.existsSync(filePath)) {
       const content = fs.readFileSync(filePath, 'utf8');
@@ -51,7 +51,7 @@ function loadTranslations(language) {
  * @param {Object} translations - Translation object
  */
 function saveTranslations(language, translations) {
-  const filePath = path.join(LOCALES_DIR, `${language}.json`);
+  const filePath = path.join(LOCALES_DIR, language, 'translation.json')
   try {
     const content = JSON.stringify(translations, null, 2);
     fs.writeFileSync(filePath, content);

@@ -30,7 +30,7 @@ const COLORS = {
  * @returns {Object} - Translation object
  */
 function loadTranslations(language) {
-  const filePath = path.join(LOCALES_DIR, `${language}.json`);
+  const filePath = path.join(LOCALES_DIR, language, 'translation.json');
   try {
     const content = fs.readFileSync(filePath, 'utf8');
     return JSON.parse(content);
