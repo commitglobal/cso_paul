@@ -2,6 +2,7 @@ import { useValidatedProps } from '@/hooks/use-validated-props';
 import { LoginChoiceForm } from "@/components/paul/login-choice-form"
 import { LoginText } from "@/components/paul/login-text"
 import { LoginChoiceProps } from './login-choice-props';
+import { useTranslation } from 'react-i18next'
 import BlankLayout from '@/layouts/blank-layout';
 
 
@@ -11,6 +12,9 @@ export default function LoginChoice() {
   } = useValidatedProps<LoginChoiceProps>(LoginChoiceProps);
 
   console.log('Language:', language);
+
+  const { i18n } = useTranslation();
+  i18n.changeLanguage(language);
 
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
