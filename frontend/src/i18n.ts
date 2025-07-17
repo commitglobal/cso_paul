@@ -8,15 +8,18 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
+    detection: {
+      order: ['cookie', 'navigator', 'htmlTag'],
+      lookupCookie: 'i18n_paul',
+    },
     resources: {
       en: { translation: enJSON },
       ro: { translation: roJSON }
     },
+    supportedLngs: ['en', 'ro'],
     fallbackLng: 'en',
     load: 'languageOnly',
-    interpolation: {
-      escapeValue: false
-    },
+    lng: (import.meta.env.DEV && import.meta.env.VITE_LNG_CIMODE) ? 'cimode' : undefined,
     debug: import.meta.env.DEV
   })
 

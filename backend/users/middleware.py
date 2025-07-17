@@ -1,8 +1,9 @@
 from typing import Callable
-from inertia import share
 
+from django.conf import settings
 from django.contrib.messages import get_messages
 from django.http import HttpRequest, HttpResponse
+from inertia import share
 
 from users.models import User
 
@@ -12,7 +13,7 @@ def global_state(get_response: Callable[[HttpRequest], HttpResponse]) -> Callabl
     Properties made available to every request response
     """
 
-    def extract_messages(request: HttpRequest) -> list[dict]:
+    def _extract_messages(request: HttpRequest) -> list[dict]:
         """
         Extract flash messages from the session storage
         """
@@ -26,6 +27,22 @@ def global_state(get_response: Callable[[HttpRequest], HttpResponse]) -> Callabl
             )
         return messages
 
+    def _extract_language(request: HttpRequest) -> str:
+        """
+        Extract the current language setting by checking, in the following order:
+            1. The user's language preference
+            2. The request's LANGUAGE_CODE
+            3. The default language setting
+        """
+
+        if request.user.is_authenticated and hasattr(request.user, "language"):
+            return request.user.language
+
+        if hasattr(request, "LANGUAGE_CODE"):
+            return request.LANGUAGE_CODE
+
+        return settings.LANGUAGE_CODE
+
     def middleware(request: HttpRequest) -> HttpResponse:
         """
         Inject some global data into each HttpResponse
@@ -33,10 +50,10 @@ def global_state(get_response: Callable[[HttpRequest], HttpResponse]) -> Callabl
         share(
             request=request,
             # Computed properties:
-            flash_messages=extract_messages(request),
+            flash_messages=_extract_messages(request),
             # Lazily computed properties:
             is_authenticated=lambda: request.user.is_authenticated,
-            language="en",  # TODO: retrieve the language from user profile or from the browser settings
+            language=_extract_language(request),
             user=lambda: User.to_dict(request.user) if request.user.is_authenticated else None,
         )
         return get_response(request)

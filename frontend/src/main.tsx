@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     resolve: async (name) => {
       const page = (await pages[`./pages/${name}.tsx`]() as { default: Page }).default;
 
-      // @ts-expect-error: TypeScript does not recognize the layout property on Page although it is used by Inertia.js
+      // @ts-expect-error: TypeScript does not recognize the layout property on Page, although it is used by Inertia.js
       page.layout = page.layout || BaseLayout;
 
       return page
