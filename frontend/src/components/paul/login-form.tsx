@@ -20,9 +20,10 @@ type LoginFormData = {
 };
 
 
-export function LoginForm({
-                            next_url
-                          }: LoginChoiceProps) {
+export function LoginForm(
+  {
+    next_url
+  }: LoginChoiceProps) {
   const {
     props: { errors }
   } = usePage()
@@ -101,12 +102,13 @@ export function LoginForm({
                   name='next'
                   placeholder=''
                   value={next_url}
-                /><Link
-                href='#'
-                className='ml-auto inline-block text-sm underline-offset-4 underline'
-              >
-                {t('forgotPassword')}
-              </Link>
+                />
+                <Link
+                  href='#'
+                  className='ml-auto inline-block text-sm underline-offset-4 underline'
+                >
+                  {t('forgotPassword')}
+                </Link>
               </div>
               <Button type='submit' disabled={processing} className='w-full'>
                 Login

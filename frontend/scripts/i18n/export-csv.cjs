@@ -8,8 +8,8 @@ const fs = require('fs');
 const path = require('path');
 
 // Configuration
-const LOCALES_DIR = path.join(__dirname, '../src/locales');
-const EXPORTS_DIR = path.join(__dirname, '../exports');
+const LOCALES_DIR = path.join(__dirname, '../../src/locales');
+const EXPORTS_DIR = path.join(__dirname, '../../exports');
 const LANGUAGES = ['en', 'ro'];
 const CSV_FILE = path.join(EXPORTS_DIR, 'translations.csv');
 
