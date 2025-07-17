@@ -7,8 +7,10 @@ import BlankLayout from '@/layouts/blank-layout';
 
 export default function LoginChoice() {
   const {
-    props: { endpoints, next_url },
+    props: { endpoints, next_url, language },
   } = useValidatedProps<LoginChoiceProps>(LoginChoiceProps);
+
+  console.log('Language:', language);
 
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
