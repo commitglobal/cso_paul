@@ -10,7 +10,7 @@ import logo from '@/assets/paul-logo.svg'
 
 
 export function AppTopbar() {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const { post } = useForm();
   const handleSignOut = useCallback(() => {
     post(apiPostUrls.userLogout());

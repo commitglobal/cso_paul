@@ -8,7 +8,7 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } fr
 
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   // Create data with translated strings
   const data = {

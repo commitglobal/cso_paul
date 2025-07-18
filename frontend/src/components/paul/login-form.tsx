@@ -28,7 +28,7 @@ export function LoginForm(
     props: { errors }
   } = usePage()
 
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const { data, setData, processing } = useForm<LoginFormData>({
     email: '',
     password: '',

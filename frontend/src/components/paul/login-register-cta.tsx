@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 
 
 export function LoginRegisterCta() {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   return (
     <div className='flex text-center text-sm mt-6 gap-2 justify-center'>

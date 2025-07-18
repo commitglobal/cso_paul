@@ -7,6 +7,10 @@
     "newHere": "Nou aici?",
     "registerCta": "Înregistrează-te"
   },
+  "loginText": {
+    "description": "Conectează-te pentru a gestiona datele ONG-ului nostru într-un singur loc, de la beneficiari și donatori la evenimente și rapoarte.",
+    "title": "Bine ai revenit la PAUL"
+  },
   "navigation": {
     "actions": "Acțiuni",
     "apps": "Aplicații",
@@ -26,5 +30,11 @@
     "signOut": "Deconectează-te",
     "viewNotifications": "Vezi notificările",
     "yourProfile": "Profilul tău"
+  },
+  "loginChoice": {
+    "loginWithNgoHub": "Conectează-te cu NGO Hub",
+    "or": "SAU",
+    "loginWithEmail": "Conectează-te cu email",
+    "loginTitle": "Conectează-te la PAUL"
   }
 }
