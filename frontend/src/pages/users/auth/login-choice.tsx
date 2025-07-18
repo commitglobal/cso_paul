@@ -12,6 +12,7 @@ export default function LoginChoice() {
     props: {endpoints, next_url, language},
   } = useValidatedProps<LoginChoiceProps>(LoginChoiceProps);
 
+  // TODO: Handle language change more gracefully, this behaviour should be used in all pages automatically
   useEffect(() => {
     console.log('Language changed to:', language);
     i18n.changeLanguage(language);
