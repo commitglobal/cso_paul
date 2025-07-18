@@ -7,6 +7,10 @@
     "newHere": "Are you new here?",
     "registerCta": "Register"
   },
+  "loginText": {
+    "description": "Login to manage our NGO's data in one place, from beneficiaries and donors to events and reports.",
+    "title": "Welcome back to PAUL"
+  },
   "navigation": {
     "actions": "Actions",
     "apps": "Apps",
@@ -26,5 +30,11 @@
     "signOut": "Sign out",
     "viewNotifications": "View notifications",
     "yourProfile": "Your profile"
+  },
+  "loginChoice": {
+    "loginWithNgoHub": "Login with NGO Hub",
+    "or": "OR",
+    "loginWithEmail": "Login with Email",
+    "loginTitle": "Login to PAUL"
   }
 }

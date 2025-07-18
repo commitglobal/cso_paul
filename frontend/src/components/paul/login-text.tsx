@@ -1,21 +1,21 @@
-import {
-  Card,
-  CardContent,
-  CardHeader,
-} from "@/components/ui/card"
+import { Card, CardContent, CardHeader, } from "@/components/ui/card"
+import { useTranslation } from "react-i18next";
 
 export function LoginText() {
+  const { t } = useTranslation();
+
   return (
     <Card className="border-0 shadow-none">
-        <CardHeader>
+      <CardHeader>
         <div className="flex flex-col items-center gap-2 text-center">
-            <h1 className="text-2xl font-bold">Welcome back to PAUL</h1>
+          <h1 className="text-2xl font-bold">
+            {t('loginText.title')}
+          </h1>
         </div>
-        </CardHeader>
-        <CardContent>
-        Login to manage our NGO's data in one place, from
-        beneficiaries and donors to events and reports.
-        </CardContent>
+      </CardHeader>
+      <CardContent>
+        {t('loginText.description')}
+      </CardContent>
     </Card>
   )
 }
