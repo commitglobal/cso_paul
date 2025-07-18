@@ -62,7 +62,9 @@ export default function BaseLayout(page: Page<CommonProps>) {
           <div className="container mx-auto p-10 ">
 
             <h1 className="text-2xl font-bold mb-4">
-              {page.props.title || t('navigation.home')}
+              <>
+                {page.props.title || t('navigation.home')}
+              </>
             </h1>
 
             <div className="bg-white px-4 sm:px-6 lg:px-8 rounded-lg shadow-sm">
