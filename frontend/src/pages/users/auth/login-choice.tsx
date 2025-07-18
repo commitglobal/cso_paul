@@ -3,20 +3,12 @@ import { LoginChoiceForm } from "@/components/paul/login-choice-form";
 import { LoginText } from "@/components/paul/login-text";
 import { LoginChoiceProps } from './login-choice-props';
 import BlankLayout from '@/layouts/blank-layout';
-import i18n from "i18next";
-import { useEffect } from "react";
 
 
 export default function LoginChoice() {
   const {
-    props: {endpoints, next_url, language},
+    props: {endpoints, next_url},
   } = useValidatedProps<LoginChoiceProps>(LoginChoiceProps);
-
-  // TODO: Handle language change more gracefully, this behaviour should be used in all pages automatically
-  useEffect(() => {
-    console.log('Language changed to:', language);
-    i18n.changeLanguage(language);
-  }, [language]);
 
   return (
     <div className="grid min-h-svh lg:grid-cols-2">

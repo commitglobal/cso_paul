@@ -9,12 +9,12 @@ i18n
   .use(initReactI18next)
   .init({
     detection: {
-      order: ['cookie', 'navigator', 'htmlTag'],
-      lookupCookie: 'i18n_paul',
+      order: ['localStorage', 'navigator', 'htmlTag'],
+      caches: ['localStorage']
     },
     resources: {
-      en: { translation: enJSON },
-      ro: { translation: roJSON }
+      en: {translation: enJSON},
+      ro: {translation: roJSON}
     },
     supportedLngs: ['en', 'ro'],
     fallbackLng: 'en',
