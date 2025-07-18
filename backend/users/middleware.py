@@ -51,9 +51,9 @@ def global_state(get_response: Callable[[HttpRequest], HttpResponse]) -> Callabl
             request=request,
             # Computed properties:
             flash_messages=_extract_messages(request),
+            language=_extract_language(request),
             # Lazily computed properties:
             is_authenticated=lambda: request.user.is_authenticated,
-            language=_extract_language(request),
             user=lambda: User.to_dict(request.user) if request.user.is_authenticated else None,
         )
         return get_response(request)
