@@ -84,33 +84,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     navMore: [
       {
         title: t('navigation.team'),
-        url: '#',
+        url: 'users/team/index',
         icon: UsersRound,
-        items: [
-          {
-            title: t('navigation.test1'),
-            url: '#'
-          },
-          {
-            title: t('navigation.test2'),
-            url: '#'
-          }
-        ]
       },
       {
         title: t('navigation.help'),
         url: '#',
         icon: Info,
-        items: [
-          {
-            title: t('navigation.test1'),
-            url: '#'
-          },
-          {
-            title: t('navigation.test2'),
-            url: '#'
-          }
-        ]
       }
     ]
   }
@@ -124,7 +104,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <ExpandableNav items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <ExpandableNav items={data.navMore} />
+        <SingleNav items={data.navMore} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

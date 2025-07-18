@@ -148,6 +148,7 @@ def ngohub_login(request: HttpRequest) -> InertiaResponse:
 
 @login_required
 @cache_control(private=True)
+@inertia("users/team/index")
 def manage_team(request: HttpRequest) -> InertiaResponse:
     """
     Manage the user team

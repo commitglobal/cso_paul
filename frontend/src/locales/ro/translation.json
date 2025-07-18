@@ -20,7 +20,8 @@
     "processedData": "Date procesate",
     "team": "Echipa",
     "test1": "Test 1",
-    "test2": "Test 2"
+    "test2": "Test 2",
+    "dashboard": "navigation.dashboard"
   },
   "topbar": {
     "openMainMenu": "Meniul principal",
