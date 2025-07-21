@@ -20,7 +20,7 @@ export type User = {
   is_current_user: boolean;
 };
 
-export const Columns: (dependency: string) => ColumnDef<User>[] = (dependency) => {
+export const Columns: () => ColumnDef<User>[] = () => {
   const { t } = useTranslation();
   return [
     {
@@ -52,7 +52,6 @@ export const Columns: (dependency: string) => ColumnDef<User>[] = (dependency) =
       accessorKey: "last_activity",
       header: "Last activity",
     },
-
     {
       id: "actions",
       enableHiding: false,
@@ -62,10 +61,14 @@ export const Columns: (dependency: string) => ColumnDef<User>[] = (dependency) =
             <EllipsisVerticalIcon className="w-[24px] h-[24px] text-gray-500 hover:bg-gray-50 rounded-full" />
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem onClick={() => console.log("view")}>View {row.original.id}</DropdownMenuItem>
-            <DropdownMenuItem onClick={() => console.log("edit")}>Edit</DropdownMenuItem>
-            <DropdownMenuItem onClick={() => console.log("resend")}>
-              Resend invitation email {dependency}
+            <DropdownMenuItem onClick={() => console.log("viewUserInfo", row.original.id)}>
+              {t('users.team.menu.viewUserInfo')}
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => console.log("changeUserRole", row.original.id)}>
+              {t('users.team.menu.changeUserRole')}
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => console.log("deleteFromTeam", row.original.id)}>
+              {t('users.team.menu.deleteFromTeam')}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

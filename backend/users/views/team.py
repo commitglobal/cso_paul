@@ -36,6 +36,7 @@ def manage_team(request: HttpRequest) -> InertiaResponse:
         props={
             "title": _("Team members"),
             "description": subtitle,
+            "user_count": users.count(),
             "users": [
                 {
                     "id": user.id,

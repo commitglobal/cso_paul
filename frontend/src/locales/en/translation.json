@@ -43,7 +43,16 @@
       "addUser": "Add team member",
       "title": "All team members",
       "ngohub_refresh": "Sync with NGO Hub",
-      "current_user_marker": "(you)"
+      "current_user_marker": "(you)",
+      "menu": {
+        "viewUserInfo": "View user info",
+        "changeUserRole": "Change user role",
+        "deleteFromTeam": "Delete from team"
+      },
+      "empty": {
+        "title": "No team members yet",
+        "description": "You don’t have any team members in PAUL. To get started, sync your team from NGO Hub. All members with access will appear here, and you’ll be able to manage roles and permissions."
+      }
     }
   }
 }
