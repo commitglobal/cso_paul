@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { type ColumnDef } from "@tanstack/react-table";
-import { useTranslation } from "react-i18next";
 
 export type User = {
   id: string;
@@ -20,8 +19,7 @@ export type User = {
   is_current_user: boolean;
 };
 
-export const Columns: () => ColumnDef<User>[] = () => {
-  const { t } = useTranslation();
+export const Columns: (t: (key: string) => string) => ColumnDef<User>[] = (t) => {
   return [
     {
       accessorKey: "email",

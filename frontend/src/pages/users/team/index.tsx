@@ -30,7 +30,8 @@ export default function TeamPage() {
 
   const {t} = useTranslation();
 
-  const tableColumns = useMemo(() => Columns(), []);
+  // Pass t to Columns to avoid calling hooks inside useMemo
+  const tableColumns = useMemo(() => Columns(t), [t]);
 
   const typedPagination = pagination as PaginationProps;
 

@@ -1,15 +1,12 @@
 import React from "react"
 import { router } from "@inertiajs/react"
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  MoreHorizontalIcon,
-} from "lucide-react"
+import { ChevronLeftIcon, ChevronRightIcon, MoreHorizontalIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Button, buttonVariants } from "@/components/ui/button"
+import { useTranslation } from "react-i18next";
 
-function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
+function Pagination({className, ...props}: React.ComponentProps<"nav">) {
   return (
     <nav
       role="navigation"
@@ -21,10 +18,11 @@ function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
   )
 }
 
-function PaginationContent({
-  className,
-  ...props
-}: React.ComponentProps<"ul">) {
+function PaginationContent(
+  {
+    className,
+    ...props
+  }: React.ComponentProps<"ul">) {
   return (
     <ul
       data-slot="pagination-content"
@@ -34,7 +32,7 @@ function PaginationContent({
   )
 }
 
-function PaginationItem({ ...props }: React.ComponentProps<"li">) {
+function PaginationItem({...props}: React.ComponentProps<"li">) {
   return <li data-slot="pagination-item" {...props} />
 }
 
@@ -43,12 +41,13 @@ type PaginationLinkProps = {
 } & Pick<React.ComponentProps<typeof Button>, "size"> &
   React.ComponentProps<"a">
 
-function PaginationLink({
-  className,
-  isActive,
-  size = "icon",
-  ...props
-}: PaginationLinkProps) {
+function PaginationLink(
+  {
+    className,
+    isActive,
+    size = "icon",
+    ...props
+  }: PaginationLinkProps) {
   return (
     <a
       aria-current={isActive ? "page" : undefined}
@@ -66,10 +65,12 @@ function PaginationLink({
   )
 }
 
-function PaginationPrevious({
-  className,
-  ...props
-}: React.ComponentProps<typeof PaginationLink>) {
+function PaginationPrevious(
+  {
+    className,
+    ...props
+  }: React.ComponentProps<typeof PaginationLink>) {
+  const {t} = useTranslation()
   return (
     <PaginationLink
       aria-label="Go to previous page"
@@ -77,16 +78,21 @@ function PaginationPrevious({
       className={cn("gap-1 px-2.5 sm:pl-2.5", className)}
       {...props}
     >
-      <ChevronLeftIcon />
-      <span className="hidden sm:block">Previous</span>
+      <ChevronLeftIcon/>
+      <span className="hidden sm:block">
+        {t("pagination.previous")}
+      </span>
     </PaginationLink>
   )
 }
 
-function PaginationNext({
-  className,
-  ...props
-}: React.ComponentProps<typeof PaginationLink>) {
+function PaginationNext(
+  {
+    className,
+    ...props
+  }: React.ComponentProps<typeof PaginationLink>) {
+  const {t} = useTranslation()
+
   return (
     <PaginationLink
       aria-label="Go to next page"
@@ -94,16 +100,19 @@ function PaginationNext({
       className={cn("gap-1 px-2.5 sm:pr-2.5", className)}
       {...props}
     >
-      <span className="hidden sm:block">Next</span>
-      <ChevronRightIcon />
+      <span className="hidden sm:block">
+        {t("pagination.next")}
+      </span>
+      <ChevronRightIcon/>
     </PaginationLink>
   )
 }
 
-function PaginationEllipsis({
-  className,
-  ...props
-}: React.ComponentProps<"span">) {
+function PaginationEllipsis(
+  {
+    className,
+    ...props
+  }: React.ComponentProps<"span">) {
   return (
     <span
       aria-hidden
@@ -111,20 +120,10 @@ function PaginationEllipsis({
       className={cn("flex size-9 items-center justify-center", className)}
       {...props}
     >
-      <MoreHorizontalIcon className="size-4" />
+      <MoreHorizontalIcon className="size-4"/>
       <span className="sr-only">More pages</span>
     </span>
   )
-}
-
-export {
-  Pagination,
-  PaginationContent,
-  PaginationLink,
-  PaginationItem,
-  PaginationPrevious,
-  PaginationNext,
-  PaginationEllipsis,
 }
 
 type PaginationElidedProps = {
@@ -151,12 +150,13 @@ function getPageNumbers(current: number, total: number): (number | "ellipsis")[]
   return range
 }
 
-const PaginationElided: React.FC<PaginationElidedProps> = ({
-  currentPage,
-  totalPages,
-  onPageChange,
-  className,
-}) => {
+const PaginationElided: React.FC<PaginationElidedProps> = (
+  {
+    currentPage,
+    totalPages,
+    onPageChange,
+    className,
+  }) => {
   const pageNumbers = getPageNumbers(currentPage, totalPages)
 
   // Default navigation logic using Inertia router and current path
@@ -165,7 +165,7 @@ const PaginationElided: React.FC<PaginationElidedProps> = ({
       onPageChange(page)
     } else {
       const url = `${window.location.pathname}?page=${page}`
-      router.get(url, {}, { preserveScroll: true, preserveState: true })
+      router.get(url, {}, {preserveScroll: true, preserveState: true})
     }
   }
 
@@ -178,19 +178,17 @@ const PaginationElided: React.FC<PaginationElidedProps> = ({
   return (
     <Pagination className={className}>
       <PaginationContent>
-        {currentPage > 1 && (
-          <PaginationItem>
-            <PaginationPrevious
-              onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
-              aria-disabled={currentPage === 1}
-              tabIndex={currentPage === 1 ? -1 : 0}
-            />
-          </PaginationItem>
-        )}
+        <PaginationItem>
+          <PaginationPrevious
+            onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
+            aria-disabled={currentPage === 1}
+            tabIndex={currentPage === 1 ? -1 : 0}
+          />
+        </PaginationItem>
         {pageNumbers.map((page, idx) =>
           page === "ellipsis" ? (
             <PaginationItem key={`ellipsis-${idx}`}>
-              <PaginationEllipsis />
+              <PaginationEllipsis/>
             </PaginationItem>
           ) : (
             <PaginationItem key={page}>
@@ -205,15 +203,13 @@ const PaginationElided: React.FC<PaginationElidedProps> = ({
             </PaginationItem>
           )
         )}
-        {currentPage < totalPages && (
-          <PaginationItem>
-            <PaginationNext
-              onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
-              aria-disabled={currentPage === totalPages}
-              tabIndex={currentPage === totalPages ? -1 : 0}
-            />
-          </PaginationItem>
-        )}
+        <PaginationItem>
+          <PaginationNext
+            onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
+            aria-disabled={currentPage === totalPages}
+            tabIndex={currentPage === totalPages ? -1 : 0}
+          />
+        </PaginationItem>
       </PaginationContent>
     </Pagination>
   )

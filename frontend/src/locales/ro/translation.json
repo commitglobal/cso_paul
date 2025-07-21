@@ -54,5 +54,9 @@
         "description": "Nu ai niciun membru în echipă în PAUL. Pentru a începe, sincronizează-ți echipa din NGO Hub. Toți membrii cu acces vor apărea aici, iar tu vei putea gestiona rolurile și permisiunile."
       }
     }
+  },
+  "pagination": {
+    "previous": "Anterior",
+    "next": "Următorul"
   }
 }

@@ -54,5 +54,9 @@
         "description": "You don’t have any team members in PAUL. To get started, sync your team from NGO Hub. All members with access will appear here, and you’ll be able to manage roles and permissions."
       }
     }
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next"
   }
 }
