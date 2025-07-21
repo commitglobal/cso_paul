@@ -10,15 +10,29 @@ import { InputSearch } from "@/components/ui/input-search.tsx";
 import { FunnelIcon } from "@heroicons/react/24/outline";
 import { Button } from "@/components/ui/button.tsx";
 import userEmptyImage from "@/assets/user-empty.svg";
+import PaginationElided from "@/components/ui/pagination_elided";
+
+type PaginationProps = {
+  has_next: boolean;
+  has_previous: boolean;
+  num_pages: number;
+  current_page: number;
+  next_page_number: number | null;
+  previous_page_number: number | null;
+  total_items: number;
+  per_page: number;
+};
 
 export default function TeamPage() {
   const {
-    props: {users, user_count},
+    props: {users, user_count, pagination},
   } = useValidatedProps<LoginChoiceProps>(LoginChoiceProps);
 
   const {t} = useTranslation();
 
   const tableColumns = useMemo(() => Columns(), []);
+
+  const typedPagination = pagination as PaginationProps;
 
   console.log("We have users data:", users);
 
@@ -56,6 +70,12 @@ export default function TeamPage() {
           </div>
 
           <DataTable columns={tableColumns} data={users as User[]}/>
+          <div className="mt-4 flex justify-center">
+            <PaginationElided
+              currentPage={typedPagination.current_page}
+              totalPages={typedPagination.num_pages}
+            />
+          </div>
         </>
       ) : (
         <div className="flex flex-col items-center justify-center py-16 max-w-sm mx-auto">
