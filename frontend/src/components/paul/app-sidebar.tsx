@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { ExpandableNav } from '@/components/paul/expandable-nav'
 import { SingleNav } from '@/components/paul/single-nav'
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from '@/components/ui/sidebar'
+import { apiGetUrls } from '@/constants/api-urls';
 
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -15,7 +16,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     navHome: [
       {
         title: t('navigation.home'),
-        url: '#',
+        url: '/',
         icon: House
       }
     ],
@@ -84,7 +85,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     navMore: [
       {
         title: t('navigation.team'),
-        url: 'users/team/index',
+        url: apiGetUrls.teamIndex,
         icon: UsersRound,
       },
       {
