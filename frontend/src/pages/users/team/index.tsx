@@ -3,55 +3,57 @@ import { useValidatedProps } from "@/hooks/use-validated-props.ts";
 import BaseLayout from "@/layouts/base-layout.tsx";
 import { LoginChoiceProps } from "@/pages/users/auth/login-choice-props.ts";
 import { useMemo } from "react";
-import { columns, type User } from "./columns";
+import { Columns, type User } from "./columns";
+import { useTranslation } from "react-i18next";
+import { ArrowPathIcon, UserPlusIcon } from "@heroicons/react/20/solid";
+import { InputSearch } from "@/components/ui/input-search.tsx";
+import { FunnelIcon } from "@heroicons/react/24/outline";
+import { Button } from "@/components/ui/button.tsx";
 
-// function getData(users: User[]): UserProps[] {
-//   return users.map((user) => ({
-//     id: user.id,
-//     user: {
-//       name: `${user.first_name} ${user.last_name}`,
-//       email: user.email,
-//       is_current_user: false, // This can be set based on your logic
-//     },
-//     role: "User", // Default role, you can modify this based on your logic
-//     added_since: new Date(user.date_joined).toLocaleDateString(),
-//     last_activity: new Date(user.last_login).toLocaleDateString(),
-//   }));
-// }
 
 export default function TeamPage() {
   const {
-    props: { users },
+    props: {users},
   } = useValidatedProps<LoginChoiceProps>(LoginChoiceProps);
 
-  const tableColumns = useMemo(() => columns("ion"), []);
+  const {t} = useTranslation();
 
-  // const data = getData(users as UserProps[]);
+  const tableColumns = useMemo(() => Columns("ion"), []);
 
   console.log("We have users data:", users);
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="flex flex-col gap-4 py-4">
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
-            <h1 className="text-base font-semibold text-gray-900">Users</h1>
-            <p className="mt-2 text-sm text-gray-700">
-              A list of all the users in your account including their name, title, email and role.
-            </p>
+            <h2 className="text-base font-semibold text-gray-900">
+              {t('users.team.title')}
+            </h2>
           </div>
-          <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-            <button
-              type="button"
-              className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-              Add user
-            </button>
+          <div className="flex gap-4 mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+            <Button variant="outline" size="sm" className="gap-x-1.5">
+              <ArrowPathIcon aria-hidden="true" className="-ml-0.5 h-5 w-5"/>
+              {t('users.team.ngohub_refresh')}
+            </Button>
+            <Button variant="default" size="sm" className="gap-x-1.5">
+              <UserPlusIcon aria-hidden="true" className="-ml-0.5 h-5 w-5"/>
+              {t('users.team.addUser')}
+            </Button>
           </div>
         </div>
       </div>
 
-      <DataTable columns={tableColumns} data={users as User[]} />
+      <div aria-hidden="true" className="inset-0 flex items-center px-4">
+        <div className="w-full border-t border-gray-300"/>
+      </div>
+
+      <div className="flex gap-4 items-center px-4 sm:px-6 lg:px-8">
+        <InputSearch/>
+        <FunnelIcon className="h-5 w-5 cursor-pointer text-paul-500 hover:text-paul-700 hover:fill-current"/>
+      </div>
+
+      <DataTable columns={tableColumns} data={users as User[]}/>
     </div>
   );
 }

@@ -37,5 +37,13 @@
     "or": "OR",
     "loginWithEmail": "Login with Email",
     "loginTitle": "Login to PAUL"
+  },
+  "users": {
+    "team": {
+      "addUser": "Add team member",
+      "title": "All team members",
+      "ngohub_refresh": "Sync with NGO Hub",
+      "current_user_marker": "(you)"
+    }
   }
 }

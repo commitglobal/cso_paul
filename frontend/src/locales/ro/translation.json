@@ -37,5 +37,13 @@
     "or": "SAU",
     "loginWithEmail": "Conectează-te cu email",
     "loginTitle": "Conectează-te la PAUL"
+  },
+  "users": {
+    "team": {
+      "addUser": "Adaugă membru în echipă",
+      "title": "Toți membrii echipei",
+      "ngohub_refresh": "Sincronizează cu NGO Hub",
+      "current_user_marker": "(tu)"
+    }
   }
 }

@@ -14,7 +14,17 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { SidebarInset, SidebarProvider, SidebarTrigger, } from "@/components/ui/sidebar";
 import { useTranslation } from "react-i18next";
+import { SanitizeHTML } from '@/components/helpers/sanitized-html';
 
+
+function renderDescription(description: string | undefined) {
+  if (!description) return null;
+  return (
+    <div className="text-sm max-w-none mb-4">
+      <SanitizeHTML html={description} />
+    </div>
+  );
+}
 
 export default function BaseLayout(page: Page<CommonProps>) {
   const {t} = useTranslation();
@@ -67,7 +77,9 @@ export default function BaseLayout(page: Page<CommonProps>) {
               </>
             </h1>
 
-            <div className="bg-white px-4 sm:px-6 lg:px-8 rounded-lg shadow-sm">
+            {renderDescription(page.props.description as string)}
+
+            <div className="bg-white rounded-lg shadow-sm">
               {page as unknown as ReactNode}
             </div>
           </div>
@@ -75,5 +87,6 @@ export default function BaseLayout(page: Page<CommonProps>) {
 
       </SidebarInset>
     </SidebarProvider>
-  );
+  )
+
 }
