@@ -10,7 +10,7 @@ import { InputSearch } from "@/components/ui/input-search.tsx";
 import { FunnelIcon } from "@heroicons/react/24/outline";
 import { Button } from "@/components/ui/button.tsx";
 import userEmptyImage from "@/assets/user-empty.svg";
-import PaginationElided from "@/components/ui/pagination_elided";
+import PaginationElided from "@/components/ui/pagination.tsx";
 
 type PaginationProps = {
   has_next: boolean;
