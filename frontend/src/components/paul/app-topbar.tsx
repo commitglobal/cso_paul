@@ -94,7 +94,7 @@ export function AppTopbar() {
                   </a>
                 </MenuItem>
                 <MenuItem>
-                  <Link href={apiPostUrls.userLogout()} method='post' className='block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none'>
+                  <Link href={apiPostUrls.userLogout()} method='post' className='w-full text-left block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none'>
                     {t('topbar.signOut')}
                   </Link>
                 </MenuItem>
