@@ -1,9 +1,8 @@
-import { columns, type User, type UserProps } from "./columns"
-import { DataTable } from "./table"
+import { columns, type User, type UserProps } from "./columns";
 import { useValidatedProps } from "@/hooks/use-validated-props.ts";
 import { LoginChoiceProps } from "@/pages/users/auth/login-choice-props.ts";
 import BaseLayout from "@/layouts/base-layout.tsx";
-
+import { DataTable } from "@/components/ui/data-table";
 
 function getData(users: UserProps[]): User[] {
   return users.map((user) => ({
@@ -21,7 +20,7 @@ function getData(users: UserProps[]): User[] {
 
 export default function TeamPage() {
   const {
-    props: {users},
+    props: { users },
   } = useValidatedProps<LoginChoiceProps>(LoginChoiceProps);
 
   const data = getData(users as UserProps[]);
@@ -30,7 +29,6 @@ export default function TeamPage() {
 
   return (
     <div className="container mx-auto py-10">
-
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
@@ -50,10 +48,9 @@ export default function TeamPage() {
         </div>
       </div>
 
-
-      <DataTable columns={columns} data={data}/>
+      <DataTable columns={columns} data={data} />
     </div>
-  )
+  );
 }
 
 TeamPage.layout = BaseLayout;
