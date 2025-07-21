@@ -3,19 +3,13 @@ import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useTranslation } from 'react-i18next'
 import { apiPostUrls } from '@/constants/api-urls';
-import { useCallback } from 'react';
-import { useForm } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
 
 import logo from '@/assets/paul-logo.svg'
 
 
 export function AppTopbar() {
   const { t } = useTranslation();
-  const { post } = useForm();
-  const handleSignOut = useCallback(() => {
-    post(apiPostUrls.userLogout());
-  }, [post]);
-
 
   return (
     <Disclosure as='nav' className='bg-white shadow'>
@@ -100,9 +94,9 @@ export function AppTopbar() {
                   </a>
                 </MenuItem>
                 <MenuItem>
-                  <a href='#'onClick={handleSignOut} className='block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none'>
+                  <Link href={apiPostUrls.userLogout()} method='post' className='block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:outline-none'>
                     {t('topbar.signOut')}
-                  </a>
+                  </Link>
                 </MenuItem>
               </MenuItems>
             </Menu>
