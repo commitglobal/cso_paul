@@ -1,18 +1,18 @@
 import { buildUrl } from '@/utils/build-url';
 import { concat } from 'lodash';
 
-const usersBackend = 'users';
-// const datastoreBackend = 'datastore';
-// const dashboardBackend = '';
-
 function buildUrlFactory(baseUrl: string[]) {
   return (urlPathStrings: (string | number)[] = []) =>
     buildUrl(concat(baseUrl, urlPathStrings));
 }
 
-const buildUsersUrl = buildUrlFactory([usersBackend]);
+const buildUsersUrl = buildUrlFactory(['users']);
+const buildTeamUrl = buildUrlFactory(['users', 'team']);
 
-export const apiGetUrls = {};
+export const apiGetUrls = {
+  teamIndex: buildTeamUrl([]),
+};
+
 export const apiPostUrls = {
   userEmailLogin: buildUsersUrl(['login', 'email']),
   userLogout: () => buildUsersUrl(['logout']),

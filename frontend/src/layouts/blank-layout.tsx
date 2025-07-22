@@ -6,8 +6,7 @@ export default function BlankLayout(page: Page<CommonProps>) {
 
   return (
     <main>
-    {page as unknown as ReactNode}
+      {page as unknown as ReactNode}
     </main>
-
   )
 }

@@ -20,7 +20,8 @@
     "processedData": "Processed Data",
     "team": "Team",
     "test1": "Test 1",
-    "test2": "Test 2"
+    "test2": "Test 2",
+    "dashboard": "Dashboard"
   },
   "topbar": {
     "openMainMenu": "Open main menu",
@@ -36,5 +37,33 @@
     "or": "OR",
     "loginWithEmail": "Login with Email",
     "loginTitle": "Login to PAUL"
+  },
+  "users": {
+    "team": {
+      "addUser": "Add team member",
+      "title": "All team members",
+      "ngohub_refresh": "Sync with NGO Hub",
+      "current_user_marker": "(you)",
+      "menu": {
+        "viewUserInfo": "View user info",
+        "changeUserRole": "Change user role",
+        "deleteFromTeam": "Delete from team"
+      },
+      "empty": {
+        "title": "No team members yet",
+        "description": "You don’t have any team members in PAUL. To get started, sync your team from NGO Hub. All members with access will appear here, and you’ll be able to manage roles and permissions."
+      },
+      "table": {
+        "user": "User",
+        "role": "Role",
+        "added_since": "Added Since",
+        "last_activity": "Last Activity"
+      },
+      "filterOptions": "Filters"
+    }
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next"
   }
 }

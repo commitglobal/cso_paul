@@ -2,17 +2,16 @@ import json
 from typing import Any
 
 from django.contrib import auth, messages
-from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest, Http404, HttpResponse
+from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse
-from django.utils.translation import gettext_lazy as _
 from django.utils.http import url_has_allowed_host_and_scheme
+from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
-from inertia import inertia, render as inertia_render, InertiaResponse
+from inertia import InertiaResponse, inertia
+from inertia import render as inertia_render
 
 from users.forms import LoginForm
-from users.models import User
 from utils.types import RedirectionResponse
 
 
@@ -144,30 +143,3 @@ def ngohub_login(request: HttpRequest) -> InertiaResponse:
     #     "users/auth/ngohub-login",
     #     props={},
     # )
-
-
-@login_required
-@cache_control(private=True)
-def manage_team(request: HttpRequest) -> InertiaResponse:
-    """
-    Manage the user team
-    """
-    users = User.objects.all()
-
-    return inertia_render(
-        request,
-        "users/team/index",
-        props={
-            "users": [
-                {
-                    "id": user.id,
-                    "first_name": user.first_name,
-                    "last_name": user.last_name,
-                    "email": user.email,
-                    "date_joined": user.date_joined,
-                    "last_login": user.last_login,  # TODO: replace with a last_activity timestamp
-                }
-                for user in users
-            ]
-        },
-    )

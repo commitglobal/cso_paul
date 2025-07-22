@@ -1,13 +1,14 @@
 "use client"
 
 import { type LucideIcon } from "lucide-react"
+import { Link } from '@inertiajs/react';
 
 import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarMenu,
-  SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSubButton,
 } from "@/components/ui/sidebar"
 
 export function SingleNav({
@@ -25,10 +26,12 @@ export function SingleNav({
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton tooltip={item.title}>
-                {item.icon && <item.icon />}
-                <span>{item.title}</span>
-              </SidebarMenuButton>
+              <SidebarMenuSubButton asChild>
+                <Link href={item.url}>
+                  {item.icon && <item.icon />}
+                  <span>{item.title}</span>
+                </Link>
+              </SidebarMenuSubButton>
             </SidebarMenuItem>
           ))}
         </SidebarMenu>

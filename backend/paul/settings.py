@@ -21,7 +21,6 @@ from django.utils.translation import gettext_lazy as _
 
 from utils.encoders import CustomJsonEncoder
 
-
 # Constants for memory sizes
 KIBIBYTE = 1024
 MEBIBYTE = KIBIBYTE * 1024
@@ -504,7 +503,7 @@ elif USE_AZURE:
 
     default_storage_options["azure_container"] = env("AZURE_CONTAINER")
 
-    azure_custom_domain = f'{env("AZURE_ACCOUNT_NAME")}.blob.core.windows.net'
+    azure_custom_domain = f"{env('AZURE_ACCOUNT_NAME')}.blob.core.windows.net"
     default_storage_options["custom_domain"] = azure_custom_domain
 
     # azure public media settings
@@ -613,3 +612,9 @@ RECAPTCHA_PRIVATE_KEY = env("RECAPTCHA_PRIVATE_KEY")
 RECAPTCHA_REQUIRED_SCORE = env("RECAPTCHA_REQUIRED_SCORE")
 
 RECAPTCHA_ENABLED = True if RECAPTCHA_PUBLIC_KEY else False
+
+
+# NGO Hub URLS
+
+NGOHUB_APP_HOST = env.str("NGOHUB_APP_HOST", default="https://app.ngohub.ro")
+NGOHUB_API_HOST = env.str("NGOHUB_API_HOST", default="https://api.ngohub.ro")
