@@ -19,6 +19,18 @@ export type User = {
   is_current_user: boolean;
 };
 
+function onViewUserInfo(id: string) {
+  console.log("viewUserInfo", id);
+}
+
+function onChangeUserRole(id: string) {
+  console.log("changeUserRole", id);
+}
+
+function onDeleteFromTeam(id: string) {
+  console.log("deleteFromTeam", id);
+}
+
 export const Columns: (t: (key: string) => string) => ColumnDef<User>[] = (t) => {
   return [
     {
@@ -59,13 +71,13 @@ export const Columns: (t: (key: string) => string) => ColumnDef<User>[] = (t) =>
             <EllipsisVerticalIcon className="w-[24px] h-[24px] text-gray-500 hover:bg-gray-50 rounded-full" />
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem onClick={() => console.log("viewUserInfo", row.original.id)}>
+            <DropdownMenuItem onClick={() => onViewUserInfo(row.original.id)}>
               {t('users.team.menu.viewUserInfo')}
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => console.log("changeUserRole", row.original.id)}>
+            <DropdownMenuItem onClick={() => onChangeUserRole(row.original.id)}>
               {t('users.team.menu.changeUserRole')}
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => console.log("deleteFromTeam", row.original.id)}>
+            <DropdownMenuItem onClick={() => onDeleteFromTeam(row.original.id)}>
               {t('users.team.menu.deleteFromTeam')}
             </DropdownMenuItem>
           </DropdownMenuContent>
