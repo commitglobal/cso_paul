@@ -6,7 +6,7 @@ const defaultOptions: IOptions = {
   allowedAttributes: {
     a: ["href"],
   },
-  allowedIframeHostnames: ["www.youtube.com"],
+  allowedIframeHostnames: [""],
 };
 
 type SanitizeHTMLProps = {

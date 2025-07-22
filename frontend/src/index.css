@@ -150,10 +150,6 @@
     --shadow-2xl: var(--shadow-2xl);
 }
 
-a {
-    @apply text-sky-700 hover:text-sky-900 underline-offset-4 font-semibold;
-}
-
 @theme {
     --color-paul-50: oklch(0.979 0.007 304.244);
     --color-paul-100: oklch(0.957 0.02 315.669);
