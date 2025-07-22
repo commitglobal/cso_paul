@@ -169,12 +169,6 @@ const PaginationElided: React.FC<PaginationElidedProps> = (
     }
   }
 
-  console.log("PaginationElided rendered with:", {
-    currentPage,
-    totalPages,
-    pageNumbers,
-  })
-
   return (
     <Pagination className={className}>
       <PaginationContent>
