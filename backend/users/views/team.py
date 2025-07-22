@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpRequest
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
 from inertia import InertiaResponse, inertia
@@ -47,6 +48,9 @@ def manage_team(request: HttpRequest) -> InertiaResponse:
             "title": _("Team members"),
             "description": subtitle,
             "user_count": users_qs.count(),
+            "breadcrumbs": [
+                {"label": _("Team"), "url": reverse("users:manage-team")},
+            ],
             "users": [
                 {
                     "id": user.id,

@@ -4,16 +4,11 @@ import { type Page } from '@inertiajs/core';
 import { AppSidebar } from "@/components/paul/app-sidebar";
 import { AppTopbar } from "@/components/paul/app-topbar";
 import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
+  Breadcrumbs,
+  type BreadcrumbListItem,
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import { SidebarInset, SidebarProvider, SidebarTrigger, } from "@/components/ui/sidebar";
-import { useTranslation } from "react-i18next";
 import { SanitizeHTML } from '@/components/helpers/sanitized-html';
 
 
@@ -21,14 +16,12 @@ function renderDescription(description: string | undefined) {
   if (!description) return null;
   return (
     <div className="text-sm max-w-none mb-4">
-      <SanitizeHTML html={description} />
+      <SanitizeHTML html={description}/>
     </div>
   );
 }
 
 export default function BaseLayout(page: Page<CommonProps>) {
-  const {t} = useTranslation();
-
   return (
     <SidebarProvider>
 
@@ -49,21 +42,7 @@ export default function BaseLayout(page: Page<CommonProps>) {
               orientation="vertical"
               className="mr-2 data-[orientation=vertical]:h-4"
             />
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="#">
-                    {t('navigation.dashboard')}
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator className="hidden md:block"/>
-                <BreadcrumbItem>
-                  <BreadcrumbPage>
-                    {t('navigation.home')}
-                  </BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
+            <Breadcrumbs breadcrumbList={page.props.breadcrumbs as BreadcrumbListItem[]} />
           </div>
         </header>
 
@@ -73,7 +52,7 @@ export default function BaseLayout(page: Page<CommonProps>) {
 
             <h1 className="text-2xl font-bold mb-4">
               <>
-                {page.props.title || t('navigation.home')}
+                {page.props.title}
               </>
             </h1>
 
