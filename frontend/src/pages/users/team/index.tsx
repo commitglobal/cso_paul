@@ -65,7 +65,20 @@ export default function TeamPage() {
         <>
           <div className="flex gap-4 items-center px-4 sm:px-6 lg:px-8">
             <InputSearch/>
-            <FunnelIcon className="h-5 w-5 cursor-pointer text-paul-500 hover:text-paul-700 hover:fill-current"/>
+            <div
+              role="button"
+              tabIndex={0}
+              aria-label={t('users.team.filterOptions')}
+              onClick={() => console.log('Filter options clicked')}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  console.log('Filter options activated via keyboard');
+                }
+              }}
+            >
+              <FunnelIcon aria-hidden="true" className="h-5 w-5 cursor-pointer text-paul-500 hover:text-paul-700 hover:fill-current"/>
+            </div>
           </div>
 
           <DataTable columns={tableColumns} data={users as User[]}/>

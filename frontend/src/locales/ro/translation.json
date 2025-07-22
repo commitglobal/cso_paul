@@ -58,7 +58,8 @@
         "role": "Rol",
         "added_since": "Adăugat din",
         "last_activity": "Ultima activitate"
-      }
+      },
+      "filterOptions": "Filtre"
     }
   },
   "pagination": {

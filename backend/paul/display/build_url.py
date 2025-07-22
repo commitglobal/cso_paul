@@ -1,9 +1,9 @@
-from typing import List
+from typing import List, Optional
 
 from django.conf import settings
 
 
-def build_ngohub_url(path_elements: List[str] = None) -> str:
+def build_ngohub_url(path_elements: Optional[List[str]] = None) -> str:
     """
     Build the URL for the NGO Hub.
     """

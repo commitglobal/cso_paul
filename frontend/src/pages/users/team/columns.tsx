@@ -20,14 +20,17 @@ export type User = {
 };
 
 function onViewUserInfo(id: string) {
+  // TODO: Implement user info view logic
   console.log("viewUserInfo", id);
 }
 
 function onChangeUserRole(id: string) {
+  // TODO: Implement role change logic
   console.log("changeUserRole", id);
 }
 
 function onDeleteFromTeam(id: string) {
+  // TODO: Implement deletion logic
   console.log("deleteFromTeam", id);
 }
 

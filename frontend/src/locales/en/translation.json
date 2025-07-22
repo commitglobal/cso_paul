@@ -58,7 +58,8 @@
         "role": "Role",
         "added_since": "Added Since",
         "last_activity": "Last Activity"
-      }
+      },
+      "filterOptions": "Filters"
     }
   },
   "pagination": {
