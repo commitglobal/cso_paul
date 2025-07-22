@@ -35,8 +35,6 @@ export default function TeamPage() {
 
   const typedPagination = pagination as PaginationProps;
 
-  console.log("We have users data:", users);
-
   return (
     <div className="flex flex-col gap-4 py-4">
       <div className="px-4 sm:px-6 lg:px-8">

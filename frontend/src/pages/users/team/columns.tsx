@@ -22,8 +22,8 @@ export type User = {
 export const Columns: (t: (key: string) => string) => ColumnDef<User>[] = (t) => {
   return [
     {
-      accessorKey: "email",
-      header: "User",
+      accessorKey: "user",
+      header: t("users.team.table.user"),
       cell: ({ row }) => (
         <div className="flex flex-col gap-2">
           <span>
@@ -40,15 +40,15 @@ export const Columns: (t: (key: string) => string) => ColumnDef<User>[] = (t) =>
     },
     {
       accessorKey: "role",
-      header: "Role",
+      header: t("users.team.table.role"),
     },
     {
       accessorKey: "added_since",
-      header: "Added since",
+      header: t("users.team.table.added_since"),
     },
     {
       accessorKey: "last_activity",
-      header: "Last activity",
+      header: t("users.team.table.last_activity"),
     },
     {
       id: "actions",
