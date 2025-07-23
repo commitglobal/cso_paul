@@ -8,33 +8,24 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { type ColumnDef } from "@tanstack/react-table";
+import type { UserProps } from "@/pages/users/team/team-page-props-struct.ts";
 
-export type User = {
-  id: string;
-  email: string;
-  first_name: string;
-  last_name: string;
-  last_login: string;
-  date_joined: string;
-  is_current_user: boolean;
-};
-
-function onViewUserInfo(id: string) {
+function onViewUserInfo(id: number) {
   // TODO: Implement user info view logic
   console.log("viewUserInfo", id);
 }
 
-function onChangeUserRole(id: string) {
+function onChangeUserRole(id: number) {
   // TODO: Implement role change logic
   console.log("changeUserRole", id);
 }
 
-function onDeleteFromTeam(id: string) {
+function onDeleteFromTeam(id: number) {
   // TODO: Implement deletion logic
   console.log("deleteFromTeam", id);
 }
 
-export const Columns: (t: (key: string) => string) => ColumnDef<User>[] = (t) => {
+export const Columns: (t: (key: string) => string) => ColumnDef<UserProps>[] = (t) => {
   return [
     {
       accessorKey: "user",

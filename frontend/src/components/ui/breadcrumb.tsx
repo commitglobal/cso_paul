@@ -3,8 +3,9 @@ import { Slot } from "@radix-ui/react-slot"
 import { ChevronRight, MoreHorizontal } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { type Breadcrumb } from "@/types/breadcrumb.ts";
 
-function Breadcrumb({...props}: React.ComponentProps<"nav">) {
+function BreadcrumbWrapper({...props}: React.ComponentProps<"nav">) {
   return <nav aria-label="breadcrumb" data-slot="breadcrumb" {...props} />
 }
 
@@ -101,17 +102,13 @@ function BreadcrumbEllipsis(
   )
 }
 
-type BreadcrumbListItem = {
-  label: string
-  url?: string
-}
 
-function Breadcrumbs({breadcrumbList}: { breadcrumbList: BreadcrumbListItem[] }) {
+function Breadcrumbs({breadcrumbList}: { breadcrumbList: Breadcrumb[] }) {
   if (!breadcrumbList || breadcrumbList.length < 2) return null;
 
   const maxItems = 5;
   const showEllipsis = breadcrumbList.length > maxItems;
-  let itemsToRender: (BreadcrumbListItem | "ellipsis")[] = [];
+  let itemsToRender: (Breadcrumb | "ellipsis")[] = [];
 
   if (showEllipsis) {
     // Show: first, ellipsis, last 3
@@ -125,9 +122,10 @@ function Breadcrumbs({breadcrumbList}: { breadcrumbList: BreadcrumbListItem[] })
   }
 
   return (
-    <Breadcrumb>
+    <BreadcrumbWrapper>
       <BreadcrumbList>
         {itemsToRender.map((item, idx) => {
+          item = item as Breadcrumb | "ellipsis";
           if (item === "ellipsis") {
             return (
               <React.Fragment key="ellipsis">
@@ -140,12 +138,12 @@ function Breadcrumbs({breadcrumbList}: { breadcrumbList: BreadcrumbListItem[] })
           return (
             <React.Fragment key={idx}>
               <BreadcrumbItem>
-                {!isLast && (item as BreadcrumbListItem).url ? (
-                  <BreadcrumbLink href={(item as BreadcrumbListItem).url}>
-                    {(item as BreadcrumbListItem).label}
+                {!isLast && (item).url ? (
+                  <BreadcrumbLink href={(item).url}>
+                    {(item).label}
                   </BreadcrumbLink>
                 ) : (
-                  <BreadcrumbPage>{(item as BreadcrumbListItem).label}</BreadcrumbPage>
+                  <BreadcrumbPage>{(item).label}</BreadcrumbPage>
                 )}
               </BreadcrumbItem>
               {!isLast && <BreadcrumbSeparator/>}
@@ -153,9 +151,9 @@ function Breadcrumbs({breadcrumbList}: { breadcrumbList: BreadcrumbListItem[] })
           );
         })}
       </BreadcrumbList>
-    </Breadcrumb>
+    </BreadcrumbWrapper>
   );
 }
 
 
-export { type BreadcrumbListItem, Breadcrumbs }
+export { Breadcrumbs }

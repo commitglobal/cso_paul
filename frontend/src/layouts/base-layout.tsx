@@ -5,11 +5,11 @@ import { AppSidebar } from "@/components/paul/app-sidebar";
 import { AppTopbar } from "@/components/paul/app-topbar";
 import {
   Breadcrumbs,
-  type BreadcrumbListItem,
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import { SidebarInset, SidebarProvider, SidebarTrigger, } from "@/components/ui/sidebar";
 import { SanitizeHTML } from '@/components/helpers/sanitized-html';
+import type { Breadcrumb } from "@/types/breadcrumb.ts";
 
 
 function renderDescription(description: string | undefined) {
@@ -25,7 +25,7 @@ export default function BaseLayout(page: Page<CommonProps>) {
   return (
     <SidebarProvider>
 
-      {/* Side savigation */}
+      {/* Side navigation */}
       <AppSidebar/>
 
       <SidebarInset>
@@ -42,7 +42,7 @@ export default function BaseLayout(page: Page<CommonProps>) {
               orientation="vertical"
               className="mr-2 data-[orientation=vertical]:h-4"
             />
-            <Breadcrumbs breadcrumbList={page.props.breadcrumbs as BreadcrumbListItem[]} />
+            <Breadcrumbs breadcrumbList={page.props.breadcrumbs as Breadcrumb[]} />
           </div>
         </header>
 

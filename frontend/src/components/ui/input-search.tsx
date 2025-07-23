@@ -4,8 +4,8 @@ import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 
 export function InputSearch(props: React.ComponentProps<typeof Input>) {
   return (
-    <div className="relative flex items-center">
-      <span className="absolute left-2.5 flex items-center pointer-events-none text-gray-500">
+    <div className="relative flex w-full items-center">
+      <span className="pointer-events-none absolute flex items-center text-gray-500 left-2.5">
         <MagnifyingGlassIcon aria-hidden="true" className="-ml-0.5 size-5"/>
       </span>
       <Input
