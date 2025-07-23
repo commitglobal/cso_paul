@@ -16,6 +16,7 @@ from typing import Any, Dict
 
 import environ
 import sentry_sdk
+from django.urls import reverse_lazy
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
@@ -420,6 +421,7 @@ PASSWORD_RESET_EXPIRY_TIME = timezone.timedelta(hours=env.int("EMAIL_PASSWORD_RE
 
 MAX_RESET_ATTEMPTS = 5
 MAX_LOGIN_ATTEMPTS = 5
+LOGIN_URL = reverse_lazy("users:login")
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
