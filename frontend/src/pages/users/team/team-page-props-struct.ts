@@ -29,6 +29,7 @@ export const TeamPagePropsStruct = assign(
     description: string(),
     user_count: number(),
     breadcrumbs: array(Breadcrumb),
+    search_query: string(),
     users: array(UserStruct),
     pagination: Pagination,
   }),

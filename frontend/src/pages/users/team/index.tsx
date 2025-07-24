@@ -1,33 +1,47 @@
-import { DataTable } from "@/components/ui/data-table";
+import { DataTable } from "@/components/paul/data-table";
 import { useValidatedProps } from "@/hooks/use-validated-props.ts";
-import BaseLayout from "@/layouts/base-layout.tsx";
+import BaseLayout from "@/layouts/base-layout";
 import { useMemo } from "react";
 import { Columns } from "./columns";
 import { useTranslation } from "react-i18next";
 import { ArrowPathIcon, UserPlusIcon } from "@heroicons/react/20/solid";
-import { InputSearch } from "@/components/ui/input-search.tsx";
+import { InputSearch } from "@/components/ui/input-search";
 import { FunnelIcon } from "@heroicons/react/24/outline";
-import { Button } from "@/components/ui/button.tsx";
+import { Button } from "@/components/ui/button";
 import userEmptyImage from "@/assets/user-empty.svg";
-import PaginationElided from "@/components/ui/pagination.tsx";
-import {
-  type TeamPageProps,
-  TeamPagePropsStruct
-} from "@/pages/users/team/team-page-props-struct.ts";
-import type { Pagination } from "@/types/pagination.ts";
+import { type TeamPageProps, TeamPagePropsStruct } from "@/pages/users/team/team-page-props-struct.ts";
+import { PaginationFooter } from "@/components/paul/pagination-footer";
+import { router } from "@inertiajs/react";
 
 
 export default function TeamPage() {
   const {
-    props: {users, user_count, pagination},
+    props: {users, user_count, pagination, search_query},
   } = useValidatedProps<TeamPageProps>(TeamPagePropsStruct);
 
   const {t} = useTranslation();
 
-  // Pass t to Columns to avoid calling hooks inside useMemo
+  const [pageSize, setPageSize] = useMemo(() => {
+    const size: string = pagination.per_page.toString();
+    return [size, (size: string) => {
+      const params = new URLSearchParams(window.location.search);
+      params.set("page_size", size.toString());
+      router.get(window.location.pathname + "?" + params.toString(), {}, {preserveState: true});
+    }];
+  }, [pagination.per_page]);
+
   const tableColumns = useMemo(() => Columns(t), [t]);
 
-  const typedPagination: Pagination = pagination;
+  const handleSearch = (query: string) => {
+    const params = new URLSearchParams(window.location.search);
+    if (query) {
+      params.set("search", query);
+      params.delete("page");
+    } else {
+      params.delete("search");
+    }
+    router.get(window.location.pathname + "?" + params.toString(), {}, {preserveState: true});
+  };
 
   return (
     <div className="flex flex-col gap-4 py-4">
@@ -55,30 +69,31 @@ export default function TeamPage() {
         <div className="w-full border-t border-gray-300"/>
       </div>
 
+      <>
+        <div className="flex w-full items-center gap-4 px-4 sm:px-6 xl:w-1/2 xl:px-8 2xl:1/3">
+          <InputSearch
+            placeholder={t('users.team.searchPlaceholder')}
+            value={search_query}
+            onSearch={handleSearch}
+          />
+          <Button
+            variant="outline"
+            size="icon"
+            aria-label={t('users.team.filterOptions')}
+            onClick={() => console.log('Filter options clicked')}
+          >
+            <FunnelIcon
+              aria-hidden="true"
+              className="h-5 w-5 text-paul-500 hover:text-paul-700 hover:fill-current"
+            />
+          </Button>
+        </div>
+      </>
+
       {user_count > 0 ? (
         <>
-          <div className="flex w-full items-center gap-4 px-4 sm:px-6 xl:w-1/2 2xl:1/3 xl:px-8">
-            <InputSearch/>
-            <Button
-              variant="outline"
-              size="icon"
-              aria-label={t('users.team.filterOptions')}
-              onClick={() => console.log('Filter options clicked')}
-            >
-              <FunnelIcon
-                aria-hidden="true"
-                className="h-5 w-5 text-paul-500 hover:text-paul-700 hover:fill-current"
-              />
-            </Button>
-          </div>
-
           <DataTable columns={tableColumns} data={users}/>
-          <div className="mt-4 flex justify-center">
-            <PaginationElided
-              currentPage={typedPagination.current_page}
-              totalPages={typedPagination.num_pages}
-            />
-          </div>
+          <PaginationFooter pageSize={pageSize} setPageSize={setPageSize} pagination={pagination}/>
         </>
       ) : (
         <div className="mx-auto flex max-w-sm flex-col items-center justify-center py-16">
@@ -102,5 +117,4 @@ export default function TeamPage() {
     </div>
   );
 }
-
 TeamPage.layout = BaseLayout;

@@ -10,4 +10,5 @@ urlpatterns = [
     path("login/ngohub/", users.views.auth.ngohub_login, name="login-by-ngohub"),
     path("logout/", users.views.auth.logout, name="logout"),
     path("team/", users.views.team.manage_team, name="manage-team"),
+    path("team/api/", users.views.team.api_team_users, name="team-api-users"),
 ]

@@ -3,8 +3,9 @@ import { router } from "@inertiajs/react"
 import { ChevronLeftIcon, ChevronRightIcon, MoreHorizontalIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { Button } from "@/components/ui/button"
 import { useTranslation } from "react-i18next";
+import { buttonVariants } from "@/constants/button-variants.ts";
 
 function Pagination({className, ...props}: React.ComponentProps<"nav">) {
   return (
@@ -54,6 +55,7 @@ function PaginationLink(
       data-slot="pagination-link"
       data-active={isActive}
       className={cn(
+        "hover:cursor-pointer",
         buttonVariants({
           variant: isActive ? "outline" : "ghost",
           size,
@@ -159,26 +161,36 @@ const PaginationElided: React.FC<PaginationElidedProps> = (
   }) => {
   const pageNumbers = getPageNumbers(currentPage, totalPages)
 
-  // Default navigation logic using Inertia router and current path
+  // Merge page param into existing query string
   const handlePageChange = (page: number) => {
     if (onPageChange) {
       onPageChange(page)
     } else {
-      const url = `${window.location.pathname}?page=${page}`
-      router.get(url, {}, {preserveScroll: true, preserveState: true})
+      const url = new URL(window.location.href)
+      url.searchParams.set("page", String(page))
+      router.get(`${url.pathname}?${url.searchParams.toString()}`, {}, {preserveScroll: true, preserveState: true})
     }
   }
+
+  const isFirstPage: boolean = currentPage === 1
+  const isLastPage: boolean = currentPage === totalPages
+  const isSinglePage: boolean = isFirstPage && isLastPage;
 
   return (
     <Pagination className={className}>
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
-            onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
-            aria-disabled={currentPage === 1}
-            tabIndex={currentPage === 1 ? -1 : 0}
+            onClick={
+              isFirstPage
+                ? undefined
+                : () => handlePageChange(Math.max(1, currentPage - 1))
+            }
+            aria-disabled={isFirstPage}
+            tabIndex={isFirstPage ? -1 : 0}
           />
         </PaginationItem>
+
         {pageNumbers.map((page, idx) =>
           page === "ellipsis" ? (
             <PaginationItem key={`ellipsis-${idx}`}>
@@ -188,7 +200,11 @@ const PaginationElided: React.FC<PaginationElidedProps> = (
             <PaginationItem key={page}>
               <PaginationLink
                 isActive={page === currentPage}
-                onClick={() => handlePageChange(Number(page))}
+                onClick={
+                  isSinglePage
+                    ? undefined
+                    : () => handlePageChange(Number(page))
+                }
                 aria-disabled={page === currentPage}
                 tabIndex={page === currentPage ? -1 : 0}
               >
@@ -197,11 +213,16 @@ const PaginationElided: React.FC<PaginationElidedProps> = (
             </PaginationItem>
           )
         )}
+
         <PaginationItem>
           <PaginationNext
-            onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
-            aria-disabled={currentPage === totalPages}
-            tabIndex={currentPage === totalPages ? -1 : 0}
+            onClick={
+              isLastPage
+                ? undefined
+                : () => handlePageChange(Math.min(totalPages, currentPage + 1))
+            }
+            aria-disabled={isLastPage}
+            tabIndex={isLastPage ? -1 : 0}
           />
         </PaginationItem>
       </PaginationContent>
