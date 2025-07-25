@@ -4,9 +4,10 @@ import { createRoot } from 'react-dom/client'
 import { Fallback } from './components/paul/fallback.tsx'
 import type { Page } from '@inertiajs/core'
 import BaseLayout from './layouts/base-layout';
-import './index.css'
 import { I18nextProvider } from 'react-i18next';
+import { NuqsAdapter } from "nuqs/adapters/react";
 import i18n from './i18n';
+import './index.css'
 
 const pages = import.meta.glob('./pages/**/*.tsx')
 
@@ -29,7 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
       createRoot(el).render(
         <ErrorBoundary FallbackComponent={Fallback}>
           <I18nextProvider i18n={i18n}>
-            <App {...props} />
+            <NuqsAdapter>
+              <App {...props} />
+            </NuqsAdapter>
           </I18nextProvider>
         </ErrorBoundary>
       )

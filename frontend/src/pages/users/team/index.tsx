@@ -21,15 +21,6 @@ export default function TeamPage() {
 
   const {t} = useTranslation();
 
-  const [pageSize, setPageSize] = useMemo(() => {
-    const size: string = pagination.per_page.toString();
-    return [size, (size: string) => {
-      const params = new URLSearchParams(window.location.search);
-      params.set("page_size", size.toString());
-      router.get(window.location.pathname + "?" + params.toString(), {}, {preserveState: true});
-    }];
-  }, [pagination.per_page]);
-
   const tableColumns = useMemo(() => Columns(t), [t]);
 
   const handleSearch = (query: string) => {
@@ -93,7 +84,7 @@ export default function TeamPage() {
       {user_count > 0 ? (
         <>
           <DataTable columns={tableColumns} data={users}/>
-          <PaginationFooter pageSize={pageSize} setPageSize={setPageSize} pagination={pagination}/>
+          <PaginationFooter pagination={pagination}/>
         </>
       ) : (
         <div className="mx-auto flex max-w-sm flex-col items-center justify-center py-16">

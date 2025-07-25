@@ -4,28 +4,32 @@ import { PaginationSizeSelector } from "@/components/ui/pagination-size-selector
 import PaginationElided from "@/components/ui/pagination";
 
 type PaginationFooterProps = {
-  pageSize: string
-  setPageSize: (size: string) => void
   pagination: Pagination
 }
 
-export function PaginationFooter({pageSize, setPageSize, pagination}: PaginationFooterProps) {
+const setPageSize = (size: string) => {
+  const params = new URLSearchParams(window.location.search);
+  params.set("page_size", size.toString());
+  window.location.search = params.toString();
+}
+
+export function PaginationFooter({pagination}: PaginationFooterProps) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-4 items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+    <div className="grid grid-cols-2 xl:grid-cols-4 items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
       <div className="col-span-1">
         <PaginationIndicator pagination={pagination}/>
       </div>
-      <div className="col-span-1">
 
+      <div className="col-span-1">
         <PaginationSizeSelector
-          value={pageSize}
-          onChange={setPageSize}/>
+          value={String(pagination.per_page)}
+          onChange={setPageSize}
+        />
       </div>
 
       <div className="col-span-2">
         <PaginationElided
-          currentPage={pagination.current_page}
-          totalPages={pagination.num_pages}/>
+          pagination={pagination}/>
       </div>
     </div>
   )
