@@ -67,11 +67,8 @@
     "previous": "Previous",
     "next": "Next",
     "indicator": "Showing {{from}} to {{to}} of {{total}} items",
-    "sizeSelector": {
-      "per_page": "per page",
-      "no_results": "'Enter' to use current value",
-      "search_placeholder": "Type or select..."
-    }
+    "rowsPerPage": "per page",
+    "all": "All"
   },
   "input": {
     "search": {

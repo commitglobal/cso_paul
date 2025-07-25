@@ -67,11 +67,8 @@
     "previous": "Anterior",
     "next": "Următorul",
     "indicator": "Arată {{from}} la {{to}} din {{total}} itemi",
-    "sizeSelector": {
-      "per_page": "per pagină",
-      "no_results": "'Enter' pentru a folosi valoarea curentă",
-      "search_placeholder": "Scrie sau selectează..."
-    }
+    "rowsPerPage": "per pagină",
+    "all": "Tot"
   },
   "input": {
     "search": {

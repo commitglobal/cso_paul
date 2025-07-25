@@ -1,5 +1,5 @@
 import React, { useMemo } from "react"
-import { router } from "@inertiajs/react"
+// import { router } from "@inertiajs/react"
 import { ChevronLeftIcon, ChevronRightIcon, MoreHorizontalIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button"
 import { useTranslation } from "react-i18next";
 import { buttonVariants } from "@/constants/button-variants.ts";
 import { parseAsInteger, useQueryState } from "nuqs";
-import { Pagination } from "@/types/pagination";
 
 function PaginationNav({className, ...props}: React.ComponentProps<"nav">) {
   return (
@@ -131,7 +130,7 @@ function PaginationEllipsis(
 }
 
 type PaginationElidedProps = {
-  pagination: Pagination;
+  totalPages: number;
 }
 
 function getPageNumbers(current: number, total: number): (number | "ellipsis")[] {
@@ -148,29 +147,17 @@ function getPageNumbers(current: number, total: number): (number | "ellipsis")[]
   for (let i = l; i <= r; i++) range.push(i);
   if (r < total - 1) range.push("ellipsis");
   if (total > 1) range.push(total);
+
   return range
 }
 
 const PaginationElided: React.FC<PaginationElidedProps> = (
   {
-    pagination,
+    totalPages,
   }) => {
   const [currentPage, setCurrentPage] = useQueryState('page', parseAsInteger.withDefault(1));
 
-  const totalPages = pagination.num_pages;
   const pageNumbers = useMemo(() => getPageNumbers(currentPage, totalPages), [currentPage, totalPages]);
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page).then(() => {
-      router.get(window.location.href, {}, {
-        preserveScroll: true,
-        preserveState: true,
-        replace: true,
-      });
-    });
-  }
-
-  console.log("Current Page:", currentPage);
 
   const isFirstPage: boolean = currentPage === 1;
   const isLastPage: boolean = currentPage === totalPages;
@@ -183,7 +170,7 @@ const PaginationElided: React.FC<PaginationElidedProps> = (
             onClick={
               isFirstPage
                 ? undefined
-                : () => handlePageChange(Math.max(1, currentPage - 1))
+                : () => setCurrentPage(Math.max(1, currentPage - 1))
             }
             aria-disabled={isFirstPage}
             tabIndex={isFirstPage ? -1 : 0}
@@ -203,7 +190,7 @@ const PaginationElided: React.FC<PaginationElidedProps> = (
                   onClick={
                     isCurrentPage
                       ? undefined
-                      : () => handlePageChange(Number(pageNum))
+                      : () => setCurrentPage(Number(pageNum))
                   }
                   aria-disabled={isCurrentPage}
                   tabIndex={isCurrentPage ? -1 : 0}
@@ -220,7 +207,7 @@ const PaginationElided: React.FC<PaginationElidedProps> = (
             onClick={
               isLastPage
                 ? undefined
-                : () => handlePageChange(Math.min(totalPages, currentPage + 1))
+                : () => setCurrentPage(Math.min(totalPages, currentPage + 1))
             }
             aria-disabled={isLastPage}
             tabIndex={isLastPage ? -1 : 0}

@@ -11,28 +11,19 @@ import { Button } from "@/components/ui/button";
 import userEmptyImage from "@/assets/user-empty.svg";
 import { type TeamPageProps, TeamPagePropsStruct } from "@/pages/users/team/team-page-props-struct.ts";
 import { PaginationFooter } from "@/components/paul/pagination-footer";
-import { router } from "@inertiajs/react";
+import { parseAsString, useQueryState } from "nuqs";
 
 
 export default function TeamPage() {
   const {
-    props: {users, user_count, pagination, search_query},
+    props: {users, user_count, pagination},
   } = useValidatedProps<TeamPageProps>(TeamPagePropsStruct);
 
   const {t} = useTranslation();
 
   const tableColumns = useMemo(() => Columns(t), [t]);
 
-  const handleSearch = (query: string) => {
-    const params = new URLSearchParams(window.location.search);
-    if (query) {
-      params.set("search", query);
-      params.delete("page");
-    } else {
-      params.delete("search");
-    }
-    router.get(window.location.pathname + "?" + params.toString(), {}, {preserveState: true});
-  };
+const [searchString , setSearchString ] = useQueryState("search", parseAsString.withDefault(""));
 
   return (
     <div className="flex flex-col gap-4 py-4">
@@ -64,8 +55,8 @@ export default function TeamPage() {
         <div className="flex w-full items-center gap-4 px-4 sm:px-6 xl:w-1/2 xl:px-8 2xl:1/3">
           <InputSearch
             placeholder={t('users.team.searchPlaceholder')}
-            value={search_query}
-            onSearch={handleSearch}
+            value={searchString}
+            onSearch={setSearchString}
           />
           <Button
             variant="outline"
@@ -84,7 +75,7 @@ export default function TeamPage() {
       {user_count > 0 ? (
         <>
           <DataTable columns={tableColumns} data={users}/>
-          <PaginationFooter pagination={pagination}/>
+          <PaginationFooter totalItems={pagination.total_items} totalPages={pagination.num_pages}/>
         </>
       ) : (
         <div className="mx-auto flex max-w-sm flex-col items-center justify-center py-16">
