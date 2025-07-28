@@ -1,7 +1,7 @@
 import { DataTable } from "@/components/ui/data-table";
 import { useValidatedProps } from "@/hooks/use-validated-props.ts";
 import BaseLayout from "@/layouts/base-layout.tsx";
-import { useMemo } from "react";
+import { useMemo, useCallback, useState } from "react";
 import { Columns } from "./columns";
 import { useTranslation } from "react-i18next";
 import { ArrowPathIcon, UserPlusIcon } from "@heroicons/react/20/solid";
@@ -16,6 +16,9 @@ import {
 } from "@/pages/users/team/team-page-props-struct.ts";
 import type { Pagination } from "@/types/pagination.ts";
 
+import { AddTeamMemberDialog } from "./add-team-member-dialog";
+
+
 
 export default function TeamPage() {
   const {
@@ -24,12 +27,23 @@ export default function TeamPage() {
 
   const {t} = useTranslation();
 
+  const [open, setOpen] = useState(false);
+  const handleCloseDialog = useCallback(() => {
+    setOpen(false);
+  }, []);
+
+  const handleOpenDialog = useCallback(() => {
+    setOpen(true);
+  }, []);
+
+
   // Pass t to Columns to avoid calling hooks inside useMemo
   const tableColumns = useMemo(() => Columns(t), [t]);
 
   const typedPagination: Pagination = pagination;
 
   return (
+    <>
     <div className="flex flex-col gap-4 py-4">
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
@@ -43,7 +57,7 @@ export default function TeamPage() {
               <ArrowPathIcon aria-hidden="true" className="h-5 w-5 -ml-0.5"/>
               {t('users.team.ngohub_refresh')}
             </Button>
-            <Button variant="default" size="sm" className="gap-x-1.5">
+            <Button variant="default" size="sm" className="gap-x-1.5" onClick={handleOpenDialog}>
               <UserPlusIcon aria-hidden="true" className="h-5 w-5 -ml-0.5"/>
               {t('users.team.addUser')}
             </Button>
@@ -100,6 +114,8 @@ export default function TeamPage() {
         </div>
       )}
     </div>
+    <AddTeamMemberDialog open={open} onClose={handleCloseDialog} />
+    </>
   );
 }
 

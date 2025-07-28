@@ -40,6 +40,11 @@
   },
   "users": {
     "team": {
+      "add": {
+        "name": "Name",
+        "email": "Email",
+        "userRole": "User Role"
+      },
       "addUser": "Add team member",
       "title": "All team members",
       "ngohub_refresh": "Sync with NGO Hub",

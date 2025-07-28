@@ -40,6 +40,11 @@
   },
   "users": {
     "team": {
+      "add": {
+        "name": "Name",
+        "email": "Email",
+        "userRole": "User Role"
+      },
       "addUser": "Adaugă membru în echipă",
       "title": "Toți membrii echipei",
       "ngohub_refresh": "Sincronizează cu NGO Hub",
