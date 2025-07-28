@@ -10,8 +10,8 @@ class PaginationInfo(BaseModel):
     has_previous: bool
     num_pages: int
     current_page: int
-    next_page_number: int | None
-    previous_page_number: int | None
+    next_page_number: Optional[int]
+    previous_page_number: Optional[int]
     total_items: int
     per_page: int
 

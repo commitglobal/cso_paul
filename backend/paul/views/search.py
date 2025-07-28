@@ -4,7 +4,7 @@ from typing import List
 from django.contrib.postgres.search import SearchQuery, SearchVector
 from django.db.models import QuerySet
 
-loggger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 
 def search(query: str, queryset: QuerySet, language_code: str, search_fields: List[str]) -> QuerySet:
@@ -14,7 +14,7 @@ def search(query: str, queryset: QuerySet, language_code: str, search_fields: Li
     if not query:
         return queryset
 
-    loggger.info(f"Searching for '{query}' in fields: {search_fields} with language code: {language_code}")
+    logger.info(f"Searching for '{query}' in fields: {search_fields} with language code: {language_code}")
 
     search_vector = SearchVector(*search_fields)
     search_query = SearchQuery(query)

@@ -55,7 +55,7 @@ const [searchString , setSearchString ] = useQueryState("search", parseAsString.
         <div className="flex w-full items-center gap-4 px-4 sm:px-6 xl:w-1/2 xl:px-8 2xl:1/3">
           <InputSearch
             placeholder={t('users.team.searchPlaceholder')}
-            value={searchString}
+            initialValue={searchString}
             onSearch={setSearchString}
           />
           <Button

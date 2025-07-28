@@ -1,22 +1,22 @@
 "use client"
 
-import React, { useRef, useState } from "react"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
+import React, { useRef, useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 
-class InputSearchProps {
-  value: string = "";
+type InputSearchProps = {
+  initialValue: string;
   placeholder?: string;
-  onSearch?: (query: string) => void;
+  onSearch: (value: string) => void;
   onChange?: (value: string) => void;
 }
 
 export function InputSearch(
   {
-    value,
+    initialValue,
     placeholder,
     onSearch,
     onChange,
@@ -24,9 +24,10 @@ export function InputSearch(
 ) {
   const {t} = useTranslation();
 
-  const inputRef = useRef<HTMLInputElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const [inputValue, setInternalValue] = useState<string>(value);
+  const [inputValue, setInternalValue] = useState<string>(initialValue);
+
 
   const handleChange = (val: string) => {
     if (typeof onChange === "function") {
@@ -37,18 +38,18 @@ export function InputSearch(
   };
   const handleClear = () => {
     handleChange("");
-    handleFocusInput();
-  }
+    onSearch("");
+  };
   const handleFocusInput = () => {
     inputRef.current?.focus();
-  }
+  };
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && onSearch) {
+    if (e.key === "Enter") {
       onSearch(inputValue);
     }
   };
   const handleSearchClick = () => {
-    if (onSearch) {
+    if (inputValue) {
       onSearch(inputValue);
     } else {
       handleFocusInput();
