@@ -2,11 +2,10 @@ from typing import Dict, List
 
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Page
-from django.http import HttpRequest, JsonResponse
+from django.http import HttpRequest
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
-from django.views.decorators.http import require_GET
 from inertia import InertiaResponse, inertia
 from inertia import render as inertia_render
 
