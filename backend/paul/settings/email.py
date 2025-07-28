@@ -1,0 +1,34 @@
+from .environment import env
+
+# Email settings
+EMAIL_BACKEND = env.str("EMAIL_BACKEND")
+EMAIL_SEND_METHOD = env.str("EMAIL_SEND_METHOD")
+
+DEFAULT_RECEIVE_EMAIL = env("DEFAULT_RECEIVE_EMAIL")
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL")
+NO_REPLY_EMAIL = env("NO_REPLY_EMAIL")
+CC_STATUS_EMAIL = env("CC_STATUS_EMAIL")
+
+if EMAIL_BACKEND == "django_ses.SESBackend":
+    AWS_SES_CONFIGURATION_SET_NAME = env.str("AWS_SES_CONFIGURATION_SET_NAME")
+
+    AWS_SES_AUTO_THROTTLE = env.float("AWS_SES_AUTO_THROTTLE", default=0.5)
+    AWS_SES_REGION_NAME = env.str("AWS_SES_REGION_NAME") if env("AWS_SES_REGION_NAME") else env("AWS_REGION_NAME")
+    AWS_SES_REGION_ENDPOINT = env.str("AWS_SES_REGION_ENDPOINT", default=f"email.{AWS_SES_REGION_NAME}.amazonaws.com")
+
+    AWS_SES_FROM_EMAIL = DEFAULT_FROM_EMAIL
+
+    USE_SES_V2 = env.bool("AWS_SES_USE_V2", default=True)
+
+    if aws_access_key := env("AWS_ACCESS_KEY_ID", default=None):
+        AWS_ACCESS_KEY_ID = aws_access_key
+        AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
+else:
+    AWS_SES_CONFIGURATION_SET_NAME = None
+    EMAIL_HOST = env.str("EMAIL_HOST")
+    EMAIL_PORT = env.str("EMAIL_PORT")
+    EMAIL_HOST_USER = env.str("EMAIL_HOST_USER")
+    EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD")
+    EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS")
+
+EMAIL_FAIL_SILENTLY = env.bool("EMAIL_FAIL_SILENTLY")
