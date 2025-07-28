@@ -10,6 +10,7 @@ from django.views.decorators.http import require_GET
 from inertia import InertiaResponse, inertia
 from inertia import render as inertia_render
 
+from paul.constants.query_params import PAGE, PAGE_SIZE, SEARCH
 from paul.display import format_dates as display_dates
 from paul.display.build_url import build_ngohub_url
 from paul.views.pagination import paginate_queryset
@@ -34,9 +35,9 @@ def _serialize_users(users_page: Page[User], user_id: int) -> List[Dict]:
 
 
 def _request_users(request):
-    search_query = request.GET.get("search", "").strip()
-    page_number = int(request.GET.get("page", 1))
-    page_size = request.GET.get("page_size", 10)
+    search_query = request.GET.get(SEARCH, "").strip()
+    page_number = int(request.GET.get(PAGE, 1))
+    page_size = request.GET.get(PAGE_SIZE, 10)
 
     users_qs = User.objects.all()
     if search_query:
@@ -63,16 +64,6 @@ def _request_users(request):
     }
 
     return data
-
-
-@require_GET
-@login_required
-def api_team_users(request: HttpRequest):
-    """
-    API endpoint for fetching users with search and pagination.
-    Returns JSON with users and pagination info.
-    """
-    return JsonResponse(_request_users(request))
 
 
 @login_required
