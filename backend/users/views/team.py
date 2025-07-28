@@ -1,5 +1,6 @@
 from typing import Dict, List
 
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Page
 from django.http import HttpRequest
@@ -9,7 +10,6 @@ from django.views.decorators.cache import cache_control
 from inertia import InertiaResponse, inertia
 from inertia import render as inertia_render
 
-from paul.constants.query_params import PAGE, PAGE_SIZE, SEARCH
 from paul.display import format_dates as display_dates
 from paul.display.build_url import build_ngohub_url
 from paul.views.pagination import paginate_queryset
@@ -34,9 +34,9 @@ def _serialize_users(users_page: Page[User], user_id: int) -> List[Dict]:
 
 
 def _request_users(request):
-    search_query = request.GET.get(SEARCH, "").strip()
-    page_number = int(request.GET.get(PAGE, 1))
-    page_size = request.GET.get(PAGE_SIZE, 10)
+    search_query = request.GET.get(settings.QUERY_PARAMS["SEARCH"], "").strip()
+    page_number = int(request.GET.get(settings.QUERY_PARAMS["PAGE"], 1))
+    page_size = request.GET.get(settings.QUERY_PARAMS["PAGE_SIZE"], 10)
 
     users_qs = User.objects.all()
     if search_query:

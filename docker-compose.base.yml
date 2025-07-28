@@ -20,7 +20,6 @@ services:
     env_file:
       - .env
     environment:
-      DATABASE_ENGINE: "postgresql"
       DATABASE_PORT: "5432"
       DATABASE_NAME: "${DATABASE_NAME}"
       DATABASE_USER: "${DATABASE_USER}"
