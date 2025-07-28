@@ -26,6 +26,7 @@ dependencies = [
   "gunicorn~=23.0.0",
   "whitenoise~=6.9.0",
   "ngohub~=0.1.0",
+  "pydantic>=2.11.7",
 ]
 
 
@@ -103,10 +104,12 @@ exclude = [
 # Same as Black.
 line-length = 120
 
-
 [tool.ruff.lint.mccabe]
 # Unlike Flake8, default to a complexity level of 10.
 max-complexity = 10
+
+[tool.ruff.lint.extend-per-file-ignores]
+"paul/settings/__init__.py" = ["F403"]
 
 
 [tool.uv]

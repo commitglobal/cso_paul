@@ -1,20 +1,18 @@
-import { DataTable } from "@/components/ui/data-table";
+import { DataTable } from "@/components/paul/data-table";
 import { useValidatedProps } from "@/hooks/use-validated-props.ts";
 import BaseLayout from "@/layouts/base-layout.tsx";
 import { useMemo, useCallback, useState } from "react";
 import { Columns } from "./columns";
 import { useTranslation } from "react-i18next";
 import { ArrowPathIcon, UserPlusIcon } from "@heroicons/react/20/solid";
-import { InputSearch } from "@/components/ui/input-search.tsx";
+import { InputSearch } from "@/components/ui/input-search";
 import { FunnelIcon } from "@heroicons/react/24/outline";
-import { Button } from "@/components/ui/button.tsx";
+import { Button } from "@/components/ui/button";
 import userEmptyImage from "@/assets/user-empty.svg";
-import PaginationElided from "@/components/ui/pagination.tsx";
-import {
-  type TeamPageProps,
-  TeamPagePropsStruct
-} from "@/pages/users/team/team-page-props-struct.ts";
-import type { Pagination } from "@/types/pagination.ts";
+import { type TeamPageProps, TeamPagePropsStruct } from "@/pages/users/team/team-page-props-struct.ts";
+import { PaginationFooter } from "@/components/paul/pagination-footer";
+import { QUERY_PARAM_SEARCH } from "@/constants/query-params";
+import { parseAsString, useQueryState } from "nuqs";
 
 import { AddTeamMemberDialog } from "./add-team-member-dialog";
 
@@ -40,7 +38,7 @@ export default function TeamPage() {
   // Pass t to Columns to avoid calling hooks inside useMemo
   const tableColumns = useMemo(() => Columns(t), [t]);
 
-  const typedPagination: Pagination = pagination;
+const [searchString , setSearchString ] = useQueryState(QUERY_PARAM_SEARCH, parseAsString.withDefault(""));
 
   return (
     <>
@@ -69,30 +67,31 @@ export default function TeamPage() {
         <div className="w-full border-t border-gray-300"/>
       </div>
 
+      <>
+        <div className="flex w-full items-center gap-4 px-4 sm:px-6 xl:w-1/2 xl:px-8 2xl:1/3">
+          <InputSearch
+            placeholder={t('users.team.searchPlaceholder')}
+            initialValue={searchString}
+            onSearch={setSearchString}
+          />
+          <Button
+            variant="outline"
+            size="icon"
+            aria-label={t('users.team.filterOptions')}
+            onClick={() => console.log('Filter options clicked')}
+          >
+            <FunnelIcon
+              aria-hidden="true"
+              className="h-5 w-5 text-paul-500 hover:text-paul-700 hover:fill-current"
+            />
+          </Button>
+        </div>
+      </>
+
       {user_count > 0 ? (
         <>
-          <div className="flex w-full items-center gap-4 px-4 sm:px-6 xl:w-1/2 2xl:1/3 xl:px-8">
-            <InputSearch/>
-            <Button
-              variant="outline"
-              size="icon"
-              aria-label={t('users.team.filterOptions')}
-              onClick={() => console.log('Filter options clicked')}
-            >
-              <FunnelIcon
-                aria-hidden="true"
-                className="h-5 w-5 text-paul-500 hover:text-paul-700 hover:fill-current"
-              />
-            </Button>
-          </div>
-
           <DataTable columns={tableColumns} data={users}/>
-          <div className="mt-4 flex justify-center">
-            <PaginationElided
-              currentPage={typedPagination.current_page}
-              totalPages={typedPagination.num_pages}
-            />
-          </div>
+          <PaginationFooter totalItems={pagination.total_items} totalPages={pagination.num_pages}/>
         </>
       ) : (
         <div className="mx-auto flex max-w-sm flex-col items-center justify-center py-16">
@@ -118,5 +117,4 @@ export default function TeamPage() {
     </>
   );
 }
-
 TeamPage.layout = BaseLayout;

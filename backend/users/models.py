@@ -55,10 +55,14 @@ class User(AbstractUser):
     email = models.EmailField(verbose_name=_("email address"), blank=False, null=False, unique=True)
     is_ngohub_user = models.BooleanField(default=False, editable=False)
 
+    objects = CustomUserManager()
+
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
     class Meta:
+        ordering = ["pk"]
+
         verbose_name = _("User")
         verbose_name_plural = _("Users")
         constraints = [

@@ -1,12 +1,15 @@
-import React from "react"
-import { router } from "@inertiajs/react"
+import React, { useMemo } from "react"
+// import { router } from "@inertiajs/react"
 import { ChevronLeftIcon, ChevronRightIcon, MoreHorizontalIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { Button } from "@/components/ui/button"
 import { useTranslation } from "react-i18next";
+import { buttonVariants } from "@/constants/button-variants.ts";
+import { parseAsInteger, useQueryState } from "nuqs";
+import { QUERY_PARAM_PAGE } from "@/constants/query-params.ts";
 
-function Pagination({className, ...props}: React.ComponentProps<"nav">) {
+function PaginationNav({className, ...props}: React.ComponentProps<"nav">) {
   return (
     <nav
       role="navigation"
@@ -54,6 +57,7 @@ function PaginationLink(
       data-slot="pagination-link"
       data-active={isActive}
       className={cn(
+        "hover:cursor-pointer",
         buttonVariants({
           variant: isActive ? "outline" : "ghost",
           size,
@@ -127,86 +131,92 @@ function PaginationEllipsis(
 }
 
 type PaginationElidedProps = {
-  currentPage: number
-  totalPages: number
-  onPageChange?: (page: number) => void
-  className?: string
+  totalPages: number;
 }
 
 function getPageNumbers(current: number, total: number): (number | "ellipsis")[] {
-  const delta = 2
-  const range: (number | "ellipsis")[] = []
-  let l = Math.max(2, current - delta)
-  let r = Math.min(total - 1, current + delta)
+  const delta = 2;
+  const range: (number | "ellipsis")[] = [];
+  let l = Math.max(2, current - delta);
+  let r = Math.min(total - 1, current + delta);
 
-  if (current - delta <= 2) l = 2
-  if (current + delta >= total - 1) r = total - 1
+  if (current - delta <= 2) l = 2;
+  if (current + delta >= total - 1) r = total - 1;
 
-  range.push(1)
-  if (l > 2) range.push("ellipsis")
-  for (let i = l; i <= r; i++) range.push(i)
-  if (r < total - 1) range.push("ellipsis")
-  if (total > 1) range.push(total)
+  range.push(1);
+  if (l > 2) range.push("ellipsis");
+  for (let i = l; i <= r; i++) range.push(i);
+  if (r < total - 1) range.push("ellipsis");
+  if (total > 1) range.push(total);
+
   return range
 }
 
 const PaginationElided: React.FC<PaginationElidedProps> = (
   {
-    currentPage,
     totalPages,
-    onPageChange,
-    className,
   }) => {
-  const pageNumbers = getPageNumbers(currentPage, totalPages)
+  const [currentPage, setCurrentPage] = useQueryState(QUERY_PARAM_PAGE, parseAsInteger.withDefault(1));
 
-  // Default navigation logic using Inertia router and current path
-  const handlePageChange = (page: number) => {
-    if (onPageChange) {
-      onPageChange(page)
-    } else {
-      const url = `${window.location.pathname}?page=${page}`
-      router.get(url, {}, {preserveScroll: true, preserveState: true})
-    }
-  }
+  const pageNumbers = useMemo(() => getPageNumbers(currentPage, totalPages), [currentPage, totalPages]);
+
+  const isFirstPage: boolean = currentPage === 1;
+  const isLastPage: boolean = currentPage === totalPages;
 
   return (
-    <Pagination className={className}>
+    <PaginationNav>
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
-            onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
-            aria-disabled={currentPage === 1}
-            tabIndex={currentPage === 1 ? -1 : 0}
+            onClick={
+              isFirstPage
+                ? undefined
+                : () => setCurrentPage(Math.max(1, currentPage - 1))
+            }
+            aria-disabled={isFirstPage}
+            tabIndex={isFirstPage ? -1 : 0}
           />
         </PaginationItem>
-        {pageNumbers.map((page, idx) =>
-          page === "ellipsis" ? (
-            <PaginationItem key={`ellipsis-${idx}`}>
-              <PaginationEllipsis/>
-            </PaginationItem>
-          ) : (
-            <PaginationItem key={page}>
-              <PaginationLink
-                isActive={page === currentPage}
-                onClick={() => handlePageChange(Number(page))}
-                aria-disabled={page === currentPage}
-                tabIndex={page === currentPage ? -1 : 0}
-              >
-                {page}
-              </PaginationLink>
-            </PaginationItem>
-          )
+
+        {pageNumbers.map((pageNum, idx) => {
+            const isCurrentPage: boolean = pageNum === currentPage;
+            return pageNum === "ellipsis" ? (
+              <PaginationItem key={`ellipsis-${idx}`}>
+                <PaginationEllipsis/>
+              </PaginationItem>
+            ) : (
+              <PaginationItem key={pageNum}>
+                <PaginationLink
+                  isActive={isCurrentPage}
+                  onClick={
+                    isCurrentPage
+                      ? undefined
+                      : () => setCurrentPage(Number(pageNum))
+                  }
+                  aria-disabled={isCurrentPage}
+                  tabIndex={isCurrentPage ? -1 : 0}
+                >
+                  {pageNum}
+                </PaginationLink>
+              </PaginationItem>
+            );
+          }
         )}
+
         <PaginationItem>
           <PaginationNext
-            onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
-            aria-disabled={currentPage === totalPages}
-            tabIndex={currentPage === totalPages ? -1 : 0}
+            onClick={
+              isLastPage
+                ? undefined
+                : () => setCurrentPage(Math.min(totalPages, currentPage + 1))
+            }
+            aria-disabled={isLastPage}
+            tabIndex={isLastPage ? -1 : 0}
           />
         </PaginationItem>
       </PaginationContent>
-    </Pagination>
+    </PaginationNav>
   )
 }
 
-export default PaginationElided
+export default PaginationElided;
