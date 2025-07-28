@@ -8,7 +8,7 @@
     --foreground: oklch(0 0 0);
     --card: oklch(1.0000 0 0);
     --card-foreground: oklch(0.2126 0.0066 314.6771);
-    --popover: oklch(0.9448 0.0400 317.0001);
+    --popover: oklch(0.9851 0 0);
     --popover-foreground: oklch(0 0 0);
     --primary: oklch(0.5239 0.2468 323.5352);
     --primary-foreground: oklch(1.0000 0 0);
@@ -150,6 +150,16 @@
     --shadow-2xl: var(--shadow-2xl);
 }
 
+@layer base {
+    * {
+        @apply border-border outline-ring/50;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+    }
+}
+
 @theme {
     --color-paul-50: oklch(0.979 0.007 304.244);
     --color-paul-100: oklch(0.957 0.02 315.669);
@@ -162,4 +172,16 @@
     --color-paul-800: oklch(0.278 0.03 256.848);
     --color-paul-900: oklch(0.21 0.032 264.665);
     --color-paul-950: oklch(0.165 0.025 265.002);
+}
+
+/* Styling for tables */
+@layer components {
+
+    th {
+        @apply border-y bg-gray-50 p-4;
+    }
+
+    tr:hover {
+        @apply bg-muted/50;
+    }
 }

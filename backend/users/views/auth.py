@@ -1,5 +1,5 @@
 import json
-from typing import Any
+from typing import Any, Union
 
 from django.contrib import auth, messages
 from django.http import Http404, HttpRequest, HttpResponse
@@ -57,7 +57,7 @@ def login_choice(request: HttpRequest) -> dict[str, Any]:
 
 
 @cache_control(private=True)
-def email_login(request: HttpRequest) -> RedirectionResponse | InertiaResponse:
+def email_login(request: HttpRequest) -> Union[InertiaResponse, RedirectionResponse]:
     """
     Login by using the email and password
     """

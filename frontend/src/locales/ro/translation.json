@@ -50,8 +50,8 @@
         "deleteFromTeam": "Șterge din echipă"
       },
       "empty": {
-        "title": "Încă nu există membri în echipă",
-        "description": "Nu ai niciun membru în echipă în PAUL. Pentru a începe, sincronizează-ți echipa din NGO Hub. Toți membrii cu acces vor apărea aici, iar tu vei putea gestiona rolurile și permisiunile."
+        "title": "Nu a fost găsit niciun membru în echipă",
+        "description": "Nu a fost găsit niciun membru în echipă. Poți să-ți sincronizezi echipa din NGO Hub. Toți membrii cu acces vor apărea aici, iar tu vei putea gestiona rolurile și permisiunile."
       },
       "table": {
         "user": "Utilizator",
@@ -59,11 +59,26 @@
         "added_since": "Adăugat din",
         "last_activity": "Ultima activitate"
       },
-      "filterOptions": "Filtre"
+      "filterOptions": "Filtre",
+      "searchPlaceholder": "Caută membrii echipei..."
     }
   },
   "pagination": {
     "previous": "Anterior",
-    "next": "Următorul"
+    "next": "Următorul",
+    "indicator": "Arată {{from}} la {{to}} din {{total}} itemi",
+    "rowsPerPage": "per pagină",
+    "all": "Tot"
+  },
+  "input": {
+    "search": {
+      "clear": "Șterge căutarea",
+      "placeholder": "Caută...",
+      "focus": "Focus pe căutare",
+      "label": "Căutare"
+    }
+  },
+  "table": {
+    "noData": "Nu sunt rezultate."
   }
 }

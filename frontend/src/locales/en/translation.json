@@ -50,8 +50,8 @@
         "deleteFromTeam": "Delete from team"
       },
       "empty": {
-        "title": "No team members yet",
-        "description": "You don’t have any team members in PAUL. To get started, sync your team from NGO Hub. All members with access will appear here, and you’ll be able to manage roles and permissions."
+        "title": "No team members found",
+        "description": "No team members found. You can sync your team from NGO Hub. All members with access will appear here, and you will be able to manage roles and permissions."
       },
       "table": {
         "user": "User",
@@ -59,11 +59,26 @@
         "added_since": "Added Since",
         "last_activity": "Last Activity"
       },
-      "filterOptions": "Filters"
+      "filterOptions": "Filters",
+      "searchPlaceholder": "Search team members..."
     }
   },
   "pagination": {
     "previous": "Previous",
-    "next": "Next"
+    "next": "Next",
+    "indicator": "Showing {{from}} to {{to}} of {{total}} items",
+    "rowsPerPage": "per page",
+    "all": "All"
+  },
+  "input": {
+    "search": {
+      "clear": "Clear search",
+      "placeholder": "Search...",
+      "focus": "Focus on search input",
+      "label": "Search input"
+    }
+  },
+  "table": {
+    "noData": "No results."
   }
 }

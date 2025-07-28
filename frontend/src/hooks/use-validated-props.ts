@@ -8,7 +8,7 @@ export function useValidatedProps<T extends PageProps>(struct: Struct<T>) {
   // @todo remove after BE is implemented
   if (import.meta.env.DEV) {
     const [err] = validate(props, struct);
-    if (err) {
+    if (err && err.key !== 'username') {
       console.log('==== Validation fail =====');
       console.log('Message:', err.message);
       console.log('Property:', err.key);

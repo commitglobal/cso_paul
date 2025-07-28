@@ -59,6 +59,8 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
 
     class Meta:
+        ordering = ["pk"]
+
         verbose_name = _("User")
         verbose_name_plural = _("Users")
         constraints = [
