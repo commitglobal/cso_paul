@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import userEmptyImage from "@/assets/user-empty.svg";
 import { type TeamPageProps, TeamPagePropsStruct } from "@/pages/users/team/team-page-props-struct.ts";
 import { PaginationFooter } from "@/components/paul/pagination-footer";
+import { QUERY_PARAM_SEARCH } from "@/constants/query-params";
 import { parseAsString, useQueryState } from "nuqs";
 
 
@@ -23,7 +24,7 @@ export default function TeamPage() {
 
   const tableColumns = useMemo(() => Columns(t), [t]);
 
-const [searchString , setSearchString ] = useQueryState("search", parseAsString.withDefault(""));
+const [searchString , setSearchString ] = useQueryState(QUERY_PARAM_SEARCH, parseAsString.withDefault(""));
 
   return (
     <div className="flex flex-col gap-4 py-4">

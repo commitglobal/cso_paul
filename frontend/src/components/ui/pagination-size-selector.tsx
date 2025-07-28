@@ -4,12 +4,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, } from "
 import { parseAsStringLiteral, useQueryState } from "nuqs";
 import { useTranslation } from "react-i18next";
 import { type PageSize, pageSizes } from "@/constants/pagination.ts";
+import { QUERY_PARAM_PAGE_SIZE } from "@/constants/query-params.ts";
 
 
 export function PaginationSizeSelector() {
   const {t} = useTranslation();
 
-  const [rowsPerPage, setRowsPerPage] = useQueryState("page_size", parseAsStringLiteral(pageSizes).withDefault("10"));
+  const [rowsPerPage, setRowsPerPage] = useQueryState(QUERY_PARAM_PAGE_SIZE, parseAsStringLiteral(pageSizes).withDefault("10"));
 
   return (
     <div className="flex w-full items-center justify-between gap-2">

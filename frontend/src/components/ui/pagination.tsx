@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { useTranslation } from "react-i18next";
 import { buttonVariants } from "@/constants/button-variants.ts";
 import { parseAsInteger, useQueryState } from "nuqs";
+import { QUERY_PARAM_PAGE } from "@/constants/query-params.ts";
 
 function PaginationNav({className, ...props}: React.ComponentProps<"nav">) {
   return (
@@ -155,7 +156,7 @@ const PaginationElided: React.FC<PaginationElidedProps> = (
   {
     totalPages,
   }) => {
-  const [currentPage, setCurrentPage] = useQueryState('page', parseAsInteger.withDefault(1));
+  const [currentPage, setCurrentPage] = useQueryState(QUERY_PARAM_PAGE, parseAsInteger.withDefault(1));
 
   const pageNumbers = useMemo(() => getPageNumbers(currentPage, totalPages), [currentPage, totalPages]);
 
