@@ -1,9 +1,23 @@
+from typing import List, Optional
+
+from django.conf import settings
 from django.contrib.auth.hashers import make_password
-from django.contrib.auth.models import AbstractUser, UserManager
+from django.contrib.auth.models import AbstractUser, Group, UserManager
 from django.db import models
+from django.db.models import QuerySet
 from django.db.models.functions import Lower
 from django.forms.models import model_to_dict
 from django.utils.translation import gettext as _
+
+
+def get_highest_ranked_group(user_groups: QuerySet[Group]) -> Optional[str]:
+    # Get the names of the user's groups
+    user_group_names: List[str] = list(user_groups.values_list("name", flat=True))
+
+    # Find the highest-ranked group
+    ordered_group_names = (group_name for group_name in settings.USER_GROUPS_ORDERING if group_name in user_group_names)
+
+    return next(ordered_group_names, None)
 
 
 class CustomUserManager(UserManager):
@@ -26,12 +40,21 @@ class CustomUserManager(UserManager):
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
 
-        if extra_fields.get("is_staff") is not True:
+        if extra_fields.get("is_staff"):
             raise ValueError(_("Superuser must have is_staff=True."))
-        if extra_fields.get("is_superuser") is not True:
+
+        if extra_fields.get("is_superuser"):
             raise ValueError(_("Superuser must have is_superuser=True."))
 
         return self._create_user(email, password, **extra_fields)
+
+
+class RoleChoices(models.TextChoices):
+    USER = settings.USER, settings.USER_GROUPS[settings.USER]["label"]
+    MANAGER = settings.MANAGER, settings.USER_GROUPS[settings.MANAGER]["label"]
+    NORMAL_ADMIN = settings.NORMAL_ADMIN, settings.USER_GROUPS[settings.NORMAL_ADMIN]["label"]
+    SUPER_ADMIN = settings.SUPER_ADMIN, settings.USER_GROUPS[settings.SUPER_ADMIN]["label"]
+    SUPPORT_ADMIN = settings.SUPPORT_ADMIN, settings.USER_GROUPS[settings.SUPPORT_ADMIN]["label"]
 
 
 class User(AbstractUser):
@@ -55,6 +78,13 @@ class User(AbstractUser):
     email = models.EmailField(verbose_name=_("email address"), blank=False, null=False, unique=True)
     is_ngohub_user = models.BooleanField(default=False, editable=False)
 
+    main_role = models.CharField(
+        max_length=50,
+        choices=RoleChoices.choices,
+        default=RoleChoices.USER,
+        verbose_name=_("role"),
+    )
+
     objects = CustomUserManager()
 
     USERNAME_FIELD = "email"
@@ -71,3 +101,22 @@ class User(AbstractUser):
 
     def to_dict(self):
         return model_to_dict(self, exclude=("password", "is_superuser", "is_staff", "groups", "user_permissions"))
+
+    def __str__(self):
+        return self.email
+
+    def update_main_role(self, *, commit: bool = True) -> None:
+        """
+        Update the user's role based on the highest-ranked group they belong to.
+        If the user does not belong to any group, the role will be set to USER.
+        """
+        user_group = get_highest_ranked_group(self.groups.all())
+
+        # set the role from RoleChoices based on the user_group
+        if user_group:
+            self.main_role = RoleChoices(user_group)
+        else:
+            self.main_role = RoleChoices.USER
+
+        if commit:
+            self.save(update_fields=["main_role"])

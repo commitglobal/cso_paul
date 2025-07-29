@@ -1,6 +1,8 @@
 from datetime import timedelta
+from typing import List
 
 from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
 
 from .environment import env
 
@@ -29,10 +31,10 @@ LOGOUT_REDIRECT_URL = reverse_lazy("users:login")
 
 
 # Groups and Permissions
-SUPER_ADMIN = "super admin"
-NORMAL_ADMIN = "admin"
-MANAGER = "manager"
 USER = "user"
+MANAGER = "manager"
+NORMAL_ADMIN = "admin"
+SUPER_ADMIN = "super admin"
 
 # support admin is a special role that has access to support-related features
 SUPPORT_ADMIN = "support admin"
@@ -61,32 +63,43 @@ super_admin_permissions = admin_permissions
 # Define user groups with their respective permissions and roles
 USER_GROUPS = {
     USER: {
+        "order": 500,
+        "label": _("User"),
         "is_superuser": False,
         "is_staff": False,
         "permissions": user_permissions,
     },
     MANAGER: {
+        "order": 400,
+        "label": _("Manager"),
         "is_superuser": False,
         "is_staff": False,
         "permissions": manager_permissions,
     },
     NORMAL_ADMIN: {
+        "order": 300,
+        "label": _("Admin"),
         "is_superuser": False,
         "is_staff": False,
         "permissions": admin_permissions,
     },
     SUPER_ADMIN: {
+        "order": 100,
+        "label": _("Super Admin"),
         "is_superuser": True,
         "is_staff": False,
         "permissions": super_admin_permissions,
     },
     SUPPORT_ADMIN: {
+        "order": 200,
+        "label": _("Support Admin"),
         "is_superuser": False,
         "is_staff": True,
         "permissions": super_admin_permissions,
     },
 }
 
+USER_GROUPS_ORDERING: List[str] = [key for key, item in sorted(USER_GROUPS.items(), key=lambda x: x[1]["order"])]
 
 # Expiration times and limits for various authentication-related actions
 EMAIL_VERIFICATION_EXPIRY_TIME = timedelta(hours=env.int("EMAIL_VERIFICATION_EXPIRY_HOURS"))

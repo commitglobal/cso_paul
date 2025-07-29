@@ -10,12 +10,12 @@ is_enabled() {
     _UPPER_VALUE=$(to_uppercase "$1")
     if [ "${_UPPER_VALUE}" = "TRUE" ]; then
         return 0
-    elif [ "${_UPPER_VALUE}" = "FALSE" ]; then
+  elif   [ "${_UPPER_VALUE}" = "FALSE" ]; then
         return 1
-    else
+  else
         echo "WARNING: init.sh interpreting \"$1\" as False" >/dev/stderr
         return 1
-    fi
+  fi
 }
 
 cd "${BACKEND_ROOT:-/var/www/paul/backend}" || exit 1
@@ -41,6 +41,11 @@ if is_enabled "${RUN_COLLECT_STATIC:-False}"; then
     echo "Collecting static files"
     mkdir static
     python3 manage.py collectstatic --noinput
+fi
+
+if is_enabled "${RUN_CREATE_GROUPS:-False}"; then
+  echo "Seed the database with the groups"
+  python3 manage.py seed_groups
 fi
 
 # Create the Django Admin super user
