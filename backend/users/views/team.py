@@ -1,3 +1,4 @@
+import logging
 from typing import Dict, List
 
 from django.conf import settings
@@ -9,12 +10,14 @@ from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
 from inertia import InertiaResponse, inertia
 from inertia import render as inertia_render
-
 from paul.display import format_dates as display_dates
 from paul.display.build_url import build_ngohub_url
 from paul.views.pagination import paginate_queryset
 from paul.views.search import search
-from users.models import User
+
+from users.models import RoleChoices, User
+
+logger = logging.getLogger(__name__)
 
 
 def _serialize_users(users_page: Page[User], user_id: int) -> List[Dict]:
@@ -25,7 +28,7 @@ def _serialize_users(users_page: Page[User], user_id: int) -> List[Dict]:
             "last_name": user.last_name,
             "email": user.email,
             "is_current_user": user.id == user_id,
-            "role": "Not implemented",
+            "role": RoleChoices(user.main_role).label,
             "added_since": display_dates.short_date(user.date_joined),
             "last_activity": display_dates.short_datetime(user.date_joined),
         }
