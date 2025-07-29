@@ -1,11 +1,12 @@
+from paul.constants.time import HOUR, MINUTE
+
 from .base import DEBUG
 from .environment import env
 
-
 # Cache timeouts
-CACHE_TIMEOUT_SMALL = 60 * 2
-CACHE_TIMEOUT_STANDARD = 60 * 15
-CACHE_TIMEOUT_LARGE = 60 * 60 * 2
+CACHE_TIMEOUT_SMALL = 2 * MINUTE
+CACHE_TIMEOUT_STANDARD = 15 * MINUTE
+CACHE_TIMEOUT_LARGE = 2 * HOUR
 
 ENABLE_CACHE = env.bool("ENABLE_CACHE", default=not DEBUG)
 if ENABLE_CACHE:

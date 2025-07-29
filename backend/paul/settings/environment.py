@@ -87,6 +87,12 @@ env = environ.Env(
     EMAIL_VERIFICATION_EXPIRY_HOURS=(int, 96),  # 4 days
     EMAIL_2FA_EXPIRY_HOURS=(int, 4),
     EMAIL_PASSWORD_RESET_EXPIRY_HOURS=(int, 4),
+    # NGO Hub settings
+    NGOHUB_HOME_HOST=(str, "ngohub.ro"),
+    NGOHUB_APP_HOST=(str, "app.ngohub.ro"),
+    NGOHUB_API_HOST=(str, "api.ngohub.ro"),
+    NGOHUB_API_ACCOUNT=(str, ""),
+    NGOHUB_API_KEY=(str, ""),
 )
 
 environ.Env.read_env(ENV_FILE_PATH)

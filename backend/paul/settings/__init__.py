@@ -14,7 +14,6 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from .auth import *
 from .base import *
 from .cache import *
-from .constants import *
 from .databases import *
 from .django_q import *
 from .email import *

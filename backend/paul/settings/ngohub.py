@@ -1,6 +1,28 @@
+from .auth import SUPER_ADMIN, SUPPORT_ADMIN, USER
 from .environment import env
 
 # NGO Hub URLS
+NGOHUB_HOME_HOST = env.str("NGOHUB_HOME_HOST")
+NGOHUB_APP_HOST = env.str("NGOHUB_APP_HOST")
+NGOHUB_API_HOST = env.str("NGOHUB_API_HOST")
 
-NGOHUB_APP_HOST = env.str("NGOHUB_APP_HOST", default="https://app.ngohub.ro")
-NGOHUB_API_HOST = env.str("NGOHUB_API_HOST", default="https://api.ngohub.ro")
+# NGO Hub settings
+NGOHUB_HOME_BASE = f"https://{NGOHUB_HOME_HOST}/"
+NGOHUB_APP_BASE = f"https://{NGOHUB_APP_HOST}/"
+NGOHUB_API_BASE = f"https://{NGOHUB_API_HOST}/"
+
+# NGO Hub API credentials
+NGOHUB_API_ACCOUNT = env("NGOHUB_API_ACCOUNT")
+NGOHUB_API_KEY = env("NGOHUB_API_KEY")
+
+# NGO Hub user roles
+NGOHUB_ROLE_SUPER_ADMIN = "super-admin"
+NGOHUB_ROLE_NGO_ADMIN = "admin"
+NGOHUB_ROLE_NGO_EMPLOYEE = "employee"
+
+DEFAULT_NGOHUB_ROLE_TO_PAUL_ROLE = {
+    # XXX: Clarify if the support role will be used and how
+    NGOHUB_ROLE_SUPER_ADMIN: SUPPORT_ADMIN,
+    NGOHUB_ROLE_NGO_ADMIN: SUPER_ADMIN,
+    NGOHUB_ROLE_NGO_EMPLOYEE: USER,
+}

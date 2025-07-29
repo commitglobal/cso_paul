@@ -44,8 +44,8 @@ class CommonCreateUserCommand(BaseCommand):
         user_model = get_user_model()
 
         if user_model.objects.filter(email=admin_email).exists():
-            logger.warning("Super admin already exists")
-            return None
+            logger.warning(f"Super admin with email {admin_email} already exists")
+            return user_model.objects.get(email=admin_email)
 
         user = user_model(
             email=admin_email,
@@ -60,6 +60,6 @@ class CommonCreateUserCommand(BaseCommand):
 
         user.save()
 
-        logger.info("Super admin created successfully")
+        logger.info(f"Super admin created successfully with email {admin_email}")
 
         return user

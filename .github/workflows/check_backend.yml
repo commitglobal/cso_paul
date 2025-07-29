@@ -25,8 +25,8 @@ on:
 
 jobs:
 
-  formatting_with_black:
-    name: Run Black formatting check
+  formatting:
+    name: Run formatting check
     runs-on: ubuntu-latest
 
     steps:
@@ -41,19 +41,19 @@ jobs:
       with:
         python-version-file: "./backend/pyproject.toml"
 
-    - name: Install Black with uv
+    - name: Install Ruff with uv
       working-directory: ./backend
       run: |
-        uv sync --only-group black
+        uv sync --only-group ruff
 
-    - name: Check formatting with Black
+    - name: Check formatting with Ruff
       working-directory: ./backend
       run: |
-        uv run black --check .
+        uv run ruff format --check .
 
 
-  linting_with_ruff:
-    name: Run Ruff linting check
+  linting:
+    name: Run linting check
     runs-on: ubuntu-latest
 
     steps:
