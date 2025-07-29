@@ -2,8 +2,7 @@ from datetime import timedelta
 
 from django.urls import reverse_lazy
 
-from paul.settings.environment import env
-
+from .environment import env
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -22,14 +21,77 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Authentication settings
+# https://docs.djangoproject.com/en/5.2/ref/settings/#auth
 AUTH_USER_MODEL = "users.User"
+LOGIN_URL = reverse_lazy("users:login")
+LOGOUT_REDIRECT_URL = reverse_lazy("users:login")
 
 
+# Groups and Permissions
+SUPER_ADMIN = "super admin"
+NORMAL_ADMIN = "admin"
+MANAGER = "manager"
+USER = "user"
+
+# support admin is a special role that has access to support-related features
+SUPPORT_ADMIN = "support admin"
+
+user_permissions = [
+    "users.view_user",
+    "auth.view_group",
+]
+
+manager_permissions = [] + user_permissions
+
+admin_permissions = [
+    "users.add_user",
+    "users.change_user",
+    "users.delete_user",
+] + manager_permissions
+
+support_admin_permissions = [
+    "users.view_user",
+    "auth.view_group",
+]
+
+super_admin_permissions = admin_permissions
+
+
+# Define user groups with their respective permissions and roles
+USER_GROUPS = {
+    USER: {
+        "is_superuser": False,
+        "is_staff": False,
+        "permissions": user_permissions,
+    },
+    MANAGER: {
+        "is_superuser": False,
+        "is_staff": False,
+        "permissions": manager_permissions,
+    },
+    NORMAL_ADMIN: {
+        "is_superuser": False,
+        "is_staff": False,
+        "permissions": admin_permissions,
+    },
+    SUPER_ADMIN: {
+        "is_superuser": True,
+        "is_staff": False,
+        "permissions": super_admin_permissions,
+    },
+    SUPPORT_ADMIN: {
+        "is_superuser": False,
+        "is_staff": True,
+        "permissions": super_admin_permissions,
+    },
+}
+
+
+# Expiration times and limits for various authentication-related actions
 EMAIL_VERIFICATION_EXPIRY_TIME = timedelta(hours=env.int("EMAIL_VERIFICATION_EXPIRY_HOURS"))
 TWO_FACTOR_AUTH_EXPIRY_TIME = timedelta(hours=env.int("EMAIL_2FA_EXPIRY_HOURS"))
 PASSWORD_RESET_EXPIRY_TIME = timedelta(hours=env.int("EMAIL_PASSWORD_RESET_EXPIRY_HOURS"))
 
 MAX_RESET_ATTEMPTS = 5
 MAX_LOGIN_ATTEMPTS = 5
-
-LOGIN_URL = reverse_lazy("users:login")
