@@ -31,14 +31,12 @@ dependencies = [
 
 
 [dependency-groups]
-ruff = ["ruff~=0.11.8"]
-black = ["black==25.1.0"]
+ruff = ["ruff~=0.12.5"]
 dev = [
   "faker~=37.1.0",
   "pre-commit~=4.2.0",
   "debugpy~=1.8.14",
   { include-group = "ruff" },
-  { include-group = "black" },
 ]
 
 
@@ -60,14 +58,10 @@ fixable = ["A", "B", "C", "D", "E", "F", "G", "I", "N", "Q", "S", "T", "W", "ANN
 unfixable = []
 
 
-[tool.black]
-line-length = 120
-target-version = ["py313"]
-extend-exclude = '''
-/(
-  | migrations
-)/
-'''
+[tool.ruff.format]
+exclude = [
+  "migrations"
+]
 
 
 [tool.ruff]
@@ -101,7 +95,6 @@ exclude = [
   "_legacy_v1",
 ]
 
-# Same as Black.
 line-length = 120
 
 [tool.ruff.lint.mccabe]

@@ -138,17 +138,17 @@ messages: makemessages compilemessages ## generate and compile the translations
 collectstatic:                    ## collect the static files
 	docker exec paul_app_dev sh -c "cd ./backend && python3 -Wd ./manage.py collectstatic --no-input"
 
-format:                           ## format the code with black & ruff
+format:                           ## format the code with ruff
 	docker exec paul_app_dev sh -c " \
 		cd ./backend && \
-		black . &&  \
+		ruff format . &&  \
 		ruff check --fix ."
 
 check:
 	docker exec paul_app_dev sh -c " \
 		cd ./backend && \
 		ruff check --fix . && \
-		black --check . && \
+		ruff format --check . && \
 		cd ../frontend && \
 		npm run lint"
 
