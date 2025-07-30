@@ -1,15 +1,5 @@
-const pageSizes = [
-  "5",
-  "10",
-  "25",
-  "50",
-  "all",
-] as const;
+const pageSizes = ["5", "10", "25", "50", "all"] as const;
 
+type PageSize = (typeof pageSizes)[number];
 
-type PageSize = typeof pageSizes[number];
-
-export {
-  pageSizes,
-  type PageSize,
-}
+export { pageSizes, type PageSize };
