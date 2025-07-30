@@ -1,8 +1,11 @@
+import logging
+
 import sentry_sdk
 
 from .base import ENVIRONMENT, REVISION, VERSION
 from .environment import env
 
+logger = logging.getLogger(__name__)
 
 LOGGING = {
     "version": 1,
@@ -27,9 +30,10 @@ LOGGING = {
 
 
 # Sentry
-if env.str("SENTRY_DSN"):
+if sentry_dsn := env.str("SENTRY_DSN"):
+    logger.info("Configuring Sentry")
     sentry_sdk.init(
-        dsn=env.str("SENTRY_DSN"),
+        dsn=sentry_dsn,
         # Set traces_sample_rate to 1.0 to capture 100%
         # of transactions for performance monitoring.
         traces_sample_rate=env.float("SENTRY_TRACES_SAMPLE_RATE"),

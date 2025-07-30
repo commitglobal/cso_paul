@@ -145,14 +145,15 @@ jobs:
 
     - name: Run tests
       env:
-        DATABASE_NAME: paul
-        DATABASE_USER: user
-        DATABASE_PASSWORD: secret
-        DATABASE_HOST: 0.0.0.0
-        DATABASE_PORT: 5432
+        ENV_FILE_NAME: ".env.example"
+        DATABASE_NAME: "paul"
+        DATABASE_USER: "user"
+        DATABASE_PASSWORD: "secret"
+        DATABASE_HOST: "0.0.0.0"
+        DATABASE_PORT: "5432"
       working-directory: ./backend
       run: |
-        uv run ./manage.py test
+        uv run ./manage.py test --parallel
 
 
   codeql_analysis:
