@@ -64,7 +64,6 @@ export function AddTeamUserDialog({
           data={data}
           errors={formErrors}
           handleSubmit={handleSubmit}
-          isNew
           setData={setData}
         />
         <DialogFooter>
