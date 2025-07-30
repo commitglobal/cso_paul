@@ -14,7 +14,7 @@ import { PaginationFooter } from "@/components/paul/pagination-footer";
 import { QUERY_PARAM_SEARCH } from "@/constants/query-params";
 import { parseAsString, useQueryState } from "nuqs";
 
-import { AddTeamMemberDialog } from "./add-team-member-dialog";
+import { AddTeamUserDialog } from "./add-team-user-dialog";
 
 
 
@@ -113,7 +113,7 @@ const [searchString , setSearchString ] = useQueryState(QUERY_PARAM_SEARCH, pars
         </div>
       )}
     </div>
-    <AddTeamMemberDialog open={open} onClose={handleCloseDialog} />
+    <AddTeamUserDialog open={open} onClose={handleCloseDialog} />
     </>
   );
 }

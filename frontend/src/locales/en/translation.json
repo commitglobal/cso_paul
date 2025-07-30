@@ -41,8 +41,9 @@
   "users": {
     "team": {
       "add": {
-        "name": "Name",
         "email": "Email",
+        "firstName": "First Name",
+        "lastName": "Last Name",
         "userRole": "User Role"
       },
       "addUser": "Add team member",
@@ -82,6 +83,10 @@
       "focus": "Focus on search input",
       "label": "Search input"
     }
+  },
+  "dialog": {
+    "cancel": "Cancel",
+    "save": "Save"
   },
   "table": {
     "noData": "No results."

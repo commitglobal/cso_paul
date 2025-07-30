@@ -41,8 +41,9 @@
   "users": {
     "team": {
       "add": {
-        "name": "Name",
         "email": "Email",
+        "firstName": "Prenume",
+        "lastName": "Nume",
         "userRole": "User Role"
       },
       "addUser": "Adaugă membru în echipă",
@@ -82,6 +83,10 @@
       "focus": "Focus pe căutare",
       "label": "Căutare"
     }
+  },
+    "dialog": {
+      "cancel": "Cancel",
+      "save": "Save"
   },
   "table": {
     "noData": "Nu sunt rezultate."
