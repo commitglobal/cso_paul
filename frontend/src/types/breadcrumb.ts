@@ -5,4 +5,4 @@ export const Breadcrumb = object({
   url: optional(string()),
 });
 
-export type Breadcrumb = Infer<typeof Breadcrumb>
+export type Breadcrumb = Infer<typeof Breadcrumb>;

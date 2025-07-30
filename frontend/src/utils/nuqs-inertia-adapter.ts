@@ -11,10 +11,7 @@ export function useNuqsInertiaAdapter() {
   const { url } = usePage();
   const searchParams = new URL(location.origin + url).searchParams;
 
-  function updateUrl(
-    search: URLSearchParams,
-    options: UpdateUrlOptions = {}
-  ) {
+  function updateUrl(search: URLSearchParams, options: UpdateUrlOptions = {}) {
     const newUrl = new URL(location.href);
     newUrl.search = renderQueryString(search);
     router.visit(newUrl.pathname + newUrl.search, {
