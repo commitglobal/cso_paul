@@ -63,6 +63,7 @@ jobs:
         run: |
           npm run prod
 
+
   translations_check:
     name: Check Translations
     runs-on: ubuntu-latest
@@ -99,3 +100,27 @@ jobs:
         working-directory: frontend
         run: |
           npm run i18n:validate
+
+
+#  prettier_check:
+#    name: Check Prettier Formatting
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Check out Git repository
+#        uses: actions/checkout@v4
+#
+#      - name: Set-up Node.js according to .nvmrc
+#        uses: actions/setup-node@v4
+#        with:
+#          node-version-file: frontend/.nvmrc
+#          cache-dependency-path: frontend/package-lock.json
+#
+#      - name: Install dependencies
+#        working-directory: frontend
+#        run: |
+#          npm ci
+#
+#      - name: Check Prettier formatting
+#        working-directory: frontend
+#        run: |
+#          npm run prettier:check
