@@ -123,4 +123,5 @@ jobs:
       - name: Check Prettier formatting
         working-directory: frontend
         run: |
+          npx prettier --version
           npm run prettier:check
