@@ -124,5 +124,5 @@ jobs:
         working-directory: frontend
         run: |
           npx prettier --version
-          npx run prettier:version
+          npm run prettier:version
           npm run prettier:check
