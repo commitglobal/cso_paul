@@ -70,7 +70,7 @@ export function AddTeamUserDialog({
           <DialogClose asChild>
             <Button disabled={processing} variant="outline" onClick={onClose}>{t('dialog.cancel')}</Button>
           </DialogClose>
-          <Button disabled={processing} type="submit">{t('dialog.save')}</Button>
+          <Button disabled={processing} type="submit" onClick={handleSubmit}>{t('dialog.save')}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

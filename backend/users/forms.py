@@ -1,6 +1,7 @@
 from django import forms
 
 from users.common import normalize_email
+from users.models import User
 
 
 class LoginForm(forms.Form):
@@ -10,3 +11,9 @@ class LoginForm(forms.Form):
 
     def clean_email(self):
         return normalize_email(self.cleaned_data.get("email", ""))
+
+
+class AddTeamUserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ["email", "first_name", "last_name"]
