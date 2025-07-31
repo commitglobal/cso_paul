@@ -1,12 +1,4 @@
-import {
-  type Infer,
-  array,
-  boolean,
-  number,
-  object,
-  optional,
-  string,
-} from 'superstruct';
+import { type Infer, array, boolean, number, object, optional, string } from "superstruct";
 
 export type User = Infer<typeof User>;
 
@@ -27,4 +19,4 @@ export const User = object({
   is_user: optional(boolean()),
 });
 
-export type UserType = 'admin_super'  | 'admin_basic' | 'admin_ngo' | 'user';
+export type UserType = "admin_super" | "admin_basic" | "admin_ngo" | "user";

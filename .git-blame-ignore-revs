@@ -17,3 +17,6 @@
 
 # ignore the "Format with black" commit since it affects many files with no logic impact
 a56b04dd07c31e5d0713bb4eb321212cfab95b27
+
+# ignore the frontend formatting commit
+23a3d3ce63f25884b09ab83ec34ec091967da75c

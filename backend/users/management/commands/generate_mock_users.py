@@ -15,16 +15,15 @@ class Command(BaseCommand):
         count = options["count"]
 
         for _ in range(count):
-            username = fake.user_name()
             email = fake.unique.email()
 
-            if not User.objects.filter(username=username).exists():
+            if not User.objects.filter(email=email).exists():
+                # noinspection PyArgumentList
                 User.objects.create_user(
                     first_name=fake.first_name(),
                     last_name=fake.last_name(),
-                    username=username,
                     email=email,
-                    password=username,
+                    password=email,
                 )
 
         self.stdout.write(self.style.SUCCESS(f"Successfully created {count} mock users."))

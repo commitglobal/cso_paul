@@ -11,11 +11,11 @@ logger = logging.getLogger(__name__)
 class Command(CommonCreateUserCommand):
     help = "Command to create a superuser"
 
-    def _set_user_groups(self, user):
+    def _set_superuser_groups(self, user):
         """
         Set the user groups for the superuser.
         """
-        super_admin_group = Group.objects.get(name=settings.SUPER_ADMIN)
+        super_admin_group = Group.objects.filter(name=settings.SUPER_ADMIN).first()
         if not super_admin_group:
             logger.error(f"Group '{settings.SUPER_ADMIN}' does not exist.")
             return
@@ -38,7 +38,7 @@ class Command(CommonCreateUserCommand):
         )
         logger.info("Super admin created successfully")
 
-        self._set_user_groups(user)
+        self._set_superuser_groups(user)
         logger.info("Super admin groups set successfully")
 
         return 0
