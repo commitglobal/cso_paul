@@ -47,6 +47,7 @@ export const Columns: (t: (key: string) => string) => ColumnDef<UserProps>[] = (
     {
       accessorKey: "role",
       header: t("users.team.table.role"),
+      enableSorting: true,
     },
     {
       accessorKey: "added_since",

@@ -10,6 +10,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
 from inertia import InertiaResponse, inertia
 from inertia import render as inertia_render
+from paul.common.sort_parser import parse_order_parameter
 from paul.display import format_dates as display_dates
 from paul.display.build_url import build_ngohub_url
 from paul.views.pagination import paginate_queryset
@@ -30,7 +31,7 @@ def _serialize_users(users_page: Page[User], user_id: int) -> List[Dict]:
             "is_current_user": user.id == user_id,
             "role": RoleChoices(user.main_role).label,
             "added_since": display_dates.short_date(user.date_joined),
-            "last_activity": display_dates.short_datetime(user.date_joined),
+            "last_activity": display_dates.short_datetime(user.last_login),
         }
         for user in users_page
     ]
@@ -40,8 +41,24 @@ def _request_users(request):
     search_query = request.GET.get(settings.QUERY_PARAMS["SEARCH"], "").strip()
     page_number = int(request.GET.get(settings.QUERY_PARAMS["PAGE"], 1))
     page_size = request.GET.get(settings.QUERY_PARAMS["PAGE_SIZE"], 10)
+    sort = request.GET.get(settings.QUERY_PARAMS["SORT"], None)
 
     users_qs = User.objects.all()
+
+    if sort:
+        field_mapping = {
+            "user": ["first_name", "last_name", "email"],
+            "role": "main_role",
+            "added_since": "date_joined",
+            "last_activity": "last_login",
+        }
+        users_qs = users_qs.order_by(
+            *parse_order_parameter(
+                sort,
+                field_mapping,
+            )
+        )
+
     if search_query:
         users_qs = search(
             query=search_query,

@@ -1,35 +1,93 @@
 "use client";
 
 import { type ColumnDef, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
+import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react";
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useTranslation } from "react-i18next";
+import { createParser, useQueryState } from "nuqs";
+import { QUERY_PARAM_SORT } from "@/constants/query-params";
+import { Button } from "@/components/ui/button";
+
+const sortParser = createParser<{ key: string; direction: "asc" | "desc" }>({
+  parse(value) {
+    if (!value) return null;
+    const [key, dir] = value.split(",");
+    if (!key) return null;
+
+    const direction = (dir === "desc" ? "desc" : "asc") as "asc" | "desc";
+    return { key, direction };
+  },
+
+  serialize({ key, direction }) {
+    return `${key},${direction}`;
+  },
+});
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, TValue>) {
-  const {t} = useTranslation();
+export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+  const { t } = useTranslation();
+
+  const [sort, setSort] = useQueryState(QUERY_PARAM_SORT, sortParser.withOptions({ clearOnDefault: true }));
+
+  const setSorting = (columnId: string) => {
+    console.log("Sorting by:", columnId);
+
+    if (columnId === sort?.key) {
+      if (sort.direction === "asc") {
+        setSort({ key: columnId, direction: "desc" });
+      } else {
+        // Clear sorting if already sorted by this column in descending order
+        setSort(null);
+      }
+      return;
+    }
+
+    setSort({ key: columnId, direction: "asc" });
+  };
+
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
 
+  console.log("Table sort:", sort);
+
   return (
     <Table>
       <TableHeader>
         {table.getHeaderGroups().map((headerGroup) => (
           <TableRow key={headerGroup.id}>
-            {headerGroup.headers.map((header) => {
-              return (
-                <TableHead key={header.id}>
-                  {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                </TableHead>
-              );
-            })}
+            {headerGroup.headers.map((header) => (
+              <TableHead key={header.id}>
+                {header.isPlaceholder ? null : (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="flex items-center gap-1"
+                    onClick={() => {
+                      setSorting(header.column.id);
+                    }}
+                  >
+                    {flexRender(header.column.columnDef.header, header.getContext())}
+                    {sort?.key === header.column.id ? (
+                      sort.direction === "asc" ? (
+                        <ArrowDown className="ml-1 h-3 w-3" />
+                      ) : (
+                        <ArrowUp className="ml-1 h-3 w-3" />
+                      )
+                    ) : (
+                      <ArrowUpDown className="ml-1 h-3 w-3 opacity-50" />
+                    )}
+                  </Button>
+                )}
+              </TableHead>
+            ))}
           </TableRow>
         ))}
       </TableHeader>
