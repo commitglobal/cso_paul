@@ -52,12 +52,13 @@ def _request_users(request):
             "added_since": "date_joined",
             "last_activity": "last_login",
         }
-        users_qs = users_qs.order_by(
-            *parse_order_parameter(
-                sort,
-                field_mapping,
-            )
-        )
+        try:
+            parsed_parameters = parse_order_parameter(sort, field_mapping)
+        except ValueError as e:
+            logger.error(f"Invalid sort parameter: {sort}. Error: {e}")
+            parsed_parameters = []
+
+        users_qs = users_qs.order_by(*parsed_parameters)
 
     if search_query:
         users_qs = search(

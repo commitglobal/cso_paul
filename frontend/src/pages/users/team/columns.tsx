@@ -43,6 +43,7 @@ export const Columns: (t: (key: string) => string) => ColumnDef<UserProps>[] = (
           </span>
         </div>
       ),
+      enableSorting: true,
     },
     {
       accessorKey: "role",
@@ -52,10 +53,12 @@ export const Columns: (t: (key: string) => string) => ColumnDef<UserProps>[] = (
     {
       accessorKey: "added_since",
       header: t("users.team.table.added_since"),
+      enableSorting: true,
     },
     {
       accessorKey: "last_activity",
       header: t("users.team.table.last_activity"),
+      enableSorting: true,
     },
     {
       id: "actions",

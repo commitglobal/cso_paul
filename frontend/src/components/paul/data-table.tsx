@@ -35,28 +35,19 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
   const [sort, setSort] = useQueryState(QUERY_PARAM_SORT, sortParser.withOptions({ clearOnDefault: true }));
 
   const setSorting = (columnId: string) => {
-    console.log("Sorting by:", columnId);
-
-    if (columnId === sort?.key) {
-      if (sort.direction === "asc") {
-        setSort({ key: columnId, direction: "desc" });
-      } else {
-        // Clear sorting if already sorted by this column in descending order
-        setSort(null);
-      }
-      return;
+    if (!sort || sort.key !== columnId) {
+      setSort({ key: columnId, direction: "asc" });
+    } else if (sort.direction === "asc") {
+      setSort({ key: columnId, direction: "desc" });
+    } else {
+      setSort(null);
     }
-
-    setSort({ key: columnId, direction: "asc" });
   };
-
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
-
-  console.log("Table sort:", sort);
 
   return (
     <Table>
@@ -65,7 +56,9 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
           <TableRow key={headerGroup.id}>
             {headerGroup.headers.map((header) => (
               <TableHead key={header.id}>
-                {header.isPlaceholder ? null : (
+                {header.isPlaceholder ? null : !header.column.columnDef.enableSorting ? (
+                  flexRender(header.column.columnDef.header, header.getContext())
+                ) : (
                   <Button
                     variant="ghost"
                     size="sm"

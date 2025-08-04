@@ -22,6 +22,9 @@ def parse_order_parameter(sort: str, field_mapping: Dict[str, Union[List[str], s
     if direction and direction not in ("asc", "desc"):
         raise ValueError(f"Invalid sort direction: {direction}")
 
+    if field not in field_mapping:
+        raise ValueError(f"Invalid sort field: {field}")
+
     sort_field = field_mapping[field]
 
     direction_prefix = "" if direction == "asc" else "-"
