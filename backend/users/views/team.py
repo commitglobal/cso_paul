@@ -45,20 +45,14 @@ def _request_users(request):
 
     users_qs = User.objects.all()
 
-    if sort:
-        field_mapping = {
-            "user": ["first_name", "last_name", "email"],
-            "role": "main_role",
-            "added_since": "date_joined",
-            "last_activity": "last_login",
-        }
-        try:
-            parsed_parameters = parse_order_parameter(sort, field_mapping)
-        except ValueError as e:
-            logger.error(f"Invalid sort parameter: {sort}. Error: {e}")
-            parsed_parameters = []
-
-        users_qs = users_qs.order_by(*parsed_parameters)
+    field_mapping = {
+        "user": ["first_name", "last_name", "email"],
+        "role": "main_role",
+        "added_since": "date_joined",
+        "last_activity": "last_login",
+    }
+    parsed_parameters = parse_order_parameter(sort, field_mapping)
+    users_qs = users_qs.order_by(*parsed_parameters)
 
     if search_query:
         users_qs = search(

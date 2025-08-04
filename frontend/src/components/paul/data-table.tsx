@@ -1,13 +1,13 @@
 "use client";
 
 import { type ColumnDef, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
-import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react";
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useTranslation } from "react-i18next";
 import { createParser, useQueryState } from "nuqs";
 import { QUERY_PARAM_SORT } from "@/constants/query-params";
 import { Button } from "@/components/ui/button";
+import { ArrowDownIcon, ArrowsUpDownIcon, ArrowUpIcon } from "@heroicons/react/20/solid";
 
 const sortParser = createParser<{ key: string; direction: "asc" | "desc" }>({
   parse(value) {
@@ -56,29 +56,31 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
           <TableRow key={headerGroup.id}>
             {headerGroup.headers.map((header) => (
               <TableHead key={header.id}>
-                {header.isPlaceholder ? null : !header.column.columnDef.enableSorting ? (
-                  flexRender(header.column.columnDef.header, header.getContext())
-                ) : (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="flex items-center gap-1"
-                    onClick={() => {
-                      setSorting(header.column.id);
-                    }}
-                  >
-                    {flexRender(header.column.columnDef.header, header.getContext())}
-                    {sort?.key === header.column.id ? (
-                      sort.direction === "asc" ? (
-                        <ArrowDown className="ml-1 h-3 w-3" />
+                <div className="flex items-center gap-1">
+                  {flexRender(header.column.columnDef.header, header.getContext())}
+
+                  {header.column.columnDef.enableSorting && (
+                    <Button
+                      aria-label={t("table.sortBy", { column: header.column.columnDef.header })}
+                      variant="ghost"
+                      size="sm"
+                      className="hover:cursor-pointer"
+                      onClick={() => {
+                        setSorting(header.column.id);
+                      }}
+                    >
+                      {sort?.key === header.column.id ? (
+                        sort.direction === "asc" ? (
+                          <ArrowDownIcon className="h-3 w-3" />
+                        ) : (
+                          <ArrowUpIcon className="h-3 w-3" />
+                        )
                       ) : (
-                        <ArrowUp className="ml-1 h-3 w-3" />
-                      )
-                    ) : (
-                      <ArrowUpDown className="ml-1 h-3 w-3 opacity-50" />
-                    )}
-                  </Button>
-                )}
+                        <ArrowsUpDownIcon className="h-3 w-3 opacity-50" />
+                      )}
+                    </Button>
+                  )}
+                </div>
               </TableHead>
             ))}
           </TableRow>
