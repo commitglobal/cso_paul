@@ -119,13 +119,19 @@ def manage_team(request: HttpRequest) -> InertiaResponse:
         if not has_add_permission:
             raise PermissionDenied()
 
+        print("POST new team user")
         form = AddTeamUserForm(json.loads(request.body))
+        print("Checking if the form is valid")
         if not form.is_valid():
+            print("The form is not valid")
             return_props.update(
                 {
                     "errors": {"team": form.errors},
                 }
             )
+        else:
+            print("The form is valid")
+        print("Saving the form")
         form.save()
 
     return_props.update(_request_users(request))

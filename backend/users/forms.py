@@ -17,3 +17,12 @@ class AddTeamUserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ["email", "first_name", "last_name"]
+
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+        print("Validating the email input")
+        if User.objects.filter(email=email).exists():
+            print(f"Email {email} already exists in db")
+            raise forms.ValidationError("User with this email already exists.")
+
+        return email
