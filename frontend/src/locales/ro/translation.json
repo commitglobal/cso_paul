@@ -40,6 +40,12 @@
   },
   "users": {
     "team": {
+      "add": {
+        "email": "Email",
+        "firstName": "Prenume",
+        "lastName": "Nume",
+        "userRole": "User Role"
+      },
       "addUser": "Adaugă membru în echipă",
       "title": "Toți membrii echipei",
       "ngohub_refresh": "Sincronizează cu NGO Hub",
@@ -77,6 +83,10 @@
       "focus": "Focus pe căutare",
       "label": "Căutare"
     }
+  },
+    "dialog": {
+      "cancel": "Cancel",
+      "save": "Save"
   },
   "table": {
     "noData": "Nu sunt rezultate.",

@@ -13,6 +13,7 @@ export const apiGetUrls = {
 };
 
 export const apiPostUrls = {
-  userEmailLogin: buildUsersUrl(["login", "email"]),
-  userLogout: () => buildUsersUrl(["logout"]),
+  teamAddUser: buildTeamUrl(),
+  userEmailLogin: buildUsersUrl(['login', 'email']),
+  userLogout: () => buildUsersUrl(['logout']),
 };

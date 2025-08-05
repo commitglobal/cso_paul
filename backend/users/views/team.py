@@ -1,8 +1,10 @@
+import json
 import logging
 from typing import Dict, List
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.core.paginator import Page
 from django.http import HttpRequest
 from django.urls import reverse
@@ -17,6 +19,8 @@ from paul.views.pagination import paginate_queryset
 from paul.views.search import search
 
 from users.models import RoleChoices, User
+from users.forms import AddTeamUserForm
+
 
 logger = logging.getLogger(__name__)
 
@@ -98,17 +102,37 @@ def manage_team(request: HttpRequest) -> InertiaResponse:
             {subtitle_cta_text}
         </a>"""
 
-    return_props = {
+    has_add_permission = request.user.has_perm("users.add_user")
+
+    page_props = {
         "title": _("Team members"),
         "description": subtitle,
         "breadcrumbs": [
             {"label": _("Team"), "url": reverse("users:manage-team")},
         ],
+        "permissions": {
+            "team_add_user": has_add_permission,
+        },
     }
-    return_props.update(_request_users(request))
+
+    if request.method == "POST":
+        if not has_add_permission:
+            raise PermissionDenied()
+
+        form = AddTeamUserForm(json.loads(request.body))
+        if not form.is_valid():
+            page_props.update(
+                {
+                    "errors": {"team": form.errors},
+                }
+            )
+        else:
+            form.save()
+
+    page_props.update(_request_users(request))
 
     return inertia_render(
         request,
         "users/team/index",
-        props=return_props,
+        props=page_props,
     )

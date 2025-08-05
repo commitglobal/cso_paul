@@ -1,7 +1,7 @@
 import { DataTable } from "@/components/paul/data-table";
 import { useValidatedProps } from "@/hooks/use-validated-props.ts";
-import BaseLayout from "@/layouts/base-layout";
-import { useMemo } from "react";
+import BaseLayout from "@/layouts/base-layout.tsx";
+import { useMemo, useCallback, useState } from "react";
 import { Columns } from "./columns";
 import { useTranslation } from "react-i18next";
 import { ArrowPathIcon, UserPlusIcon } from "@heroicons/react/20/solid";
@@ -13,6 +13,10 @@ import { PaginationFooter } from "@/components/paul/pagination-footer";
 import { QUERY_PARAM_SEARCH } from "@/constants/query-params";
 import { parseAsString, useQueryState } from "nuqs";
 
+import { AddTeamUserDialog } from "./add-team-user-dialog";
+
+
+
 export default function TeamPage() {
   const {
     props: { users, user_count, pagination },
@@ -20,11 +24,23 @@ export default function TeamPage() {
 
   const { t } = useTranslation();
 
+  const [open, setOpen] = useState(false);
+  const handleCloseDialog = useCallback(() => {
+    setOpen(false);
+  }, []);
+
+  const handleOpenDialog = useCallback(() => {
+    setOpen(true);
+  }, []);
+
+
+  // Pass t to Columns to avoid calling hooks inside useMemo
   const tableColumns = useMemo(() => Columns(t), [t]);
 
   const [searchString, setSearchString] = useQueryState(QUERY_PARAM_SEARCH, parseAsString.withDefault(""));
 
   return (
+    <>
     <div className="flex flex-col gap-4 py-4">
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
@@ -36,9 +52,9 @@ export default function TeamPage() {
               <ArrowPathIcon aria-hidden="true" className="h-5 w-5 -ml-0.5" />
               {t("users.team.ngohub_refresh")}
             </Button>
-            <Button variant="default" size="sm" className="gap-x-1.5">
-              <UserPlusIcon aria-hidden="true" className="h-5 w-5 -ml-0.5" />
-              {t("users.team.addUser")}
+            <Button variant="default" size="sm" className="gap-x-1.5" onClick={handleOpenDialog}>
+              <UserPlusIcon aria-hidden="true" className="h-5 w-5 -ml-0.5"/>
+              {t('users.team.addUser')}
             </Button>
           </div>
         </div>
@@ -79,6 +95,8 @@ export default function TeamPage() {
         </div>
       )}
     </div>
+    <AddTeamUserDialog open={open} onClose={handleCloseDialog} />
+    </>
   );
 }
 TeamPage.layout = BaseLayout;

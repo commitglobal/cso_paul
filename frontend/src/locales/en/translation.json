@@ -40,6 +40,12 @@
   },
   "users": {
     "team": {
+      "add": {
+        "email": "Email",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "userRole": "User Role"
+      },
       "addUser": "Add team member",
       "title": "All team members",
       "ngohub_refresh": "Sync with NGO Hub",
@@ -77,6 +83,10 @@
       "focus": "Focus on search input",
       "label": "Search input"
     }
+  },
+  "dialog": {
+    "cancel": "Cancel",
+    "save": "Save"
   },
   "table": {
     "noData": "No results.",
