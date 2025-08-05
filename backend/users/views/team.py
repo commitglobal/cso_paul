@@ -104,7 +104,7 @@ def manage_team(request: HttpRequest) -> InertiaResponse:
 
     has_add_permission = request.user.has_perm("users.add_user")
 
-    return_props = {
+    page_props = {
         "title": _("Team members"),
         "description": subtitle,
         "breadcrumbs": [
@@ -119,25 +119,20 @@ def manage_team(request: HttpRequest) -> InertiaResponse:
         if not has_add_permission:
             raise PermissionDenied()
 
-        print("POST new team user")
         form = AddTeamUserForm(json.loads(request.body))
-        print("Checking if the form is valid")
         if not form.is_valid():
-            print("The form is not valid")
-            return_props.update(
+            page_props.update(
                 {
                     "errors": {"team": form.errors},
                 }
             )
         else:
-            print("The form is valid")
-        print("Saving the form")
-        form.save()
+            form.save()
 
-    return_props.update(_request_users(request))
+    page_props.update(_request_users(request))
 
     return inertia_render(
         request,
         "users/team/index",
-        props=return_props,
+        props=page_props,
     )

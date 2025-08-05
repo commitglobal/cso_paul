@@ -1,15 +1,15 @@
-import { Link, router, useForm, usePage } from '@inertiajs/react'
-import { type FormEventHandler, useCallback } from 'react'
-import { apiPostUrls } from '@/constants/api-urls'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { handleChange } from '@/utils/handle-change'
-import { LoginChoiceProps } from '@/pages/users/auth/login-choice-props'
-import logomark from '@/assets/paul-logomark.svg'
-import { LoginRegisterCta } from '@/components/paul/login-register-cta.tsx'
-import { useTranslation } from 'react-i18next'
+import { Link, router, useForm, usePage } from '@inertiajs/react';
+import { type FormEventHandler, useCallback } from 'react';
+import { apiPostUrls } from '@/constants/api-urls';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { handleChange } from '@/utils/handle-change';
+import { LoginChoiceProps } from '@/pages/users/auth/login-choice-props';
+import logomark from '@/assets/paul-logomark.svg';
+import { LoginRegisterCta } from '@/components/paul/login-register-cta.tsx';
+import { useTranslation } from 'react-i18next';
 
 
 type LoginFormData = {

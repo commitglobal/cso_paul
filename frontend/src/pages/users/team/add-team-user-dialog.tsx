@@ -10,7 +10,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { useTranslation } from "react-i18next";
-import { Link, usePage } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
 import { TeamUserForm } from "./team-user-form";
 import { useNotifyActions } from '@/stores/use-notify-store';
 import { useTeamUserForm } from '@/hooks/use-team-user-form';
@@ -27,14 +27,10 @@ export function AddTeamUserDialog({
   onClose,
   open,
 }: AddTeamUserDialogProps) {
-  const {
-    props: { errors },
-  } = usePage();
 
   const { data, post, processing, reset, setData } = useTeamUserForm();
   const {t} = useTranslation();
-  const formErrors = errors?.edition;
-
+  
   const { notifySuccess } = useNotifyActions();
   const handleSubmit = useCallback<FormEventHandler>(
     (e) => {
@@ -62,7 +58,6 @@ export function AddTeamUserDialog({
         </DialogHeader>
         <TeamUserForm
           data={data}
-          errors={formErrors}
           handleSubmit={handleSubmit}
           setData={setData}
         />
