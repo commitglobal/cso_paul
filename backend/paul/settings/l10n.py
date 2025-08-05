@@ -9,4 +9,4 @@ LANGUAGE_CODE = env("LANGUAGE_CODE")
 
 TIME_ZONE = env("TIME_ZONE")
 
-LOCALE_PATHS = (os.path.join(BASE_DIR, "locales"),)
+LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)

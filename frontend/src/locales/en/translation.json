@@ -89,6 +89,7 @@
     "save": "Save"
   },
   "table": {
-    "noData": "No results."
+    "noData": "No results.",
+    "sortBy": "Sort by"
   }
 }

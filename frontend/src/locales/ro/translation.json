@@ -89,6 +89,7 @@
       "save": "Save"
   },
   "table": {
-    "noData": "Nu sunt rezultate."
+    "noData": "Nu sunt rezultate.",
+    "sortBy": "Sortează după"
   }
 }
