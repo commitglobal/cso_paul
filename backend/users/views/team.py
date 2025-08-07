@@ -15,6 +15,7 @@ from inertia import render as inertia_render
 from paul.common.sort_parser import parse_order_parameter
 from paul.display import format_dates as display_dates
 from paul.display.build_url import build_ngohub_url
+from paul.views.filtering import FilterField, FilterItem, Filters, filter_qs
 from paul.views.pagination import paginate_queryset
 from paul.views.search import search
 
@@ -39,6 +40,33 @@ def _serialize_users(users_page: Page[User], user_id: int) -> List[Dict]:
         }
         for user in users_page
     ]
+
+
+def _get_filter_options() -> Filters:
+    role_options = FilterField(
+        kind="combobox",
+        items=[FilterItem(value=key, label=str(label)) for key, label in settings.USER_GROUPS_CHOICES],
+    )
+
+    added_since_options = FilterField(
+        kind="calendar",
+        items=[],
+    )
+
+    last_activity_options = FilterField(
+        kind="calendar",
+        items=[],
+    )
+
+    return Filters(
+        role=role_options,
+        added_since=added_since_options,
+        added_since__lte=added_since_options,
+        added_since__gte=added_since_options,
+        last_activity=last_activity_options,
+        last_activity__lte=last_activity_options,
+        last_activity__gte=last_activity_options,
+    )
 
 
 def _request_users(request):
@@ -66,6 +94,9 @@ def _request_users(request):
             search_fields=["first_name", "last_name", "email"],
         )
 
+    filters = _get_filter_options()
+    users_qs = filter_qs(field_mapping, filters, request, users_qs)
+
     users_page, paginator, pagination = paginate_queryset(
         queryset=users_qs,
         page_number=page_number,
@@ -78,7 +109,7 @@ def _request_users(request):
         "users": users_page,
         "search_query": search_query,
         "pagination": pagination.model_dump(),
-        "user_count": users_qs.count(),
+        "filters": filters.model_dump(mode="json"),
     }
 
     return data

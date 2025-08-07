@@ -100,6 +100,7 @@ USER_GROUPS = {
 }
 
 USER_GROUPS_ORDERING: List[str] = [key for key, item in sorted(USER_GROUPS.items(), key=lambda x: x[1]["order"])]
+USER_GROUPS_CHOICES = [(key, item["label"]) for key, item in USER_GROUPS.items()]
 
 # Expiration times and limits for various authentication-related actions
 EMAIL_VERIFICATION_EXPIRY_TIME = timedelta(hours=env.int("EMAIL_VERIFICATION_EXPIRY_HOURS"))

@@ -6,9 +6,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import type { UserProps } from "@/pages/users/team/team-page-props-struct.ts";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { type ColumnDef } from "@tanstack/react-table";
-import type { UserProps } from "@/pages/users/team/team-page-props-struct.ts";
 
 function onViewUserInfo(id: number) {
   // TODO: Implement user info view logic
@@ -34,13 +34,9 @@ export const Columns: (t: (key: string) => string) => ColumnDef<UserProps>[] = (
         <div className="flex flex-col gap-2">
           <span>
             {row.original.first_name} {row.original.last_name}
-            {row.original.is_current_user && (
-              <> {t("users.team.current_user_marker")}</>
-            )}
+            {row.original.is_current_user && <> {t("users.team.current_user_marker")}</>}
           </span>
-          <span className="text-gray-500">
-            {row.original.email}
-          </span>
+          <span className="text-gray-500">{row.original.email}</span>
         </div>
       ),
       enableSorting: true,
@@ -62,21 +58,20 @@ export const Columns: (t: (key: string) => string) => ColumnDef<UserProps>[] = (
     },
     {
       id: "actions",
-      enableHiding: false,
       cell: ({ row }) => (
         <DropdownMenu>
-          <DropdownMenuTrigger>
+          <DropdownMenuTrigger aria-label={t("users.team.menu.actions")}>
             <EllipsisVerticalIcon className="w-[24px] h-[24px] text-gray-500 hover:bg-gray-50 rounded-full" />
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuItem onClick={() => onViewUserInfo(row.original.id)}>
-              {t('users.team.menu.viewUserInfo')}
+              {t("users.team.menu.viewUserInfo")}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => onChangeUserRole(row.original.id)}>
-              {t('users.team.menu.changeUserRole')}
+              {t("users.team.menu.changeUserRole")}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => onDeleteFromTeam(row.original.id)}>
-              {t('users.team.menu.deleteFromTeam')}
+              {t("users.team.menu.deleteFromTeam")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
