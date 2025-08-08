@@ -53,7 +53,8 @@
       "menu": {
         "viewUserInfo": "View user info",
         "changeUserRole": "Change user role",
-        "deleteFromTeam": "Delete from team"
+        "deleteFromTeam": "Delete from team",
+        "actions": "Actions"
       },
       "empty": {
         "title": "No team members found",
@@ -90,6 +91,17 @@
   },
   "table": {
     "noData": "No results.",
-    "sortBy": "Sort by"
+    "sortBy": "Sort by {{column}}",
+    "filterBy": "Filter by {{column}}",
+    "filter": {
+      "noResults": "No results found for the applied filter.",
+      "calendar": {
+        "fromDate": "From date",
+        "toDate": "To date",
+        "clear": "Clear filter",
+        "cancel": "Cancel",
+        "ok": "OK"
+      }
+    }
   }
 }

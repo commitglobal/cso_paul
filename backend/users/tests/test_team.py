@@ -39,9 +39,6 @@ class TeamViewsTests(TestCase):
         self.assertIn("users", response.props)
         self.assertEqual(len(response.props["users"]), num_users + 1)
 
-        self.assertIn("user_count", response.props)
-        self.assertEqual(response.props["user_count"], num_users + 1)
-
     def test_manage_team_authenticated_can_see_search_query(self):
         num_users = 5
 

@@ -1,15 +1,8 @@
-import { CommonProps } from '@/types/common-props';
-import {
-  type Infer,
-  assign,
-  object,
-  string,
-  number,
-  boolean,
-  array,
-} from 'superstruct';
 import { Breadcrumb } from "@/types/breadcrumb.ts";
+import { CommonProps } from "@/types/common-props";
+import { Filters } from "@/types/filter";
 import { Pagination } from "@/types/pagination.ts";
+import { array, assign, boolean, type Infer, number, object, string } from "superstruct";
 
 // TODO: This should be moved to types/user.ts when the user types are more in place
 const UserStruct = object({
@@ -27,13 +20,13 @@ export const TeamPagePropsStruct = assign(
   object({
     title: string(),
     description: string(),
-    user_count: number(),
     breadcrumbs: array(Breadcrumb),
     search_query: string(),
     users: array(UserStruct),
     pagination: Pagination,
+    filters: Filters,
   }),
-  CommonProps,
+  CommonProps
 );
 
 export type UserProps = Infer<typeof UserStruct>;

@@ -53,7 +53,8 @@
       "menu": {
         "viewUserInfo": "Vezi informațiile utilizatorului",
         "changeUserRole": "Schimbă rolul utilizatorului",
-        "deleteFromTeam": "Șterge din echipă"
+        "deleteFromTeam": "Șterge din echipă",
+        "actions": "Acțiuni"
       },
       "empty": {
         "title": "Nu a fost găsit niciun membru în echipă",
@@ -90,6 +91,17 @@
   },
   "table": {
     "noData": "Nu sunt rezultate.",
-    "sortBy": "Sortează după"
+    "sortBy": "Sortează după {{column}}",
+    "filterBy": "Filtrează după {{column}}",
+    "filter": {
+      "noResults": "Nu s-au găsit rezultate pentru filtrul aplicat.",
+      "calendar": {
+        "fromDate": "De la",
+        "toDate": "Până la",
+        "clear": "Elimină filtrul",
+        "cancel": "Anulează",
+        "ok": "OK"
+      }
+    }
   }
 }
