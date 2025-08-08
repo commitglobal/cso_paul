@@ -24,7 +24,7 @@ export function TeamUserForm({
   const {
     props: { errors, role_choices }
   } = useValidatedProps<TeamUserProps>(TeamUserProps);
-  
+
   const {t} = useTranslation();
 
   return (
@@ -33,10 +33,10 @@ export function TeamUserForm({
       <div className="grid gap-4">
         <div className="grid gap-3">
           <Label htmlFor="first_name">{t('users.team.add.firstName')}</Label>
-          <Input 
-            id="first_name" 
-            name="first_name" 
-            value={data.first_name} 
+          <Input
+            id="first_name"
+            name="first_name"
+            value={data.first_name}
             onChange={handleChange<TeamUserFormData>('first_name', setData)}
           />
           {errors?.team?.first_name &&
@@ -44,10 +44,10 @@ export function TeamUserForm({
         </div>
         <div className="grid gap-3">
           <Label htmlFor="last_name">{t('users.team.add.lastName')}</Label>
-          <Input 
-            id="last_name" 
-            name="last_name" 
-            value={data.last_name} 
+          <Input
+            id="last_name"
+            name="last_name"
+            value={data.last_name}
             onChange={handleChange<TeamUserFormData>('last_name', setData)}
           />
           {errors?.team?.last_name &&
@@ -55,10 +55,10 @@ export function TeamUserForm({
         </div>
         <div className="grid gap-3">
           <Label htmlFor="email">{t('users.team.add.email')}</Label>
-          <Input 
-            id="email" 
-            name="email" 
-            value={data.email} 
+          <Input
+            id="email"
+            name="email"
+            value={data.email}
             onChange={handleChange<TeamUserFormData>('email', setData)}
           />
           {errors?.team?.email &&
@@ -66,7 +66,11 @@ export function TeamUserForm({
         </div>
         <div className="grid gap-3">
           <Label htmlFor="role">{t('users.team.add.userRole')}</Label>
-          <Select name="role">
+          <Select
+            name="role"
+            value={data.role}
+            onValueChange={(value) => setData('role', value)}
+          >
             <SelectTrigger className="w-full">
               <SelectValue placeholder="" />
             </SelectTrigger>
@@ -83,4 +87,3 @@ export function TeamUserForm({
     </form>
   );
 }
-
