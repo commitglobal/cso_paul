@@ -9,6 +9,8 @@ from django.db.models.functions import Lower
 from django.forms.models import model_to_dict
 from django.utils.translation import gettext as _
 
+from utils.choices import CommonLabelValueChoices
+
 
 def get_highest_ranked_group(user_groups: QuerySet[Group]) -> Optional[str]:
     # Get the names of the user's groups
@@ -49,7 +51,7 @@ class CustomUserManager(UserManager):
         return self._create_user(email, password, **extra_fields)
 
 
-class RoleChoices(models.TextChoices):
+class RoleChoices(CommonLabelValueChoices, models.TextChoices):
     USER = settings.USER, settings.USER_GROUPS[settings.USER]["label"]
     MANAGER = settings.MANAGER, settings.USER_GROUPS[settings.MANAGER]["label"]
     NORMAL_ADMIN = settings.NORMAL_ADMIN, settings.USER_GROUPS[settings.NORMAL_ADMIN]["label"]

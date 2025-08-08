@@ -144,6 +144,7 @@ def manage_team(request: HttpRequest) -> InertiaResponse:
         "permissions": {
             "team_add_user": has_add_permission,
         },
+        "role_choices": RoleChoices.label_value_choices(),
     }
 
     if request.method == "POST":
