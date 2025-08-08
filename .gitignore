@@ -205,3 +205,14 @@ fabric.properties
 
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
+
+
+# START Ruler Generated Files
+*.bak
+.github/copilot-instructions.md
+.github/copilot-instructions.md.bak
+.junie/guidelines.md
+.junie/guidelines.md.bak
+.vscode/mcp.json
+.vscode/mcp.json.bak
+# END Ruler Generated Files
