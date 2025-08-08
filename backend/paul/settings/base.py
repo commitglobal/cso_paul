@@ -3,6 +3,13 @@ import os
 
 from .environment import env
 
+# Authentication methods
+ENABLE_NGOHUB_AUTH = env.bool("ENABLE_NGOHUB_AUTH")
+ENABLE_EMAIL_AUTH = env.bool("ENABLE_EMAIL_AUTH")
+
+if not (ENABLE_NGOHUB_AUTH or ENABLE_EMAIL_AUTH):
+    raise ValueError("At least one authentication method must be enabled: NGO Hub or Normal Auth.")
+
 # Helper files
 VERSION_FILE = "/var/www/paul/.version"
 
@@ -17,27 +24,10 @@ ROOT_URLCONF = "paul.urls"
 
 WSGI_APPLICATION = "paul.wsgi.application"
 
-MIDDLEWARE = [
-    "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
-    "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.locale.LocaleMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
-    "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "django.contrib.messages.middleware.MessageMiddleware",
-    "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "inertia.middleware.InertiaMiddleware",
-    "auditlog.middleware.AuditlogMiddleware",
-    # paul middlewares:
-    "users.middleware.global_state",
-]
-
-
 # Cookies
 SESSION_COOKIE_SECURE = env.bool("SESSION_COOKIE_SECURE")
 SESSION_COOKIE_AGE = env.int("SESSION_EXPIRY_IDLE_SECONDS")  # This also expires the actual session data (from db)
+SESSION_COOKIE_AGE_EXTENDED = env.int("SESSION_EXPIRY_EXTENDED_SECONDS")
 SESSION_SAVE_EVERY_REQUEST = True
 
 

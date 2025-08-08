@@ -1,5 +1,6 @@
 import userEmptyImage from "@/assets/user-empty.svg";
 import { DataTable } from "@/components/data-table/data-table";
+import NgoHubRefreshButton from "@/components/paul/button-ngohub-refresh";
 import { Button } from "@/components/ui/button";
 import { InputSearch } from "@/components/ui/input-search";
 import { QUERY_PARAM_SEARCH } from "@/constants/query-params";
@@ -16,7 +17,7 @@ import { Columns } from "./columns";
 
 export default function TeamPage() {
   const {
-    props: { users, pagination, filters },
+    props: { users, pagination, filters, is_ngohub_auth_enabled, is_email_auth_enabled },
   } = useValidatedProps<TeamPageProps>(TeamPagePropsStruct);
 
   const { t } = useTranslation();
@@ -44,14 +45,14 @@ export default function TeamPage() {
               <h2 className="text-base font-semibold text-gray-900">{t("users.team.title")}</h2>
             </div>
             <div className="mt-4 flex gap-4 sm:mt-0 sm:ml-16 sm:flex-none">
-              <Button variant="outline" size="sm" className="gap-x-1.5">
-                <ArrowPathIcon aria-hidden="true" className="h-5 w-5 -ml-0.5" />
-                {t("users.team.ngohub_refresh")}
-              </Button>
-              <Button variant="default" size="sm" className="gap-x-1.5" onClick={handleOpenDialog}>
-                <UserPlusIcon aria-hidden="true" className="h-5 w-5 -ml-0.5" />
-                {t("users.team.addUser")}
-              </Button>
+              {is_ngohub_auth_enabled && <NgoHubRefreshButton />}
+
+              {is_email_auth_enabled && (
+                <Button variant="default" size="sm" className="gap-x-1.5" onClick={handleOpenDialog}>
+                  <UserPlusIcon aria-hidden="true" className="h-5 w-5 -ml-0.5" />
+                  {t("users.team.addUser")}
+                </Button>
+              )}
             </div>
           </div>
         </div>

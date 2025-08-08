@@ -2,6 +2,7 @@ from django import forms
 
 from users.common import normalize_email
 from users.models import User
+from django.utils.translation import gettext_lazy as _
 
 
 class LoginForm(forms.Form):
@@ -21,6 +22,6 @@ class AddTeamUserForm(forms.ModelForm):
     def clean_email(self):
         email = self.cleaned_data.get("email")
         if User.objects.filter(email=email).exists():
-            raise forms.ValidationError("User with this email already exists.")
+            raise forms.ValidationError(_("User with this email already exists."))
 
         return email

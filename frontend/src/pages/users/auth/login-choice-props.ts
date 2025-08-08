@@ -1,25 +1,17 @@
-import { CommonProps } from '@/types/common-props';
-import {
-  type Infer,
-  assign,
-  boolean,
-  object,
-  optional,
-  string,
-} from 'superstruct';
-
+import { CommonProps } from "@/types/common-props";
+import { assign, boolean, type Infer, object, optional, string } from "superstruct";
 
 export const LoginChoiceProps = assign(
   object({
     endpoints: object({
-      ngohub: boolean(),
+      is_ngohub_auth_enabled: boolean(),
       ngohub_url: string(),
-      email: boolean(),
+      is_email_auth_enabled: boolean(),
       email_url: string(),
     }),
     next_url: optional(string()),
   }),
-  CommonProps,
+  CommonProps
 );
 
 export type LoginChoiceProps = Infer<typeof LoginChoiceProps>;

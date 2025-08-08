@@ -1,7 +1,20 @@
 {
   "login": {
+    "title": "Login to PAUL",
     "forgotPassword": "Ai uitat parola?",
-    "loginPrompt": "Conectează-te"
+    "loginPrompt": "Conectează-te",
+    "ngohub": {
+      "redirecting": {
+        "title": "Redirecționare către autentificare...",
+        "desc": "Ești redirecționat către portalul de autentificare al NGO Hub.",
+        "manual": "Dacă nu ești redirecționat automat, te rugăm să dai click pe butonul de mai jos."
+      }
+    },
+    "input": {
+      "passwordTitle": "Parolă",
+      "emailTitle": "Email",
+      "rememberMe": "Ține-mă minte"
+    }
   },
   "loginRegister": {
     "newHere": "Nou aici?",
@@ -85,9 +98,9 @@
       "label": "Căutare"
     }
   },
-    "dialog": {
-      "cancel": "Cancel",
-      "save": "Save"
+  "dialog": {
+    "cancel": "Cancel",
+    "save": "Save"
   },
   "table": {
     "noData": "Nu sunt rezultate.",

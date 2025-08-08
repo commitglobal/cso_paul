@@ -25,6 +25,8 @@ export const TeamPagePropsStruct = assign(
     users: array(UserStruct),
     pagination: Pagination,
     filters: Filters,
+    is_ngohub_auth_enabled: boolean(),
+    is_email_auth_enabled: boolean(),
   }),
   CommonProps
 );

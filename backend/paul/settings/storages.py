@@ -3,7 +3,6 @@ from copy import deepcopy
 
 from .base import IS_CONTAINERIZED
 from .environment import BASE_DIR, env
-from .installed_apps import USE_AZURE
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
@@ -23,7 +22,10 @@ static_storage = "whitenoise.storage.CompressedStaticFilesStorage"
 default_storage_options = {}
 public_storage_options = {}
 
-if env.bool("USE_S3"):
+use_s3: bool = env.bool("USE_S3")
+use_azure: bool = env.bool("USE_AZURE") and env("AZURE_ACCOUNT_NAME") and env("AZURE_ACCOUNT_KEY")
+
+if use_s3:
     media_storage = "storages.backends.s3boto3.S3Boto3Storage"
     static_storage = "storages.backends.s3boto3.S3StaticStorage"
 
@@ -59,7 +61,7 @@ if env.bool("USE_S3"):
         env.str("AWS_S3_CUSTOM_DOMAIN", default=None) or env.str("AWS_S3_PUBLIC_CUSTOM_DOMAIN", default=None)
     ):
         public_storage_options["custom_domain"] = custom_domain
-elif USE_AZURE:
+elif use_azure:
     media_storage = "storages.backends.azure_storage.AzureStorage"
     static_storage = "storages.backends.azure_storage.AzureStorage"
 
