@@ -11,7 +11,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
-from .auth import *
+from .authentication import *
 from .base import *
 from .cache import *
 from .databases import *
@@ -22,7 +22,8 @@ from .frontend import *
 from .installed_apps import *
 from .l10n import *
 from .logging import *
-from .ngohub import *
+from .ngohub_connection import *
+from .social_auth import *
 from .query_params import *
 from .recaptcha import *
 from .storages import *

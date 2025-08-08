@@ -239,7 +239,7 @@ class SeedSuperuserCommandTestCase(TestCase):
         self.assertEqual(superuser.last_name, "Super", "Superuser last name should be 'Super'.")
 
         # Check if the user is in the correct group
-        super_admin_group = Group.objects.get(name=settings.SUPER_ADMIN)
+        super_admin_group = Group.objects.get(name=settings.SUPER_ADMIN_ROLE_NAME)
         self.assertIn(
             super_admin_group,
             superuser.groups.all(),

@@ -15,9 +15,9 @@ class Command(CommonCreateUserCommand):
         """
         Set the user groups for the superuser.
         """
-        super_admin_group = Group.objects.filter(name=settings.SUPER_ADMIN).first()
+        super_admin_group = Group.objects.filter(name=settings.SUPER_ADMIN_ROLE_NAME).first()
         if not super_admin_group:
-            logger.error(f"Group '{settings.SUPER_ADMIN}' does not exist.")
+            logger.error(f"Group '{settings.SUPER_ADMIN_ROLE_NAME}' does not exist.")
             return
 
         user.groups.clear()

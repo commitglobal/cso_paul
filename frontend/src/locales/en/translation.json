@@ -1,7 +1,20 @@
 {
   "login": {
+    "title": "Login to PAUL",
     "forgotPassword": "Forgot Password?",
-    "loginPrompt": "Login"
+    "loginPrompt": "Login",
+    "ngohub": {
+      "redirecting": {
+        "title": "Redirecting to authentication...",
+        "desc": "You are being redirected to the NGO Hub login portal.",
+        "manual": "If you are not redirected automatically, please click the button below."
+      }
+    },
+    "input": {
+      "passwordTitle": "Password",
+      "emailTitle": "Email",
+      "rememberMe": "Remember me"
+    }
   },
   "loginRegister": {
     "newHere": "Are you new here?",

@@ -6,6 +6,7 @@
 - Name variables, functions, and classes descriptively and consistently.
 - Write modular code: split logic into reusable functions and classes.
 - Add concise docstrings to all public functions and classes.
+- Don't use hardcoded strings, if possible. If a function exists to generate that string, use it. If the string is a constant, define it in its (or another appropriate) module.
 
 ## Testing Requirements
 - Store tests in `tests.py` or a `tests/` directory within each app.

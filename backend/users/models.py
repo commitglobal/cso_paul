@@ -50,11 +50,11 @@ class CustomUserManager(UserManager):
 
 
 class RoleChoices(models.TextChoices):
-    USER = settings.USER, settings.USER_GROUPS[settings.USER]["label"]
-    MANAGER = settings.MANAGER, settings.USER_GROUPS[settings.MANAGER]["label"]
-    NORMAL_ADMIN = settings.NORMAL_ADMIN, settings.USER_GROUPS[settings.NORMAL_ADMIN]["label"]
-    SUPER_ADMIN = settings.SUPER_ADMIN, settings.USER_GROUPS[settings.SUPER_ADMIN]["label"]
-    SUPPORT_ADMIN = settings.SUPPORT_ADMIN, settings.USER_GROUPS[settings.SUPPORT_ADMIN]["label"]
+    USER = settings.USER_ROLE_NAME, settings.USER_GROUPS[settings.USER_ROLE_NAME]["label"]
+    MANAGER = settings.MANAGER_ROLE_NAME, settings.USER_GROUPS[settings.MANAGER_ROLE_NAME]["label"]
+    NORMAL_ADMIN = settings.NORMAL_ADMIN_ROLE_NAME, settings.USER_GROUPS[settings.NORMAL_ADMIN_ROLE_NAME]["label"]
+    SUPER_ADMIN = settings.SUPER_ADMIN_ROLE_NAME, settings.USER_GROUPS[settings.SUPER_ADMIN_ROLE_NAME]["label"]
+    SUPPORT_ADMIN = settings.SUPPORT_ADMIN_ROLE_NAME, settings.USER_GROUPS[settings.SUPPORT_ADMIN_ROLE_NAME]["label"]
 
 
 class User(AbstractUser):
@@ -80,9 +80,19 @@ class User(AbstractUser):
 
     main_role = models.CharField(
         max_length=50,
+        verbose_name=_("role"),
         choices=RoleChoices.choices,
         default=RoleChoices.USER,
-        verbose_name=_("role"),
+    )
+
+    # NGO Hub data
+    ngohub_id = models.PositiveIntegerField(
+        verbose_name=_("NGO Hub ID"),
+        blank=True,
+        null=True,
+        db_index=True,
+        unique=True,
+        help_text=_("The ID of the user in NGO Hub, if applicable."),
     )
 
     objects = CustomUserManager()
