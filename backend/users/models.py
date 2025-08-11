@@ -51,7 +51,7 @@ class CustomUserManager(UserManager):
         return self._create_user(email, password, **extra_fields)
 
 
-class RoleChoices(models.TextChoices):
+class RoleChoices(CommonLabelValueChoices, models.TextChoices):
     USER = settings.USER_ROLE_NAME, settings.USER_GROUPS[settings.USER_ROLE_NAME]["label"]
     MANAGER = settings.MANAGER_ROLE_NAME, settings.USER_GROUPS[settings.MANAGER_ROLE_NAME]["label"]
     NORMAL_ADMIN = settings.NORMAL_ADMIN_ROLE_NAME, settings.USER_GROUPS[settings.NORMAL_ADMIN_ROLE_NAME]["label"]
