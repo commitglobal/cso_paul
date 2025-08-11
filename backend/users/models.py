@@ -71,7 +71,7 @@ class User(AbstractUser):
         help_text=_("We do not use this field"),
         max_length=150,
         null=True,
-        unique=True,
+        unique=False,
         validators=[],
         verbose_name=_("username"),
     )

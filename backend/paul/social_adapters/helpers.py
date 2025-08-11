@@ -11,7 +11,6 @@ from django.urls import reverse
 from ngohub import NGOHub
 from ngohub.exceptions import HubHTTPException
 from ngohub.models.user import UserProfile
-
 from users.models import User
 
 logger = logging.getLogger(__name__)
@@ -63,7 +62,9 @@ def _set_user_name(*, user: User, user_profile: UserProfile, commit: bool = True
         user.save()
 
 
-def _get_ngohub_user_profile(ngohub: NGOHub, user: User, user_token: str) -> UserProfile:
+def _get_ngohub_user_profile(user: User, user_token: str) -> UserProfile:
+    ngohub: NGOHub = NGOHub(settings.NGOHUB_API_HOST)
+
     try:
         user_profile: Optional[UserProfile] = ngohub.get_profile(user_token)
     except HubHTTPException:
@@ -111,7 +112,8 @@ def _update_user_with_role(*, user: User, ngohub_role: str, commit: bool = True)
         user.is_superuser = user_role_properties["is_superuser"]
         should_update = commit
 
-    if should_update:
+    if should_update or user.pk is None:
+        # If the user is new or any of the properties have changed, save the user.
         user.save()
 
     user.groups.add(Group.objects.get(name=local_role))
@@ -120,18 +122,28 @@ def _update_user_with_role(*, user: User, ngohub_role: str, commit: bool = True)
     return user
 
 
+def _check_user_is_superadmin(user_profile: UserProfile):
+    """
+    Check if the user is a superadmin in NGO Hub.
+    If the user is a superadmin, they are allowed to access all applications.
+    """
+    if user_profile.role == settings.NGOHUB_ROLE_SUPER_ADMIN:
+        return True
+
+    return False
+
+
 def user_create_or_update(sociallogin: SocialLogin) -> UserModel:
     """
     Create a new user in NGO Hub and return the UserModel instance.
     This function is called when a new user logs in for the first time.
     """
-    _check_ngo_user_has_app_permissions(sociallogin)
-
     user: User = sociallogin.user
+    user_profile: UserProfile = _get_ngohub_user_profile(user, user_token=sociallogin.token.token)
 
-    ngohub: NGOHub = NGOHub(settings.NGOHUB_API_HOST)
+    if not _check_user_is_superadmin(user_profile):
+        _check_ngo_user_has_app_permissions(sociallogin)
 
-    user_profile: UserProfile = _get_ngohub_user_profile(ngohub, user, user_token=sociallogin.token.token)
     _set_user_name(user=user, user_profile=user_profile, commit=False)
 
     user_ngohub_role: str = user_profile.role
