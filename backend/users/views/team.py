@@ -143,6 +143,7 @@ def manage_team(request: HttpRequest) -> InertiaResponse:
         "permissions": {
             "team_add_user": has_add_permission,
         },
+        "role_choices": RoleChoices.label_value_choices(),
         "is_ngohub_auth_enabled": settings.ENABLE_NGOHUB_AUTH,
         "is_email_auth_enabled": settings.ENABLE_EMAIL_AUTH,
     }

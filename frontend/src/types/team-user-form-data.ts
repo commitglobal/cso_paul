@@ -5,5 +5,6 @@ export type TeamUserFormData = Pick<
   | 'first_name'
   | 'last_name'
   | 'email'
-//   TODO: user role
->;
+> & {
+  role?: string;
+};
