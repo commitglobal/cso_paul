@@ -4,10 +4,7 @@ import {
   type Infer,
   array,
   assign,
-  number,
   object,
-  optional,
-  string,
 } from 'superstruct';
 
 
