@@ -11,5 +11,6 @@ urlpatterns = [
     path("login/ngohub/", users.views.auth.ngohub_login, name="login-by-ngohub"),
     path("logout/", users.views.auth.logout, name="logout"),
     path("team/", users.views.team.manage_team, name="manage-team"),
+    path("team/<str:user_id>/", users.views.team.manage_user, name="manage-user"),
     path("team/ngohub-refresh/", users.views.ngohub.sync_from_ngohub, name="ngohub-refresh"),
 ]

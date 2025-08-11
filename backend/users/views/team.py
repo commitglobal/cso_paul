@@ -6,7 +6,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Page
-from django.http import HttpRequest
+from django.http import Http404, HttpRequest
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
@@ -168,4 +168,50 @@ def manage_team(request: HttpRequest) -> InertiaResponse:
         request,
         "users/team/index",
         props=page_props,
+    )
+
+
+@login_required
+@cache_control(private=True)
+@inertia("users/team-user/index")
+def manage_user(request: HttpRequest, user_id: str) -> InertiaResponse:
+    """
+    Manage a specific user in the team
+    """
+    try:
+        user = User.objects.get(id=user_id)
+    except User.DoesNotExist:
+        raise Http404(_("User not found."))
+
+    if not user:
+        raise PermissionDenied(_("User not found."))
+
+    if request.method == "POST":
+        if not request.user.has_perm("users.change_user"):
+            raise PermissionDenied()
+
+        form = AddTeamUserForm(json.loads(request.body), instance=user)
+        if not form.is_valid():
+            return inertia(
+                request,
+                "users/team/index",
+                props={
+                    "errors": {"team": form.errors},
+                },
+            )
+        else:
+            form.save()
+
+    return inertia_render(
+        request,
+        "users/team/manage_user",
+        props={
+            "user": {
+                "id": user.id,
+                "first_name": user.first_name,
+                "last_name": user.last_name,
+                "email": user.email,
+                "role": RoleChoices(user.main_role).label,
+            },
+        },
     )

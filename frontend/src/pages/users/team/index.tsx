@@ -4,9 +4,9 @@ import NgoHubRefreshButton from "@/components/paul/button-ngohub-refresh";
 import { Button } from "@/components/ui/button";
 import { InputSearch } from "@/components/ui/input-search";
 import { QUERY_PARAM_SEARCH } from "@/constants/query-params";
-import { useValidatedProps } from "@/hooks/use-validated-props.ts";
-import BaseLayout from "@/layouts/base-layout.tsx";
-import { type TeamPageProps, TeamPagePropsStruct } from "@/pages/users/team/team-page-props-struct.ts";
+import { useValidatedProps } from "@/hooks/use-validated-props";
+import BaseLayout from "@/layouts/base-layout";
+import { type TeamPageProps, TeamPagePropsStruct } from "@/pages/users/team/team-page-props-struct";
 import { ArrowPathIcon, UserPlusIcon } from "@heroicons/react/20/solid";
 import { parseAsString, useQueryState } from "nuqs";
 import { useCallback, useMemo, useState } from "react";
@@ -98,4 +98,5 @@ export default function TeamPage() {
     </>
   );
 }
+
 TeamPage.layout = BaseLayout;
