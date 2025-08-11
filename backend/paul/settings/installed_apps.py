@@ -16,19 +16,45 @@ INSTALLED_APPS = [
     "inertia",
     "localflavor",
     "storages",
+    # authentication
+    "allauth",
+    "allauth.account",
+    "allauth.headless",
+    "allauth.usersessions",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.amazon_cognito",
     # paul apps:
     "dashboard",
     "datastore",
     "users",
 ]
 
-USE_S3 = env.bool("USE_S3")
-USE_AZURE = env.bool("USE_AZURE") and env("AZURE_ACCOUNT_NAME") and env("AZURE_ACCOUNT_KEY")
 
-AWS_SES_INCLUDE_REPORTS = env.bool("AWS_SES_INCLUDE_REPORTS")
+use_s3: bool = env.bool("USE_S3")
+use_azure: bool = env.bool("USE_AZURE") and env("AZURE_ACCOUNT_NAME") and env("AZURE_ACCOUNT_KEY")
 
-if not (USE_S3 or USE_AZURE):
+if not (use_s3 or use_azure):
     INSTALLED_APPS.append("whitenoise.runserver_nostatic")
 
-if AWS_SES_INCLUDE_REPORTS:
+aws_ses_include_reports = env.bool("AWS_SES_INCLUDE_REPORTS")
+
+if aws_ses_include_reports:
     INSTALLED_APPS.append("django_ses")
+
+MIDDLEWARE = [
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "inertia.middleware.InertiaMiddleware",
+    "auditlog.middleware.AuditlogMiddleware",
+    # paul middlewares:
+    "users.middleware.global_state",
+]

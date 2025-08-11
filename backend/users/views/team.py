@@ -19,9 +19,8 @@ from paul.views.filtering import FilterField, FilterItem, Filters, filter_qs
 from paul.views.pagination import paginate_queryset
 from paul.views.search import search
 
-from users.models import RoleChoices, User
 from users.forms import AddTeamUserForm
-
+from users.models import RoleChoices, User
 
 logger = logging.getLogger(__name__)
 
@@ -145,6 +144,8 @@ def manage_team(request: HttpRequest) -> InertiaResponse:
             "team_add_user": has_add_permission,
         },
         "role_choices": RoleChoices.label_value_choices(),
+        "is_ngohub_auth_enabled": settings.ENABLE_NGOHUB_AUTH,
+        "is_email_auth_enabled": settings.ENABLE_EMAIL_AUTH,
     }
 
     if request.method == "POST":

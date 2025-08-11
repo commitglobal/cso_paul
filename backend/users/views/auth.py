@@ -1,6 +1,7 @@
 import json
 from typing import Any, Union
 
+from django.conf import settings
 from django.contrib import auth, messages
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import redirect
@@ -10,9 +11,9 @@ from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
 from inertia import InertiaResponse, inertia
 from inertia import render as inertia_render
+from utils.types import RedirectionResponse
 
 from users.forms import LoginForm
-from utils.types import RedirectionResponse
 
 
 def _login_endpoints():
@@ -20,9 +21,9 @@ def _login_endpoints():
     Returns the currently available login endpoints
     """
     return {
-        "ngohub": True,
+        "is_ngohub_auth_enabled": settings.ENABLE_NGOHUB_AUTH,
         "ngohub_url": reverse("users:login-by-ngohub"),
-        "email": True,
+        "is_email_auth_enabled": settings.ENABLE_EMAIL_AUTH,
         "email_url": reverse("users:login-by-email"),
     }
 
@@ -37,8 +38,8 @@ def _make_next_url_safe(request, next_url):
         require_https=request.is_secure(),
     ):
         return next_url
-    else:
-        return reverse("dashboard:home")
+
+    return reverse("dashboard:home")
 
 
 @cache_control(private=False)
@@ -61,6 +62,9 @@ def email_login(request: HttpRequest) -> Union[InertiaResponse, RedirectionRespo
     """
     Login by using the email and password
     """
+
+    if not settings.ENABLE_EMAIL_AUTH:
+        return redirect(reverse("users:login"))
 
     # Redirect already authenticated users to their dashboard
     if request.user.is_authenticated:
@@ -106,7 +110,9 @@ def email_login(request: HttpRequest) -> Union[InertiaResponse, RedirectionRespo
         )
     else:
         auth.login(request, login_user)
-        if not remember:
+        if remember:
+            request.session.set_expiry(settings.SESSION_COOKIE_AGE_EXTENDED)
+        else:
             request.session.set_expiry(0)
 
     if next_url:
@@ -132,14 +138,44 @@ def logout(request: HttpRequest) -> HttpResponse:
 
 
 @cache_control(private=True)
-def ngohub_login(request: HttpRequest) -> InertiaResponse:
+def ngohub_login(request: HttpRequest) -> Union[InertiaResponse, RedirectionResponse]:
     """
-    Login by using NGO Hub
+    Login by using NGO Hub.
+
+    Provide the frontend bridge page with Headless API properties so it can
+    initiate the provider redirect itself (synchronous POST) and include the
+    correct CSRF token. This keeps the frontend in control as requested.
     """
 
-    raise NotImplementedError("NGO Hub authentication is not implemented yet")
-    # return inertia_render(
-    #     request,
-    #     "users/auth/ngohub-login",
-    #     props={},
-    # )
+    if not settings.ENABLE_NGOHUB_AUTH:
+        return redirect(reverse("users:login"))
+
+    # Determine the desired post-auth frontend destination
+    next_url = request.GET.get("next") or ""
+    if next_url:
+        next_url = _make_next_url_safe(request, next_url)
+    else:
+        next_url = reverse("dashboard:home")
+
+    # Headless API requires an absolute callback_url back to the frontend
+    callback_url = request.build_absolute_uri(next_url)
+
+    # CSRF token for the synchronous POST to the Headless API endpoint
+    from django.middleware.csrf import get_token
+
+    csrf_token = get_token(request)
+
+    redirect_endpoint = reverse("headless:browser:socialaccount:redirect_to_provider")
+
+    return inertia_render(
+        request,
+        "users/auth/ngohub-login",
+        props={
+            "redirect_endpoint": redirect_endpoint,
+            "provider": "amazon_cognito",
+            "process": "login",
+            "callback_url": callback_url,
+            "csrf_token": csrf_token,
+            "next_url": next_url,
+        },
+    )

@@ -4,6 +4,7 @@ from pathlib import Path
 import environ
 
 from paul.constants.sizes import MEBIBYTE
+from paul.constants.time import DAY, HOUR
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 root = Path(__file__).resolve().parent.parent.parent.parent
@@ -50,7 +51,8 @@ env = environ.Env(
     THROTTLE_IP_SIGNUPS_PER_HOUR=(int, 90),  # 0 = disabled
     SECRET_KEY=(str, "secret"),
     SESSION_COOKIE_SECURE=(bool, True),
-    SESSION_EXPIRY_IDLE_SECONDS=(int, 4 * 60 * 60),
+    SESSION_EXPIRY_IDLE_SECONDS=(int, 4 * HOUR),
+    SESSION_EXPIRY_EXTENDED_SECONDS=(int, 4 * DAY),
     TIME_ZONE=(str, "Europe/Bucharest"),
     # db settings
     DATABASE_ENGINE=(str, "sqlite3"),
@@ -87,12 +89,26 @@ env = environ.Env(
     EMAIL_VERIFICATION_EXPIRY_HOURS=(int, 96),  # 4 days
     EMAIL_2FA_EXPIRY_HOURS=(int, 4),
     EMAIL_PASSWORD_RESET_EXPIRY_HOURS=(int, 4),
+    # NGO settings
+    NGOHUB_NGO_ID=(int, None),
+    NGOHUB_APP_ID=(int, None),
     # NGO Hub settings
     NGOHUB_HOME_HOST=(str, "ngohub.ro"),
     NGOHUB_APP_HOST=(str, "app.ngohub.ro"),
     NGOHUB_API_HOST=(str, "api.ngohub.ro"),
     NGOHUB_API_ACCOUNT=(str, ""),
     NGOHUB_API_KEY=(str, ""),
+    # Auth methods
+    ENABLE_NGOHUB_AUTH=(bool, True),
+    ENABLE_EMAIL_AUTH=(bool, True),
+    # Cognito settings
+    AWS_COGNITO_DOMAIN=(str, ""),
+    AWS_COGNITO_CLIENT_ID=(str, ""),
+    AWS_COGNITO_CLIENT_SECRET=(str, ""),
+    AWS_COGNITO_USER_POOL_ID=(str, ""),
+    AWS_COGNITO_REGION=(str, ""),
+    AWS_COGNITO_EMAIL_AUTHENTICATION=(bool, True),
+    AWS_COGNITO_VERIFIED_EMAIL=(bool, True),
 )
 
 environ.Env.read_env(ENV_FILE_PATH)

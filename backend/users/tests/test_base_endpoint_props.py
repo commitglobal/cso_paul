@@ -20,7 +20,7 @@ class BasePropertiesSuperAdminTests(TestCase):
 
         self.user = User.objects.create_user(email="test@example.com", password="test_pass")
 
-        super_admin_group = Group.objects.get(name=settings.SUPER_ADMIN)
+        super_admin_group = Group.objects.get(name=settings.SUPER_ADMIN_ROLE_NAME)
         self.user.groups.add(super_admin_group)
 
         self.client = Client()

@@ -4,6 +4,7 @@ from typing import List
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
+from .base import ENABLE_EMAIL_AUTH, ENABLE_NGOHUB_AUTH
 from .environment import env
 
 # Password validation
@@ -25,19 +26,30 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Authentication settings
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth
+AUTHENTICATION_BACKENDS = []
+
+if ENABLE_EMAIL_AUTH:
+    AUTHENTICATION_BACKENDS.append("django.contrib.auth.backends.ModelBackend")
+
+if ENABLE_NGOHUB_AUTH:
+    AUTHENTICATION_BACKENDS.append("allauth.account.auth_backends.AuthenticationBackend")
+
+if not AUTHENTICATION_BACKENDS:
+    raise ValueError("At least one authentication backend must be enabled: NGO Hub or Email Auth.")
+
 AUTH_USER_MODEL = "users.User"
 LOGIN_URL = reverse_lazy("users:login")
 LOGOUT_REDIRECT_URL = reverse_lazy("users:login")
 
 
 # Groups and Permissions
-USER = "user"
-MANAGER = "manager"
-NORMAL_ADMIN = "admin"
-SUPER_ADMIN = "super admin"
+USER_ROLE_NAME = "user"
+MANAGER_ROLE_NAME = "manager"
+NORMAL_ADMIN_ROLE_NAME = "admin"
+SUPER_ADMIN_ROLE_NAME = "super admin"
 
 # support admin is a special role that has access to support-related features
-SUPPORT_ADMIN = "support admin"
+SUPPORT_ADMIN_ROLE_NAME = "support admin"
 
 user_permissions = [
     "users.view_user",
@@ -62,35 +74,35 @@ super_admin_permissions = admin_permissions
 
 # Define user groups with their respective permissions and roles
 USER_GROUPS = {
-    USER: {
+    USER_ROLE_NAME: {
         "order": 500,
         "label": _("User"),
         "is_superuser": False,
         "is_staff": False,
         "permissions": user_permissions,
     },
-    MANAGER: {
+    MANAGER_ROLE_NAME: {
         "order": 400,
         "label": _("Manager"),
         "is_superuser": False,
         "is_staff": False,
         "permissions": manager_permissions,
     },
-    NORMAL_ADMIN: {
+    NORMAL_ADMIN_ROLE_NAME: {
         "order": 300,
         "label": _("Admin"),
         "is_superuser": False,
         "is_staff": False,
         "permissions": admin_permissions,
     },
-    SUPER_ADMIN: {
+    SUPER_ADMIN_ROLE_NAME: {
         "order": 100,
         "label": _("Super Admin"),
         "is_superuser": True,
         "is_staff": False,
         "permissions": super_admin_permissions,
     },
-    SUPPORT_ADMIN: {
+    SUPPORT_ADMIN_ROLE_NAME: {
         "order": 200,
         "label": _("Support Admin"),
         "is_superuser": False,

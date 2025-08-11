@@ -1,10 +1,11 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpRequest
+from django.http import HttpRequest, JsonResponse
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views.decorators.cache import cache_control, never_cache
-from inertia import render as inertia_render, InertiaResponse
+from inertia import InertiaResponse
+from inertia import render as inertia_render
 
 
 @cache_control(private=True)
@@ -22,21 +23,23 @@ def home(request: HttpRequest) -> InertiaResponse:
 
 
 @never_cache
-def health(request: HttpRequest) -> HttpResponse:
+def health(request: HttpRequest) -> JsonResponse:
     """
     Health check endpoint
     """
-    normal_response_text = f"OK - {timezone.now()}"
+    response_data = {
+        "status": "ok",
+        "timestamp": timezone.now().isoformat(),
+        "version": settings.VERSION,
+        "revision": settings.REVISION,
+    }
 
     # Show detailed information only to authenticated staff members
-    if request.user.is_authenticated and (
-        request.user.is_staff
-        or request.user.is_superuser
-        or request.user.is_admin_member
-        or request.user.is_superadmin_member
-    ):
-        return HttpResponse(
-            f"{normal_response_text} [user #{request.user.pk}] [{settings.VERSION} {settings.REVISION}]"
-        )
+    if request.user.is_authenticated:
+        response_data["user_id"] = request.user.pk
 
-    return HttpResponse(normal_response_text)
+    return JsonResponse(
+        response_data,
+        status=200,
+        content_type="application/json",
+    )

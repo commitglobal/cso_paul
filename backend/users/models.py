@@ -51,12 +51,12 @@ class CustomUserManager(UserManager):
         return self._create_user(email, password, **extra_fields)
 
 
-class RoleChoices(CommonLabelValueChoices, models.TextChoices):
-    USER = settings.USER, settings.USER_GROUPS[settings.USER]["label"]
-    MANAGER = settings.MANAGER, settings.USER_GROUPS[settings.MANAGER]["label"]
-    NORMAL_ADMIN = settings.NORMAL_ADMIN, settings.USER_GROUPS[settings.NORMAL_ADMIN]["label"]
-    SUPER_ADMIN = settings.SUPER_ADMIN, settings.USER_GROUPS[settings.SUPER_ADMIN]["label"]
-    SUPPORT_ADMIN = settings.SUPPORT_ADMIN, settings.USER_GROUPS[settings.SUPPORT_ADMIN]["label"]
+class RoleChoices(models.TextChoices):
+    USER = settings.USER_ROLE_NAME, settings.USER_GROUPS[settings.USER_ROLE_NAME]["label"]
+    MANAGER = settings.MANAGER_ROLE_NAME, settings.USER_GROUPS[settings.MANAGER_ROLE_NAME]["label"]
+    NORMAL_ADMIN = settings.NORMAL_ADMIN_ROLE_NAME, settings.USER_GROUPS[settings.NORMAL_ADMIN_ROLE_NAME]["label"]
+    SUPER_ADMIN = settings.SUPER_ADMIN_ROLE_NAME, settings.USER_GROUPS[settings.SUPER_ADMIN_ROLE_NAME]["label"]
+    SUPPORT_ADMIN = settings.SUPPORT_ADMIN_ROLE_NAME, settings.USER_GROUPS[settings.SUPPORT_ADMIN_ROLE_NAME]["label"]
 
 
 class User(AbstractUser):
@@ -73,7 +73,7 @@ class User(AbstractUser):
         help_text=_("We do not use this field"),
         max_length=150,
         null=True,
-        unique=True,
+        unique=False,
         validators=[],
         verbose_name=_("username"),
     )
@@ -82,9 +82,19 @@ class User(AbstractUser):
 
     main_role = models.CharField(
         max_length=50,
+        verbose_name=_("role"),
         choices=RoleChoices.choices,
         default=RoleChoices.USER,
-        verbose_name=_("role"),
+    )
+
+    # NGO Hub data
+    ngohub_id = models.PositiveIntegerField(
+        verbose_name=_("NGO Hub ID"),
+        blank=True,
+        null=True,
+        db_index=True,
+        unique=True,
+        help_text=_("The ID of the user in NGO Hub, if applicable."),
     )
 
     objects = CustomUserManager()
