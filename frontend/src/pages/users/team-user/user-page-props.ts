@@ -1,6 +1,6 @@
 import { CommonProps } from "@/types/common-props";
 import { TabProps } from "@/types/tabProps";
-import { assign, type Infer, object } from "superstruct";
+import { array, assign, type Infer, object, string } from "superstruct";
 
 export const UserPageProps = assign(
   object({
@@ -10,3 +10,23 @@ export const UserPageProps = assign(
 );
 
 export type UserPageProps = Infer<typeof UserPageProps>;
+
+export const UserInfoPropsStruct = object({
+  value: string(),
+  label: string(),
+  baseUrl: string(),
+  props: array(
+    object({
+      label: string(),
+      value: string(),
+    })
+  ),
+  tabs: array(
+    object({
+      label: string(),
+      value: string(),
+    })
+  ),
+});
+
+export type UserInfoProps = Infer<typeof UserInfoPropsStruct>;

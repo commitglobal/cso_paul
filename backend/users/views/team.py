@@ -4,10 +4,9 @@ from typing import Dict, List
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import Permission
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Page
-from django.http import Http404, HttpRequest
+from django.http import HttpRequest
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
@@ -168,127 +167,5 @@ def manage_team(request: HttpRequest) -> InertiaResponse:
     return inertia_render(
         request,
         "users/team/index",
-        props=page_props,
-    )
-
-
-@login_required
-@cache_control(private=True)
-@inertia("users/team-user/index")
-def manage_user(request: HttpRequest, user_id: str) -> InertiaResponse:
-    """
-    Manage a specific user in the team
-    """
-    try:
-        user = User.objects.get(id=user_id)
-    except User.DoesNotExist:
-        raise Http404(_("User not found."))
-
-    if not user:
-        raise PermissionDenied(_("User not found."))
-
-    if request.method == "POST":
-        if not request.user.has_perm("users.change_user"):
-            raise PermissionDenied()
-
-        form = AddTeamUserForm(json.loads(request.body), instance=user)
-        if not form.is_valid():
-            return inertia(
-                request,
-                "users/team/index",
-                props={
-                    "errors": {"team": form.errors},
-                },
-            )
-        else:
-            form.save()
-
-    subtitle_text = _("This user has access to Paul. You can change access options from NGO Hub")
-    subtitle_cta_text = _("(Manage access)")
-    subtitle_cta_url = build_ngohub_url()
-    subtitle = f"""{subtitle_text}
-        <a href="{subtitle_cta_url}" target="_blank" rel="noopener noreferrer">
-            {subtitle_cta_text}
-        </a>"""
-
-    user_name: str = user.first_name
-    if user.last_name:
-        user_name = f"{user_name} {user.last_name}"
-
-    page_props = {
-        "title": user_name,
-        "description": subtitle,
-        "breadcrumbs": [
-            {"label": _("Team"), "url": reverse("users:manage-team")},
-            {"label": user_name, "url": reverse("users:manage-user", kwargs={"user_id": user.id})},
-        ],
-        "is_ngohub_auth_enabled": settings.ENABLE_NGOHUB_AUTH,
-        "is_email_auth_enabled": settings.ENABLE_EMAIL_AUTH,
-        "tabs": {
-            "default": "user",
-            "items": [
-                {
-                    "value": "user",
-                    "label": _("User Details"),
-                    "props": [
-                        {
-                            "label": _("Email"),
-                            "value": user.email,
-                        },
-                        {
-                            "label": _("Phone"),
-                            "value": "user.phone",
-                        },
-                        {
-                            "label": _("Last Activity"),
-                            "value": display_dates.short_datetime(user.last_login),
-                        },
-                        {
-                            "label": _("Added Since"),
-                            "value": display_dates.short_date(user.date_joined),
-                        },
-                    ],
-                },
-                {
-                    "value": "permissions",
-                    "label": _("Permissions"),
-                    "header": [
-                        {
-                            "label": _("Entity"),
-                            "value": "entity",
-                        },
-                        {
-                            "label": _("Type"),
-                            "value": "entity_type",
-                        },
-                        {
-                            "label": _("Permission"),
-                            "value": "permission",
-                        },
-                    ],
-                    "items": [],
-                },
-                {
-                    "value": "activity_log",
-                    "label": _("Activity Log"),
-                    "header": [
-                        {
-                            "label": _("Action"),
-                            "value": "action",
-                        },
-                        {
-                            "label": _("Date"),
-                            "value": "date",
-                        },
-                    ],
-                    "items": [],
-                },
-            ],
-        },
-    }
-
-    return inertia_render(
-        request,
-        "users/team-user/index",
         props=page_props,
     )

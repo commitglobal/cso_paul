@@ -81,6 +81,23 @@
       },
       "filterOptions": "Filters",
       "searchPlaceholder": "Search team members..."
+    },
+    "user": {
+      "addPermission": "Add permission",
+      "activity_log": {
+        "action": "users.user.activity_log.action",
+        "date": "users.user.activity_log.date"
+      },
+      "permissions": {
+        "entity": "users.user.permissions.entity",
+        "entity_type": "users.user.permissions.entity_type",
+        "permission": "users.user.permissions.permission",
+        "action": {
+          "view": "users.user.permissions.action.view",
+          "transfer": "users.user.permissions.action.transfer",
+          "remove": "users.user.permissions.action.remove"
+        }
+      }
     }
   },
   "pagination": {
