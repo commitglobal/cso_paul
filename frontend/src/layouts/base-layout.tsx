@@ -1,13 +1,13 @@
-import { CommonProps } from "@/types/common-props";
-import { type ReactNode } from "react";
-import { type Page } from "@inertiajs/core";
+import { SanitizeHTML } from "@/components/helpers/sanitized-html";
 import { AppSidebar } from "@/components/paul/app-sidebar";
 import { AppTopbar } from "@/components/paul/app-topbar";
 import { Breadcrumbs } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { SanitizeHTML } from "@/components/helpers/sanitized-html";
 import type { Breadcrumb } from "@/types/breadcrumb.ts";
+import { CommonProps } from "@/types/common-props";
+import { type Page } from "@inertiajs/core";
+import { type ReactNode } from "react";
 
 function renderDescription(description: string | undefined) {
   if (!description) return null;
@@ -46,7 +46,7 @@ export default function BaseLayout(page: Page<CommonProps>) {
 
             {renderDescription(page.props.description as string)}
 
-            <div className="bg-white rounded-lg shadow-sm">{page as unknown as ReactNode}</div>
+            {page as unknown as ReactNode}
           </div>
         </main>
       </SidebarInset>
