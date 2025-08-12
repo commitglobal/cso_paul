@@ -12,7 +12,7 @@ import { type ColumnDef } from "@tanstack/react-table";
 /**
  * Columns for the permissions table in Team User page.
  */
-export const PermissionsColumns: (t: (key: string) => string) => ColumnDef<PermissionsProps>[] = (t) => [
+export const ColumnsPermissions: (t: (key: string) => string) => ColumnDef<PermissionsProps>[] = (t) => [
   {
     accessorKey: "entity",
     header: t("users.user.permissions.entity"),

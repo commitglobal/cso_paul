@@ -1,4 +1,4 @@
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MainContent } from "@/layouts/main-content";
 import * as React from "react";
 
@@ -29,7 +29,15 @@ export default function TabWrapper({
         ))}
       </TabsList>
 
-      <MainContent>{React.cloneElement(React.Children.only(children) as React.ReactElement)}</MainContent>
+      <MainContent>
+        <div className="flex flex-col gap-4 py-4 ">
+          <TabsContent value={defaultTab}>
+          <div className="flex flex-col gap-4 py-4">
+            {React.Children.map(children, (child) => child)}
+          </div>
+          </TabsContent>
+        </div>
+      </MainContent>
     </Tabs>
   );
 }
