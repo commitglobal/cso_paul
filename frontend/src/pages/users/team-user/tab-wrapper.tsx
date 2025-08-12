@@ -1,6 +1,8 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MainContent } from "@/layouts/main-content";
+import { router } from '@inertiajs/react';
 import * as React from "react";
+
 
 export default function TabWrapper({
   defaultTab,
@@ -21,7 +23,7 @@ export default function TabWrapper({
             key={tab.value}
             value={tab.value}
             onClick={() => {
-              window.location.href = `${baseUrl}${tab.value}`;
+              router.get(`${baseUrl}${tab.value}`);
             }}
           >
             {tab.label}
