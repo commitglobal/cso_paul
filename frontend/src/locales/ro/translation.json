@@ -97,6 +97,18 @@
           "transfer": "users.user.permissions.action.transfer",
           "remove": "users.user.permissions.action.remove"
         }
+      },
+      "role": {
+        "selectLabel": "Schimbă rolul utilizatorului",
+        "selectPlaceholder": "Selectează rolul utilizatorului",
+        "submitConfirmation": "Rolul utilizatorului a fost schimbat cu succes.",
+        "selectDescription": "users.user.role.selectDescription",
+        "selectLink": "users.user.role.selectLink",
+        "roleRequired": "Un rol este necesar",
+        "buttonCancel": "Anulează",
+        "buttonSubmit": "Trimite",
+        "noRoleTitle": "Nu a fost atribuit niciun rol",
+        "noRoleDescription": "Nu a fost atribuit niciun rol acestui utilizator. Poți să-i atribui un rol pentru a-i gestiona permisiunile."
       }
     }
   },

@@ -1,8 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MainContent } from "@/layouts/main-content";
-import { router } from '@inertiajs/react';
+import { router } from "@inertiajs/react";
 import * as React from "react";
-
 
 export default function TabWrapper({
   defaultTab,
@@ -17,7 +16,7 @@ export default function TabWrapper({
 }) {
   return (
     <Tabs defaultValue={defaultTab} className="flex items-center">
-      <TabsList className="grid w-1/3 grid-cols-3">
+      <TabsList className="grid w-full lg:w-1/2 grid-cols-4">
         {tabs.map((tab) => (
           <TabsTrigger
             key={tab.value}
@@ -34,9 +33,7 @@ export default function TabWrapper({
       <MainContent>
         <div className="flex flex-col gap-4 py-4 ">
           <TabsContent value={defaultTab}>
-          <div className="flex flex-col gap-4 py-4">
-            {React.Children.map(children, (child) => child)}
-          </div>
+            <div className="flex flex-col gap-4 py-4">{React.Children.map(children, (child) => child)}</div>
           </TabsContent>
         </div>
       </MainContent>

@@ -19,6 +19,11 @@ urlpatterns = [
         name="manage-user-info",
     ),
     path(
+        "team/<str:user_id>/role/",
+        users.views.team_user.manage_user_role,
+        name="manage-user-role",
+    ),
+    path(
         "team/<str:user_id>/permissions/",
         users.views.team_user.manage_user_permissions,
         name="manage-user-permissions",

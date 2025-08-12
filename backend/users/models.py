@@ -132,3 +132,15 @@ class User(AbstractUser):
 
         if commit:
             self.save(update_fields=["main_role"])
+
+    def update_groups(self, *, commit: bool = True) -> None:
+        """
+        Update the user's groups based on the assigned main role.
+        """
+        if self.main_role:
+            self.groups.clear()
+
+            group_name = self.main_role.lower().replace(" ", "_")
+            group = Group.objects.filter(name=group_name).first()
+            if group:
+                self.groups.add(group)
