@@ -47,13 +47,13 @@ export default function Role() {
   const { t } = useTranslation();
 
   const FormSchema = z.object({
-    role: z.string().min(1, t("users.user.role.roleRequired")),
+    main_role: z.string().min(1, t("users.user.role.roleRequired")),
   });
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      role: userRole,
+      main_role: userRole,
     },
   });
 
@@ -80,7 +80,7 @@ export default function Role() {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <FormField
                 control={form.control}
-                name="role"
+                name="main_role"
                 render={({ field }) => (
                   <FormItem className="w-full">
                     <FormLabel>{t("users.user.role.selectLabel")}</FormLabel>
@@ -119,7 +119,7 @@ export default function Role() {
         </div>
         <div>
           {(() => {
-            const selectedRole = form.watch("role");
+            const selectedRole = form.watch("main_role");
             const roleDescription = roles.find((role) => role.value === selectedRole);
             if (!roleDescription) {
               return (

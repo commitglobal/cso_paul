@@ -1,3 +1,4 @@
+import json
 from typing import Any, Dict
 
 from django.conf import settings
@@ -68,7 +69,7 @@ def _get_base_page_props(user: User) -> Dict:
     ]
 
     page_props = {
-        "title": user_name,
+        "title": _("User: %s") % user_name,
         "description": subtitle,
         "baseUrl": reverse("users:manage-user", kwargs={"user_id": user.id}),
         "breadcrumbs": [
@@ -142,8 +143,19 @@ def manage_user_role(request: HttpRequest, user_id: str) -> InertiaResponse:
         if user.main_role in (RoleChoices.SUPER_ADMIN, RoleChoices.SUPPORT_ADMIN):
             raise PermissionDenied(_("You cannot change the role of this user."))
 
-        form = ChangeRoleForm(request.POST, instance=user)
-        user.update_main_role(commit=True)
+        form = ChangeRoleForm(json.loads(request.body), instance=user)
+        if not form.is_valid():
+            return inertia_render(
+                request,
+                "users/team-user/role",
+                props={
+                    **PAGE_TABS["role"],
+                    "form": form,
+                    "errors": form.errors,
+                },
+            )
+        user = form.save()
+        user.refresh_groups_after_main_role_update()
 
     roles = []
     for role in settings.USER_GROUPS:

@@ -65,9 +65,3 @@ class ChangeRoleForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ["main_role"]
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        self.fields["main_role"].label = _("User Role")
-        self.fields["main_role"].help_text = _("Select the role for this user.")
