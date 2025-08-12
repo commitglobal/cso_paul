@@ -46,7 +46,6 @@ export default function Permissions() {
                 data={[]}
                 totalItems={10}
                 totalPages={10}
-                filters={[]}
                 emptyState={<div>NOTHING</div>}
               />
           </div>

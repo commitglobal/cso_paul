@@ -4,6 +4,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import type { PermissionsProps } from "@/types/permissions";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { Link } from "@inertiajs/react";
 import { type ColumnDef } from "@tanstack/react-table";
@@ -11,7 +12,7 @@ import { type ColumnDef } from "@tanstack/react-table";
 /**
  * Columns for the permissions table in Team User page.
  */
-export const PermissionsColumns: (t: (key: string) => string) => ColumnDef<any>[] = (t) => [
+export const PermissionsColumns: (t: (key: string) => string) => ColumnDef<PermissionsProps>[] = (t) => [
   {
     accessorKey: "entity",
     header: t("users.user.permissions.entity"),

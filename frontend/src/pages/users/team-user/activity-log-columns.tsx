@@ -1,9 +1,10 @@
+import type { ActivityLogProps } from "@/types/activity-log";
 import { type ColumnDef } from "@tanstack/react-table";
 
 /**
  * Columns for the activity log table in Team User page.
  */
-export const ActivityLogColumns: (t: (key: string) => string) => ColumnDef<any>[] = (t) => {
+export const ActivityLogColumns: (t: (key: string) => string) => ColumnDef<ActivityLogProps>[] = (t) => {
   return [
     {
       accessorKey: "action",

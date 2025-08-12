@@ -38,7 +38,6 @@ export default function ActivityLog() {
                 data={[]}
                 totalItems={10}
                 totalPages={10}
-                filters={[]}
                 emptyState={<div>NOTHING</div>}
               />
           </div>
