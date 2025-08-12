@@ -4,6 +4,8 @@ import { ChevronRight, MoreHorizontal } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { type Breadcrumb } from "@/types/breadcrumb.ts";
+import { Link } from '@inertiajs/react';
+
 
 function BreadcrumbWrapper({...props}: React.ComponentProps<"nav">) {
   return <nav aria-label="breadcrumb" data-slot="breadcrumb" {...props} />
@@ -139,8 +141,10 @@ function Breadcrumbs({breadcrumbList}: { breadcrumbList: Breadcrumb[] }) {
             <React.Fragment key={idx}>
               <BreadcrumbItem>
                 {!isLast && (item).url ? (
-                  <BreadcrumbLink href={(item).url}>
-                    {(item).label}
+                  <BreadcrumbLink asChild>
+                    <Link href={(item).url}>
+                      {(item).label}
+                    </Link>
                   </BreadcrumbLink>
                 ) : (
                   <BreadcrumbPage>{(item).label}</BreadcrumbPage>
