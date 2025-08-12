@@ -150,7 +150,6 @@ def manage_user_role(request: HttpRequest, user_id: str) -> InertiaResponse:
                 "users/team-user/role",
                 props={
                     **PAGE_TABS["role"],
-                    "form": form,
                     "errors": form.errors,
                 },
             )
@@ -163,12 +162,12 @@ def manage_user_role(request: HttpRequest, user_id: str) -> InertiaResponse:
             {
                 "value": role,
                 "label": settings.USER_GROUPS[role]["label"],
-                "disabled": not settings.USER_GROUPS[role]["is_assignable_by_platform_user"],
+                "disabled": not settings.USER_GROUPS[role]["is_assignable_by_ngo_user"],
                 "description": settings.USER_GROUPS[role].get("description", ""),
             }
         )
 
-    if user.main_role in (RoleChoices.SUPER_ADMIN, RoleChoices.SUPPORT_ADMIN):
+    if not settings.USER_GROUPS.get(user.main_role)["is_assignable_by_ngo_user"]:
         for role in roles:
             if role["value"] != user.main_role:
                 role["disabled"] = True
