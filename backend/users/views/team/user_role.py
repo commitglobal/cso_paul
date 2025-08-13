@@ -81,7 +81,7 @@ def manage_user_role(request: HttpRequest, user_id: int) -> UserRolePageProps:
 
         if main_role_is_unassignable:
             is_role_disabled = role != user_role
-            role_description = (_("This user can't be assigned to any other role."), " ", role_description)
+            role_description = _("This user can't be assigned to any other role.") + " " + role_description
 
         roles.append(
             RoleChoicesModel(
