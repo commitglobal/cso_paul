@@ -63,4 +63,5 @@ def manage_user_permissions(__: HttpRequest, user_id: int) -> UserPermissionsPag
         currentTab=PAGE_TABS["permissions"].value,
         tabTitle=PAGE_TABS["permissions"].label,
         table=table,
+        errors=None,
     )

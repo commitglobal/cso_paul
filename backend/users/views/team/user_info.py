@@ -80,4 +80,5 @@ def manage_user_info(__: HttpRequest, user_id: int) -> UserInfoPageProps:
         currentTab=PAGE_TABS["info"].value,
         tabTitle=PAGE_TABS["info"].label,
         props=user_properties,
+        errors=None,
     )

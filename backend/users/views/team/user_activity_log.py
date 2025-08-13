@@ -62,4 +62,5 @@ def manage_user_activity_log(__: HttpRequest, user_id: int) -> UserActivityLogPa
         currentTab=PAGE_TABS["activity-log"].value,
         tabTitle=PAGE_TABS["activity-log"].label,
         table=table,
+        errors=None,
     )
