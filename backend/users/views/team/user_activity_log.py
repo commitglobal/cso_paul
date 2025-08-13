@@ -26,7 +26,7 @@ class UserActivityLogPageProps(UserPageProps):
 @cache_control(private=True)
 @inertia("users/team-user/activity-log")
 @serialize_page_props_decorator
-def manage_user_activity_log(__: HttpRequest, user_id: str) -> UserActivityLogPageProps:
+def manage_user_activity_log(__: HttpRequest, user_id: int) -> UserActivityLogPageProps:
     """
     Redirect to manage_user view for user activity log
     """

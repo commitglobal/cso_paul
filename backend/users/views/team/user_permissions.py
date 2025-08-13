@@ -26,7 +26,7 @@ class UserPermissionsPageProps(UserPageProps):
 @cache_control(private=True)
 @inertia("users/team-user/permissions")
 @serialize_page_props_decorator
-def manage_user_permissions(__: HttpRequest, user_id: str) -> UserPermissionsPageProps:
+def manage_user_permissions(__: HttpRequest, user_id: int) -> UserPermissionsPageProps:
     """
     Redirect to manage_user view for user permissions
     """

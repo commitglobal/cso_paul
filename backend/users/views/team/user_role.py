@@ -9,9 +9,9 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
 from inertia import inertia
+from paul.views.data_model import Breadcrumb, serialize_page_props_decorator
 from pydantic import BaseModel
 
-from paul.views.data_model import Breadcrumb, serialize_page_props_decorator
 from users.forms import ChangeRoleForm
 from users.models import RoleChoices
 from users.views.team.user import (
@@ -42,7 +42,7 @@ class UserRolePageProps(UserPageProps):
 @cache_control(private=True)
 @inertia("users/team-user/role")
 @serialize_page_props_decorator
-def manage_user_role(request: HttpRequest, user_id: str) -> UserRolePageProps:
+def manage_user_role(request: HttpRequest, user_id: int) -> UserRolePageProps:
     """
     Redirect to manage_user view for user role
     """

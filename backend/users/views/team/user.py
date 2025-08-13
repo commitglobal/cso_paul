@@ -46,7 +46,7 @@ PAGE_TABS = {
 }
 
 
-def get_requested_user(user_id: str) -> User:
+def get_requested_user(user_id: int) -> User:
     try:
         user = User.objects.get(id=user_id)
     except User.DoesNotExist:

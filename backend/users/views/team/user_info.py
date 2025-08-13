@@ -4,10 +4,10 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
 from inertia import inertia
-from pydantic import BaseModel
-
 from paul.display import format_dates as display_dates
 from paul.views.data_model import Breadcrumb, serialize_page_props_decorator
+from pydantic import BaseModel
+
 from users.views.team.user import (
     PAGE_TABS,
     UserPageProps,
@@ -33,7 +33,7 @@ class UserInfoPageProps(UserPageProps):
 @cache_control(private=True)
 @inertia("users/team-user/info")
 @serialize_page_props_decorator
-def manage_user_info(__: HttpRequest, user_id: str) -> UserInfoPageProps:
+def manage_user_info(__: HttpRequest, user_id: int) -> UserInfoPageProps:
     """
     Redirect to manage_user view for user info
     """
