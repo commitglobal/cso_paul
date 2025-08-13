@@ -23,8 +23,8 @@ from .installed_apps import *
 from .l10n import *
 from .logging import *
 from .ngohub_connection import *
-from .social_auth import *
 from .query_params import *
 from .recaptcha import *
+from .social_auth import *
 from .storages import *
 from .templates import *

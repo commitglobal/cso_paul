@@ -12,8 +12,8 @@ export const UserPageProps = assign(
 export type UserPageProps = Infer<typeof UserPageProps>;
 
 export const UserInfoPropsStruct = object({
-  value: string(),
-  label: string(),
+  currentTab: string(),
+  tabTitle: string(),
   baseUrl: string(),
   props: array(
     object({

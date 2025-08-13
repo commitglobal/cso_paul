@@ -6,15 +6,15 @@ import { type UserInfoProps, UserInfoPropsStruct } from "@/pages/users/team-user
 
 export default function Info() {
   const {
-    props: { tabs, baseUrl, value, label, props },
+    props: { tabs, baseUrl, currentTab, tabTitle, props },
   } = useValidatedProps<UserInfoProps>(UserInfoPropsStruct);
 
   return (
-    <TabWrapper tabs={tabs} defaultTab={value} baseUrl={baseUrl}>
+    <TabWrapper tabs={tabs} defaultTab={currentTab} baseUrl={baseUrl}>
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
-            <h2 className="text-base font-semibold text-gray-900">{label}</h2>
+            <h2 className="text-base font-semibold text-gray-900">{tabTitle}</h2>
           </div>
           <div className="mt-4 flex gap-4 sm:mt-0 sm:ml-16 sm:flex-none">{/*  Buttons placed here */}</div>
         </div>

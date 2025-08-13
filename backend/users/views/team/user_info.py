@@ -1,0 +1,79 @@
+from django.contrib.auth.decorators import login_required
+from django.http import HttpRequest
+from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
+from django.views.decorators.cache import cache_control
+from inertia import inertia
+from pydantic import BaseModel
+
+from paul.display import format_dates as display_dates
+from paul.views.data_model import Breadcrumb, serialize_page_props_decorator
+from users.views.team.user import (
+    PAGE_TABS,
+    UserPageProps,
+    get_base_url,
+    get_breadcrumbs,
+    get_description,
+    get_requested_user,
+    get_tabs,
+    get_title,
+)
+
+
+class UserProperty(BaseModel):
+    label: str
+    value: str
+
+
+class UserInfoPageProps(UserPageProps):
+    props: list[UserProperty]
+
+
+@login_required
+@cache_control(private=True)
+@inertia("users/team-user/info")
+@serialize_page_props_decorator
+def manage_user_info(__: HttpRequest, user_id: str) -> UserInfoPageProps:
+    """
+    Redirect to manage_user view for user info
+    """
+    user = get_requested_user(user_id=user_id)
+
+    breadcrumbs = get_breadcrumbs(user)
+    breadcrumbs.append(
+        Breadcrumb(label=str(_("Info")), url=reverse("users:manage-user-info", kwargs={"user_id": user_id}))
+    )
+
+    page_props: UserInfoPageProps = UserInfoPageProps(
+        title=get_title(user),
+        description=get_description(),
+        breadcrumbs=breadcrumbs,
+        tabs=get_tabs(),
+        baseUrl=get_base_url(user),
+        currentTab=PAGE_TABS["info"]["value"],
+        tabTitle=str(PAGE_TABS["info"]["label"]),
+        props=[
+            UserProperty(
+                label=str(_("Name")),
+                value=f"{user.first_name} {user.last_name}" if user.last_name else user.first_name,
+            ),
+            UserProperty(
+                label=str(_("Email")),
+                value=user.email,
+            ),
+            UserProperty(
+                label=str(_("Phone")),
+                value="user.phone",
+            ),
+            UserProperty(
+                label=str(_("Last Activity")),
+                value=display_dates.short_datetime(user.last_login),
+            ),
+            UserProperty(
+                label=str(_("Added Since")),
+                value=display_dates.short_date(user.date_joined),
+            ),
+        ],
+    )
+
+    return page_props

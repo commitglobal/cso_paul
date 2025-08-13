@@ -41,7 +41,7 @@ type UserRoleProps = Infer<typeof UserRolePropsStruct>;
 
 export default function Role() {
   const {
-    props: { tabs, baseUrl, value, label, roles, userRole },
+    props: { tabs, baseUrl, currentTab, tabTitle, roles, userRole },
   } = useValidatedProps<UserRoleProps>(UserRolePropsStruct);
 
   const { t } = useTranslation();
@@ -62,11 +62,11 @@ export default function Role() {
   }
 
   return (
-    <TabWrapper tabs={tabs} defaultTab={value} baseUrl={baseUrl}>
+    <TabWrapper tabs={tabs} defaultTab={currentTab} baseUrl={baseUrl}>
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
-            <h2 className="text-base font-semibold text-gray-900">{label}</h2>
+            <h2 className="text-base font-semibold text-gray-900">{tabTitle}</h2>
           </div>
           <div className="mt-4 flex gap-4 sm:mt-0 sm:ml-16 sm:flex-none">{/*  Buttons placed here */}</div>
         </div>

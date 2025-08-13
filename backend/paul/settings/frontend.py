@@ -2,8 +2,9 @@
 import os
 from typing import Any, Dict
 
-from .environment import BASE_DIR, env
 from utils.encoders import CustomJsonEncoder
+
+from .environment import BASE_DIR, env
 
 # Where ViteJS assets are built
 django_vite_assets_path = os.path.abspath(os.path.join(os.pardir, "frontend", "dist"))  # noqa
