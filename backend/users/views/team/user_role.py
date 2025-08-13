@@ -62,7 +62,7 @@ def manage_user_role(request: HttpRequest, user_id: str) -> UserRolePageProps:
 
         form = ChangeRoleForm(json.loads(request.body), instance=user)
         if not form.is_valid():
-            errors = dict(form.errors)
+            errors = {"role": dict(form.errors)}
         else:
             user = form.save()
             user.refresh_groups_after_main_role_update()

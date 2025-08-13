@@ -23,7 +23,7 @@ class UserPageProps(BasePageProps):
     currentTab: str
     tabTitle: str
 
-    errors: Optional[dict[str, list[str]]] = None
+    errors: Optional[dict[str, dict[str, list[str]]]] = []
 
 
 PAGE_TABS = {
