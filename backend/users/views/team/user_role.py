@@ -1,5 +1,5 @@
 import json
-from typing import List
+from typing import List, Tuple
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -14,6 +14,7 @@ from pydantic import BaseModel
 from paul.views.data_model import Breadcrumb, serialize_page_props_decorator
 from users.forms import ChangeRoleForm
 from users.models import RoleChoices
+from users.views.team.data_model import UserPageProps
 from users.views.team.user import (
     PAGE_TABS,
     PAGE_TABS_TUPLE,
@@ -23,7 +24,6 @@ from users.views.team.user import (
     get_requested_user,
     get_title,
 )
-from users.views.team.data_model import UserPageProps
 
 
 class RoleChoicesModel(BaseModel):
@@ -48,11 +48,13 @@ def manage_user_role(request: HttpRequest, user_id: int) -> UserRolePageProps:
     """
     user = get_requested_user(user_id=user_id)
 
-    breadcrumbs = get_breadcrumbs(user)
-    breadcrumbs.append(
-        Breadcrumb(
-            label=str(_("Activity Log")), url=reverse("users:manage-user-activity-log", kwargs={"user_id": user_id})
-        )
+    breadcrumbs: Tuple[Breadcrumb, ...] = get_breadcrumbs(
+        user,
+        append_breadcrumbs=(
+            Breadcrumb(
+                label=str(_("Activity Log")), url=reverse("users:manage-user-activity-log", kwargs={"user_id": user_id})
+            ),
+        ),
     )
 
     errors = None

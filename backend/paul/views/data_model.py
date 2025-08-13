@@ -25,7 +25,7 @@ class Breadcrumb(BaseModel):
 class BasePageProps(BaseModel):
     title: str
     description: str
-    breadcrumbs: list[Breadcrumb]
+    breadcrumbs: tuple[Breadcrumb, ...]
 
 
 def serialize_page_props_decorator(func):

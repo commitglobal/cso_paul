@@ -1,12 +1,12 @@
-from typing import List, Tuple
+from typing import Tuple
 
 from django.core.exceptions import PermissionDenied
 from django.http import Http404
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+
 from paul.display.build_url import build_ngohub_url
 from paul.views.data_model import Breadcrumb
-
 from users.models import User
 from users.views.team.data_model import Tab
 
@@ -44,11 +44,14 @@ def get_base_url(user) -> str:
     return reverse("users:manage-user", kwargs={"user_id": user.id})
 
 
-def get_breadcrumbs(user) -> List[Breadcrumb]:
-    return [
-        Breadcrumb(label=str(_("Team")), url=reverse("users:manage-team")),
-        Breadcrumb(label=get_user_name(user), url=""),
-    ]
+def get_breadcrumbs(user, *, append_breadcrumbs: Tuple[Breadcrumb, ...]) -> Tuple[Breadcrumb, ...]:
+    default_breadcrumbs: Tuple[Breadcrumb, ...] = tuple(
+        (
+            Breadcrumb(label=str(_("Team")), url=reverse("users:manage-team")),
+            Breadcrumb(label=get_user_name(user), url=""),
+        )
+    )
+    return default_breadcrumbs + append_breadcrumbs
 
 
 def get_title(user) -> str:

@@ -1,3 +1,5 @@
+from typing import Tuple
+
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
 from django.urls import reverse
@@ -6,6 +8,7 @@ from django.views.decorators.cache import cache_control
 from inertia import inertia
 
 from paul.views.data_model import Breadcrumb, DataTable, TableHeader, serialize_page_props_decorator
+from users.views.team.data_model import UserPageProps
 from users.views.team.user import (
     PAGE_TABS,
     PAGE_TABS_TUPLE,
@@ -15,7 +18,6 @@ from users.views.team.user import (
     get_requested_user,
     get_title,
 )
-from users.views.team.data_model import UserPageProps
 
 
 class UserPermissionsPageProps(UserPageProps):
@@ -32,11 +34,13 @@ def manage_user_permissions(__: HttpRequest, user_id: int) -> UserPermissionsPag
     """
     user = get_requested_user(user_id=user_id)
 
-    breadcrumbs = get_breadcrumbs(user)
-    breadcrumbs.append(
-        Breadcrumb(
-            label=str(_("Permissions")), url=reverse("users:manage-user-permissions", kwargs={"user_id": user_id})
-        )
+    breadcrumbs: Tuple[Breadcrumb, ...] = get_breadcrumbs(
+        user,
+        append_breadcrumbs=(
+            Breadcrumb(
+                label=str(_("Permissions")), url=reverse("users:manage-user-permissions", kwargs={"user_id": user_id})
+            ),
+        ),
     )
 
     table: DataTable = DataTable(
