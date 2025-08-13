@@ -9,10 +9,9 @@ def custom_400_view(request: HttpRequest, exception: Exception = None) -> HttpRe
     """
     Custom view for 400 Bad Request
     """
-    is_authenticated: bool = request.user.is_authenticated
     response = inertia_render(
         request,
-        "Errors/Index" if is_authenticated else "Errors/Public",
+        "errors/base-error",
         props={
             "code": "400",
             "title": _("Bad Request"),
@@ -28,10 +27,9 @@ def custom_403_view(request: HttpRequest, exception: Exception = None) -> HttpRe
     """
     Custom view for 403 Permission Denied
     """
-    is_authenticated: bool = request.user.is_authenticated
     response = inertia_render(
         request,
-        "Errors/Index" if is_authenticated else "Errors/Public",
+        "errors/base-error",
         props={
             "code": "403",
             "title": _("Permission Denied"),
@@ -47,10 +45,9 @@ def custom_404_view(request: HttpRequest, exception: Exception = None) -> HttpRe
     """
     Custom view for 404 Page Not Found
     """
-    is_authenticated: bool = request.user.is_authenticated
     response = inertia_render(
         request,
-        "Errors/Index" if is_authenticated else "Errors/Public",
+        "errors/base-error",
         props={
             "code": "404",
             "title": _("Page Not Found"),
@@ -66,10 +63,9 @@ def custom_500_view(request: HttpRequest, exception: Exception = None) -> HttpRe
     """
     Custom view for 500 Server Error
     """
-    is_authenticated: bool = request.user.is_authenticated
     response = inertia_render(
         request,
-        "Errors/Index" if is_authenticated else "Errors/Public",
+        "errors/base-error",
         props={
             "code": "500",
             "title": _("Server Error"),
