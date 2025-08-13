@@ -21,7 +21,7 @@ from users.views.team.user import (
     get_base_url,
     get_breadcrumbs,
     get_description,
-    get_requested_user,
+    get_user,
     get_title,
 )
 
@@ -46,7 +46,7 @@ def manage_user_role(request: HttpRequest, user_id: int) -> UserRolePageProps:
     """
     Redirect to manage_user view for user role
     """
-    user = get_requested_user(user_id=user_id)
+    user = get_user(user_id=user_id)
 
     breadcrumbs: Tuple[Breadcrumb, ...] = get_breadcrumbs(
         user,

@@ -20,7 +20,7 @@ PAGE_TABS = {
 PAGE_TABS_TUPLE: Tuple[Tab, ...] = tuple(tab for tab in PAGE_TABS.values())
 
 
-def get_requested_user(user_id: int) -> User:
+def get_user(user_id: int) -> User:
     try:
         user = User.objects.get(id=user_id)
     except User.DoesNotExist:

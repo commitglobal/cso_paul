@@ -15,7 +15,7 @@ from users.views.team.user import (
     get_base_url,
     get_breadcrumbs,
     get_description,
-    get_requested_user,
+    get_user,
     get_title,
 )
 
@@ -32,7 +32,7 @@ def manage_user_activity_log(__: HttpRequest, user_id: int) -> UserActivityLogPa
     """
     Redirect to manage_user view for user activity log
     """
-    user = get_requested_user(user_id=user_id)
+    user = get_user(user_id=user_id)
 
     breadcrumbs: Tuple[Breadcrumb, ...] = get_breadcrumbs(
         user,
