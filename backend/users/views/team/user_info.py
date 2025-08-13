@@ -6,10 +6,10 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
 from inertia import inertia
-from pydantic import BaseModel
-
 from paul.display import format_dates as display_dates
 from paul.views.data_model import Breadcrumb, serialize_page_props_decorator
+from pydantic import BaseModel
+
 from users.views.team.data_model import UserPageProps
 from users.views.team.user import (
     PAGE_TABS,
@@ -17,8 +17,8 @@ from users.views.team.user import (
     get_base_url,
     get_breadcrumbs,
     get_description,
-    get_user,
     get_title,
+    get_user,
 )
 
 
@@ -28,7 +28,7 @@ class UserProperty(BaseModel):
 
 
 class UserInfoPageProps(UserPageProps):
-    props: list[UserProperty]
+    props: tuple[UserProperty, ...]
 
 
 @login_required
@@ -48,7 +48,7 @@ def manage_user_info(__: HttpRequest, user_id: int) -> UserInfoPageProps:
         ),
     )
 
-    user_properties = [
+    user_properties: Tuple[UserProperty, ...] = (
         UserProperty(
             label=str(_("Name")),
             value=f"{user.first_name} {user.last_name}" if user.last_name else user.first_name,
@@ -69,7 +69,7 @@ def manage_user_info(__: HttpRequest, user_id: int) -> UserInfoPageProps:
             label=str(_("Added Since")),
             value=display_dates.short_date(user.date_joined),
         ),
-    ]
+    )
 
     return UserInfoPageProps(
         title=get_title(user),
