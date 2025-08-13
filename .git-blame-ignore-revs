@@ -1,4 +1,4 @@
-# Add all the commits you would like to be omitted from the `git blame` output here.
+``# Add all the commits you would like to be omitted from the `git blame` output here.
 # Add one commit per line and a comment with the reason for the omission.
 
 # In order to use this file, you either need to add it to your config:
@@ -20,3 +20,6 @@ a56b04dd07c31e5d0713bb4eb321212cfab95b27
 
 # ignore the frontend formatting commit
 23a3d3ce63f25884b09ab83ec34ec091967da75c
+
+# ignore another frontend formatting commit
+fa60ad0092932b9e05eb50f4735df4a55ba52be0
