@@ -6,10 +6,10 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
 from inertia import inertia
-from paul.display import format_dates as display_dates
-from paul.views.data_model import Breadcrumb, serialize_page_props_decorator
 from pydantic import BaseModel
 
+from paul.display import format_dates as display_dates
+from paul.views.data_model import Breadcrumb, serialize_page_props_decorator
 from users.views.team.data_model import UserPageProps
 from users.views.team.user import (
     PAGE_TABS,

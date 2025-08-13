@@ -21,8 +21,8 @@ from users.views.team.user import (
     get_base_url,
     get_breadcrumbs,
     get_description,
-    get_user,
     get_title,
+    get_user,
 )
 
 
