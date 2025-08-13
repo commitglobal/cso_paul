@@ -1,4 +1,4 @@
-import { type Infer, number, object, string,  union } from 'superstruct';
+import { type Infer, number, object, string, union } from "superstruct";
 
 export type SelectOption = Infer<typeof SelectOption>;
 

@@ -4,10 +4,10 @@ type PaginationIndicatorProps = {
   totalItems: number;
   currentPage: number;
   perPage: string;
-}
+};
 
-export function PaginationIndicator({totalItems, currentPage, perPage}: PaginationIndicatorProps) {
-  const {t} = useTranslation();
+export function PaginationIndicator({ totalItems, currentPage, perPage }: PaginationIndicatorProps) {
+  const { t } = useTranslation();
 
   const itemsPerPage = perPage === "all" ? totalItems : parseInt(perPage, 10);
 
@@ -17,9 +17,8 @@ export function PaginationIndicator({totalItems, currentPage, perPage}: Paginati
   return (
     <div>
       <p className="flex text-sm text-gray-700">
-        {t('pagination.indicator', {from: firstItem, to: lastItem, total: totalItems})}
+        {t("pagination.indicator", { from: firstItem, to: lastItem, total: totalItems })}
       </p>
     </div>
-
-  )
+  );
 }

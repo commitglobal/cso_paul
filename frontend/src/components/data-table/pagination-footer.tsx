@@ -1,7 +1,7 @@
 import PaginationElided from "@/components/ui/pagination";
-import { PaginationIndicator } from "@/components/ui/pagination-indicator.tsx";
-import { PaginationSizeSelector } from "@/components/ui/pagination-size-selector.tsx";
-import { QUERY_PARAM_PAGE, QUERY_PARAM_PAGE_SIZE } from "@/constants/query-params.ts";
+import { PaginationIndicator } from "@/components/ui/pagination-indicator";
+import { PaginationSizeSelector } from "@/components/ui/pagination-size-selector";
+import { QUERY_PARAM_PAGE, QUERY_PARAM_PAGE_SIZE } from "@/constants/query-params";
 import { parseAsInteger, parseAsString, useQueryState } from "nuqs";
 
 export interface PaginationFooterProps {

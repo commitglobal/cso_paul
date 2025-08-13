@@ -3,4 +3,4 @@ export type PermissionsProps = {
   entityType: string;
   permission: string;
   id: string;
-}
+};

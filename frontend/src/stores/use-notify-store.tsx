@@ -1,8 +1,8 @@
-import { FlashMessage } from '@/types/flash-message';
-import { omit } from 'lodash';
-import { create } from 'zustand';
+import { FlashMessage } from "@/types/flash-message";
+import { omit } from "lodash";
+import { create } from "zustand";
 
-type Alert = 'success' | 'error';
+type Alert = "success" | "error";
 
 type NotifyState = {
   alert?: Alert;
@@ -19,18 +19,15 @@ type NotifyState = {
 };
 
 const useNotifyStore = create<NotifyState>((set) => ({
-  alert: 'success',
-  message: 'Success',
+  alert: "success",
+  message: "Success",
   show: false,
 
   actions: {
-    clearNotification: () =>
-      set((state) => omit(state, ['alert', 'message']), true),
+    clearNotification: () => set((state) => omit(state, ["alert", "message"]), true),
     hideNotification: () => set({ show: false }),
-    notifyError: (message) =>
-      set(() => ({ alert: 'error', message, show: true })),
-    notifySuccess: (message) =>
-      set(() => ({ alert: 'success', message, show: true })),
+    notifyError: (message) => set(() => ({ alert: "error", message, show: true })),
+    notifySuccess: (message) => set(() => ({ alert: "success", message, show: true })),
     notify: (message, alert) => set(() => ({ alert, message, show: true })),
   },
 }));

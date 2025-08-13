@@ -1,15 +1,14 @@
-import React, { useMemo } from "react"
-// import { router } from "@inertiajs/react"
-import { ChevronLeftIcon, ChevronRightIcon, MoreHorizontalIcon } from "lucide-react"
+import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/constants/button-variants";
+import { QUERY_PARAM_PAGE } from "@/constants/query-params";
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { useTranslation } from "react-i18next";
-import { buttonVariants } from "@/constants/button-variants.ts";
+import { cn } from "@/lib/utils";
+import { ChevronLeftIcon, ChevronRightIcon, EllipsisHorizontalIcon } from "@heroicons/react/24/solid";
 import { parseAsInteger, useQueryState } from "nuqs";
-import { QUERY_PARAM_PAGE } from "@/constants/query-params.ts";
+import React, { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
-function PaginationNav({className, ...props}: React.ComponentProps<"nav">) {
+function PaginationNav({ className, ...props }: React.ComponentProps<"nav">) {
   return (
     <nav
       role="navigation"
@@ -18,39 +17,23 @@ function PaginationNav({className, ...props}: React.ComponentProps<"nav">) {
       className={cn("mx-auto flex w-full justify-center", className)}
       {...props}
     />
-  )
+  );
 }
 
-function PaginationContent(
-  {
-    className,
-    ...props
-  }: React.ComponentProps<"ul">) {
-  return (
-    <ul
-      data-slot="pagination-content"
-      className={cn("flex flex-row items-center gap-1", className)}
-      {...props}
-    />
-  )
+function PaginationContent({ className, ...props }: React.ComponentProps<"ul">) {
+  return <ul data-slot="pagination-content" className={cn("flex flex-row items-center gap-1", className)} {...props} />;
 }
 
-function PaginationItem({...props}: React.ComponentProps<"li">) {
-  return <li data-slot="pagination-item" {...props} />
+function PaginationItem({ ...props }: React.ComponentProps<"li">) {
+  return <li data-slot="pagination-item" {...props} />;
 }
 
 type PaginationLinkProps = {
-  isActive?: boolean
+  isActive?: boolean;
 } & Pick<React.ComponentProps<typeof Button>, "size"> &
-  React.ComponentProps<"a">
+  React.ComponentProps<"a">;
 
-function PaginationLink(
-  {
-    className,
-    isActive,
-    size = "icon",
-    ...props
-  }: PaginationLinkProps) {
+function PaginationLink({ className, isActive, size = "icon", ...props }: PaginationLinkProps) {
   return (
     <a
       aria-current={isActive ? "page" : undefined}
@@ -66,15 +49,11 @@ function PaginationLink(
       )}
       {...props}
     />
-  )
+  );
 }
 
-function PaginationPrevious(
-  {
-    className,
-    ...props
-  }: React.ComponentProps<typeof PaginationLink>) {
-  const {t} = useTranslation()
+function PaginationPrevious({ className, ...props }: React.ComponentProps<typeof PaginationLink>) {
+  const { t } = useTranslation();
   return (
     <PaginationLink
       aria-label="Go to previous page"
@@ -82,20 +61,14 @@ function PaginationPrevious(
       className={cn("gap-1 px-2.5 sm:pl-2.5", className)}
       {...props}
     >
-      <ChevronLeftIcon/>
-      <span className="hidden sm:block">
-        {t("pagination.previous")}
-      </span>
+      <ChevronLeftIcon />
+      <span className="hidden sm:block">{t("pagination.previous")}</span>
     </PaginationLink>
-  )
+  );
 }
 
-function PaginationNext(
-  {
-    className,
-    ...props
-  }: React.ComponentProps<typeof PaginationLink>) {
-  const {t} = useTranslation()
+function PaginationNext({ className, ...props }: React.ComponentProps<typeof PaginationLink>) {
+  const { t } = useTranslation();
 
   return (
     <PaginationLink
@@ -104,19 +77,13 @@ function PaginationNext(
       className={cn("gap-1 px-2.5 sm:pr-2.5", className)}
       {...props}
     >
-      <span className="hidden sm:block">
-        {t("pagination.next")}
-      </span>
-      <ChevronRightIcon/>
+      <span className="hidden sm:block">{t("pagination.next")}</span>
+      <ChevronRightIcon />
     </PaginationLink>
-  )
+  );
 }
 
-function PaginationEllipsis(
-  {
-    className,
-    ...props
-  }: React.ComponentProps<"span">) {
+function PaginationEllipsis({ className, ...props }: React.ComponentProps<"span">) {
   return (
     <span
       aria-hidden
@@ -124,15 +91,15 @@ function PaginationEllipsis(
       className={cn("flex size-9 items-center justify-center", className)}
       {...props}
     >
-      <MoreHorizontalIcon className="size-4"/>
+      <EllipsisHorizontalIcon className="size-4" />
       <span className="sr-only">More pages</span>
     </span>
-  )
+  );
 }
 
 type PaginationElidedProps = {
   totalPages: number;
-}
+};
 
 function getPageNumbers(current: number, total: number): (number | "ellipsis")[] {
   const delta = 2;
@@ -149,13 +116,10 @@ function getPageNumbers(current: number, total: number): (number | "ellipsis")[]
   if (r < total - 1) range.push("ellipsis");
   if (total > 1) range.push(total);
 
-  return range
+  return range;
 }
 
-const PaginationElided: React.FC<PaginationElidedProps> = (
-  {
-    totalPages,
-  }) => {
+const PaginationElided: React.FC<PaginationElidedProps> = ({ totalPages }) => {
   const [currentPage, setCurrentPage] = useQueryState(QUERY_PARAM_PAGE, parseAsInteger.withDefault(1));
 
   const pageNumbers = useMemo(() => getPageNumbers(currentPage, totalPages), [currentPage, totalPages]);
@@ -168,55 +132,42 @@ const PaginationElided: React.FC<PaginationElidedProps> = (
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
-            onClick={
-              isFirstPage
-                ? undefined
-                : () => setCurrentPage(Math.max(1, currentPage - 1))
-            }
+            onClick={isFirstPage ? undefined : () => setCurrentPage(Math.max(1, currentPage - 1))}
             aria-disabled={isFirstPage}
             tabIndex={isFirstPage ? -1 : 0}
           />
         </PaginationItem>
 
         {pageNumbers.map((pageNum, idx) => {
-            const isCurrentPage: boolean = pageNum === currentPage;
-            return pageNum === "ellipsis" ? (
-              <PaginationItem key={`ellipsis-${idx}`}>
-                <PaginationEllipsis/>
-              </PaginationItem>
-            ) : (
-              <PaginationItem key={pageNum}>
-                <PaginationLink
-                  isActive={isCurrentPage}
-                  onClick={
-                    isCurrentPage
-                      ? undefined
-                      : () => setCurrentPage(Number(pageNum))
-                  }
-                  aria-disabled={isCurrentPage}
-                  tabIndex={isCurrentPage ? -1 : 0}
-                >
-                  {pageNum}
-                </PaginationLink>
-              </PaginationItem>
-            );
-          }
-        )}
+          const isCurrentPage: boolean = pageNum === currentPage;
+          return pageNum === "ellipsis" ? (
+            <PaginationItem key={`ellipsis-${idx}`}>
+              <PaginationEllipsis />
+            </PaginationItem>
+          ) : (
+            <PaginationItem key={pageNum}>
+              <PaginationLink
+                isActive={isCurrentPage}
+                onClick={isCurrentPage ? undefined : () => setCurrentPage(Number(pageNum))}
+                aria-disabled={isCurrentPage}
+                tabIndex={isCurrentPage ? -1 : 0}
+              >
+                {pageNum}
+              </PaginationLink>
+            </PaginationItem>
+          );
+        })}
 
         <PaginationItem>
           <PaginationNext
-            onClick={
-              isLastPage
-                ? undefined
-                : () => setCurrentPage(Math.min(totalPages, currentPage + 1))
-            }
+            onClick={isLastPage ? undefined : () => setCurrentPage(Math.min(totalPages, currentPage + 1))}
             aria-disabled={isLastPage}
             tabIndex={isLastPage ? -1 : 0}
           />
         </PaginationItem>
       </PaginationContent>
     </PaginationNav>
-  )
-}
+  );
+};
 
 export default PaginationElided;

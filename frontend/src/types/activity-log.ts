@@ -3,4 +3,4 @@ export type ActivityLogProps = {
   user_id: number;
   action: string;
   date: string;
-}
+};

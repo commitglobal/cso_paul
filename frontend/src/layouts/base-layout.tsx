@@ -4,7 +4,7 @@ import { AppTopbar } from "@/components/paul/app-topbar";
 import { Breadcrumbs } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import type { Breadcrumb } from "@/types/breadcrumb.ts";
+import type { Breadcrumb } from "@/types/breadcrumb";
 import { CommonProps } from "@/types/common-props";
 import { type Page } from "@inertiajs/core";
 import { type ReactNode } from "react";

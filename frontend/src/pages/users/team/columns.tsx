@@ -7,7 +7,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { apiGetUrls } from "@/constants/api-urls";
-import type { UserProps } from "@/pages/users/team/team-page-props-struct.ts";
+import type { UserProps } from "@/pages/users/team/team-page-props-struct";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { Link } from "@inertiajs/react";
 import { type ColumnDef } from "@tanstack/react-table";

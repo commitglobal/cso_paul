@@ -1,7 +1,7 @@
-import { Breadcrumb } from "@/types/breadcrumb.ts";
+import { Breadcrumb } from "@/types/breadcrumb";
 import { CommonProps } from "@/types/common-props";
 import { Filters } from "@/types/filter";
-import { Pagination } from "@/types/pagination.ts";
+import { Pagination } from "@/types/pagination";
 import { array, assign, boolean, type Infer, number, object, string } from "superstruct";
 
 // TODO: This should be moved to types/user.ts when the user types are more in place

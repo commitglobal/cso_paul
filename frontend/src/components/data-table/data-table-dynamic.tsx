@@ -17,11 +17,7 @@ interface DataTableProps {
   totalPages: number;
 }
 
-export function DataTableDynamic({
-  header,
-  totalItems,
-  totalPages,
-}: DataTableProps) {
+export function DataTableDynamic({ header, totalItems, totalPages }: DataTableProps) {
   return (
     <div>
       <Table>

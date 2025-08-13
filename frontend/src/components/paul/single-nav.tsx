@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { type LucideIcon } from "lucide-react"
-import { Link } from '@inertiajs/react';
+import { type LucideIcon } from "lucide-react";
+import { Link } from "@inertiajs/react";
 
 import {
   SidebarGroup,
@@ -9,16 +9,16 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuSubButton,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 
 export function SingleNav({
   items,
 }: {
   items: {
-    title: string
-    url: string
-    icon?: LucideIcon
-  }[]
+    title: string;
+    url: string;
+    icon?: LucideIcon;
+  }[];
 }) {
   return (
     <SidebarGroup>
@@ -37,5 +37,5 @@ export function SingleNav({
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>
-  )
+  );
 }

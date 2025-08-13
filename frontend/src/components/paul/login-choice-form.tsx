@@ -1,5 +1,5 @@
 import logomark from "@/assets/paul-logomark.svg";
-import { LoginRegisterCta } from "@/components/paul/login-register-cta.tsx";
+import { LoginRegisterCta } from "@/components/paul/login-register-cta";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
