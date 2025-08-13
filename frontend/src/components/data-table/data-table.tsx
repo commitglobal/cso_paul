@@ -15,7 +15,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
   totalItems: number;
   totalPages: number;
-  filters: Filters;
+  filters?: Filters;
   emptyState: ReactNode;
 }
 
@@ -49,11 +49,13 @@ export function DataTable<TData, TValue>({
 
                     <SortButton enableSorting={header.column.columnDef.enableSorting ?? false} headerId={header.id} />
 
-                    <FilterButton
-                      enableFilter={header.id in filters}
-                      headerId={header.id}
-                      filterGroup={filters[header.id]}
-                    />
+                    {filters && (
+                      <FilterButton
+                        enableFilter={header.id in filters}
+                        headerId={header.id}
+                        filterGroup={filters[header.id]}
+                      />
+                    )}
                   </div>
                 </TableHead>
               ))}

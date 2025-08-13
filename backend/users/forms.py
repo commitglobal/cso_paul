@@ -1,10 +1,10 @@
 from django import forms
 from django.conf import settings
 from django.contrib.auth.models import Group
+from django.utils.translation import gettext_lazy as _
 
 from users.common import normalize_email
-from users.models import User, RoleChoices
-from django.utils.translation import gettext_lazy as _
+from users.models import RoleChoices, User
 
 
 class LoginForm(forms.Form):
@@ -59,3 +59,9 @@ class AddTeamUserForm(forms.ModelForm):
                 user_group.user_set.add(user)
 
         return user
+
+
+class ChangeRoleForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ["main_role"]

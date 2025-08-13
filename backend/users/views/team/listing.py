@@ -12,13 +12,13 @@ from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
 from inertia import InertiaResponse, inertia
 from inertia import render as inertia_render
+
 from paul.common.sort_parser import parse_order_parameter
 from paul.display import format_dates as display_dates
 from paul.display.build_url import build_ngohub_url
 from paul.views.filtering import FilterField, FilterItem, Filters, filter_qs
 from paul.views.pagination import paginate_queryset
 from paul.views.search import search
-
 from users.forms import AddTeamUserForm
 from users.models import RoleChoices, User
 

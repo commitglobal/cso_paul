@@ -132,3 +132,12 @@ class User(AbstractUser):
 
         if commit:
             self.save(update_fields=["main_role"])
+
+    def refresh_groups_after_main_role_update(self) -> None:
+        """
+        Update the user's groups based on the assigned main role.
+        """
+        self.groups.clear()
+
+        new_group = Group.objects.get(name=self.main_role)
+        self.groups.add(new_group)

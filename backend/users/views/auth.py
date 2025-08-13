@@ -11,9 +11,9 @@ from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
 from inertia import InertiaResponse, inertia
 from inertia import render as inertia_render
-from utils.types import RedirectionResponse
 
 from users.forms import LoginForm
+from utils.types import RedirectionResponse
 
 
 def _login_endpoints():

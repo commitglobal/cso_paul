@@ -11,6 +11,7 @@ from django.urls import reverse
 from ngohub import NGOHub
 from ngohub.exceptions import HubHTTPException
 from ngohub.models.user import UserProfile
+
 from users.models import User
 
 logger = logging.getLogger(__name__)

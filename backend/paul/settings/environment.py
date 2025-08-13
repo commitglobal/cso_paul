@@ -100,6 +100,8 @@ env = environ.Env(
     NGOHUB_API_HOST=(str, "api.ngohub.ro"),
     NGOHUB_API_ACCOUNT=(str, ""),
     NGOHUB_API_KEY=(str, ""),
+    # Something cute about us
+    SUPPORT_ORGANIZATION_NAME=(str, "Commit Global"),
     # Auth methods
     ENABLE_NGOHUB_AUTH=(bool, True),
     ENABLE_EMAIL_AUTH=(bool, True),

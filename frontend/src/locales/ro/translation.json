@@ -81,6 +81,35 @@
       },
       "filterOptions": "Filtre",
       "searchPlaceholder": "Caută membrii echipei..."
+    },
+    "user": {
+      "addPermission": "Add permission",
+      "activity_log": {
+        "action": "users.user.activity_log.action",
+        "date": "users.user.activity_log.date"
+      },
+      "permissions": {
+        "entity": "users.user.permissions.entity",
+        "entity_type": "users.user.permissions.entity_type",
+        "permission": "users.user.permissions.permission",
+        "action": {
+          "view": "users.user.permissions.action.view",
+          "transfer": "users.user.permissions.action.transfer",
+          "remove": "users.user.permissions.action.remove"
+        }
+      },
+      "role": {
+        "selectLabel": "Schimbă rolul utilizatorului",
+        "selectPlaceholder": "Selectează rolul utilizatorului",
+        "submitConfirmation": "Rolul utilizatorului a fost schimbat cu succes.",
+        "selectDescription": "users.user.role.selectDescription",
+        "selectLink": "users.user.role.selectLink",
+        "roleRequired": "Un rol este necesar",
+        "buttonCancel": "Anulează",
+        "buttonSubmit": "Trimite",
+        "noRoleTitle": "Nu a fost atribuit niciun rol",
+        "noRoleDescription": "Nu a fost atribuit niciun rol acestui utilizator. Poți să-i atribui un rol pentru a-i gestiona permisiunile."
+      }
     }
   },
   "pagination": {
