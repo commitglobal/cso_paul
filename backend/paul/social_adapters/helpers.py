@@ -46,7 +46,7 @@ def _check_ngo_user_has_app_permissions(sociallogin: SocialLogin) -> None:
     user_token: str = sociallogin.token.token
 
     if not _check_ngohub_user_has_app(user_token=user_token, user_email=sociallogin.user.email):
-        raise ImmediateHttpResponse(redirect(reverse("error-app-missing")))
+        raise ImmediateHttpResponse(redirect(reverse("error:ngohub-app-missing")))
 
 
 def _set_user_properties(*, user: User, user_profile: UserProfile, commit: bool = True) -> None:
@@ -76,7 +76,7 @@ def _get_ngohub_user_profile(user: User, user_token: str) -> UserProfile:
     except HubHTTPException:
         logger.error(f"User {user.email} could not be found in NGO Hub. Please check the configuration.")
 
-        raise ImmediateHttpResponse(redirect(reverse("error-app-missing")))
+        raise ImmediateHttpResponse(redirect(reverse("error:ngohub-user-invalid")))
 
     return user_profile
 
@@ -148,6 +148,9 @@ def user_create_or_update(sociallogin: SocialLogin) -> UserModel:
     user_profile: UserProfile = _get_ngohub_user_profile(user, user_token=sociallogin.token.token)
 
     if not _check_user_is_superadmin(user_profile):
+        if user_profile.organization.id != settings.NGOHUB_NGO_ID:
+            raise ImmediateHttpResponse(redirect(reverse("error:ngohub-user-invalid")))
+
         _check_ngo_user_has_app_permissions(sociallogin)
 
     _set_user_properties(user=user, user_profile=user_profile)

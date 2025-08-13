@@ -145,5 +145,13 @@
         "ok": "OK"
       }
     }
+  },
+  "errors": {
+    "ngohub": {
+      "appMissingMessage": "Utilizatorul nu are acces la această aplicație. Administratorul trebuie să adauge utilizatorul la aplicație.",
+      "appMissingTitle": "Aplicație negăsită",
+      "userInvalidMessage": "Contul nu face parte din ONG-ul asociat cu această platformă.",
+      "userInvalidTitle": "Utilizator negăsit"
+    }
   }
 }
