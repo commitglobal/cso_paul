@@ -142,14 +142,17 @@ format:                           ## format the code with ruff
 	docker exec paul_app_dev sh -c " \
 		cd ./backend && \
 		ruff format . &&  \
-		ruff check --fix ."
+		ruff check --select I --fix . && \
+		cd ../frontend && \
+		npm run prettier:format"
 
 check:
 	docker exec paul_app_dev sh -c " \
 		cd ./backend && \
-		ruff check --fix . && \
+		ruff check --select I . && \
 		ruff format --check . && \
 		cd ../frontend && \
+		npm run prettier:check && \
 		npm run lint"
 
 pyshell:                          ## start a django shell
