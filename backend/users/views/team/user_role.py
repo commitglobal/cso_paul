@@ -9,21 +9,21 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
 from inertia import inertia
-from paul.views.data_model import Breadcrumb, serialize_page_props_decorator
 from pydantic import BaseModel
 
+from paul.views.data_model import Breadcrumb, serialize_page_props_decorator
 from users.forms import ChangeRoleForm
 from users.models import RoleChoices
 from users.views.team.user import (
     PAGE_TABS,
-    UserPageProps,
+    PAGE_TABS_TUPLE,
     get_base_url,
     get_breadcrumbs,
     get_description,
     get_requested_user,
-    get_tabs,
     get_title,
 )
+from users.views.team.data_model import UserPageProps
 
 
 class RoleChoicesModel(BaseModel):
@@ -94,10 +94,10 @@ def manage_user_role(request: HttpRequest, user_id: int) -> UserRolePageProps:
         title=get_title(user),
         description=get_description(),
         breadcrumbs=breadcrumbs,
-        tabs=get_tabs(),
+        tabs=PAGE_TABS_TUPLE,
         baseUrl=get_base_url(user),
-        currentTab=PAGE_TABS["role"]["value"],
-        tabTitle=str(PAGE_TABS["role"]["label"]),
+        currentTab=PAGE_TABS["role"].value,
+        tabTitle=PAGE_TABS["role"].label,
         userRole=user_role,
         roles=roles,
         errors=errors,

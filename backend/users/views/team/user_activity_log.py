@@ -8,14 +8,14 @@ from inertia import inertia
 from paul.views.data_model import Breadcrumb, DataTable, TableHeader, serialize_page_props_decorator
 from users.views.team.user import (
     PAGE_TABS,
-    UserPageProps,
+    PAGE_TABS_TUPLE,
     get_base_url,
     get_breadcrumbs,
     get_description,
     get_requested_user,
-    get_tabs,
     get_title,
 )
+from users.views.team.data_model import UserPageProps
 
 
 class UserActivityLogPageProps(UserPageProps):
@@ -53,9 +53,9 @@ def manage_user_activity_log(__: HttpRequest, user_id: int) -> UserActivityLogPa
         title=get_title(user),
         description=get_description(),
         breadcrumbs=breadcrumbs,
-        tabs=get_tabs(),
+        tabs=PAGE_TABS_TUPLE,
         baseUrl=get_base_url(user),
-        currentTab=PAGE_TABS["activity-log"]["value"],
-        tabTitle=str(PAGE_TABS["activity-log"]["label"]),
+        currentTab=PAGE_TABS["activity-log"].value,
+        tabTitle=PAGE_TABS["activity-log"].label,
         table=table,
     )

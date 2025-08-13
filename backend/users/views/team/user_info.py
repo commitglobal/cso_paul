@@ -4,20 +4,20 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
 from inertia import inertia
-from paul.display import format_dates as display_dates
-from paul.views.data_model import Breadcrumb, serialize_page_props_decorator
 from pydantic import BaseModel
 
+from paul.display import format_dates as display_dates
+from paul.views.data_model import Breadcrumb, serialize_page_props_decorator
 from users.views.team.user import (
     PAGE_TABS,
-    UserPageProps,
+    PAGE_TABS_TUPLE,
     get_base_url,
     get_breadcrumbs,
     get_description,
     get_requested_user,
-    get_tabs,
     get_title,
 )
+from users.views.team.data_model import UserPageProps
 
 
 class UserProperty(BaseModel):
@@ -71,9 +71,9 @@ def manage_user_info(__: HttpRequest, user_id: int) -> UserInfoPageProps:
         title=get_title(user),
         description=get_description(),
         breadcrumbs=breadcrumbs,
-        tabs=get_tabs(),
+        tabs=PAGE_TABS_TUPLE,
         baseUrl=get_base_url(user),
-        currentTab=PAGE_TABS["info"]["value"],
-        tabTitle=str(PAGE_TABS["info"]["label"]),
+        currentTab=PAGE_TABS["info"].value,
+        tabTitle=PAGE_TABS["info"].label,
         props=user_properties,
     )

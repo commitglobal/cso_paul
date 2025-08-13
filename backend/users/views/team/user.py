@@ -1,49 +1,23 @@
-from typing import List, Optional
+from typing import List, Tuple
 
 from django.core.exceptions import PermissionDenied
 from django.http import Http404
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-from pydantic import BaseModel
-
 from paul.display.build_url import build_ngohub_url
-from paul.views.data_model import BasePageProps, Breadcrumb
+from paul.views.data_model import Breadcrumb
+
 from users.models import User
-
-
-class Tab(BaseModel):
-    value: str
-    label: str
-
-
-class UserPageProps(BasePageProps):
-    tabs: list[Tab]
-    baseUrl: str
-
-    currentTab: str
-    tabTitle: str
-
-    errors: Optional[dict[str, dict[str, list[str]]]] = []
-
+from users.views.team.data_model import Tab
 
 PAGE_TABS = {
-    "info": {
-        "label": _("Info"),
-        "value": "info",
-    },
-    "role": {
-        "label": _("User Role"),
-        "value": "role",
-    },
-    "permissions": {
-        "label": _("Permissions"),
-        "value": "permissions",
-    },
-    "activity-log": {
-        "label": _("Activity Log"),
-        "value": "activity-log",
-    },
+    "info": Tab(value="info", label=str(_("Info"))),
+    "role": Tab(value="role", label=str(_("User Role"))),
+    "permissions": Tab(value="permissions", label=str(_("Permissions"))),
+    "activity-log": Tab(value="activity-log", label=str(_("Activity Log"))),
 }
+
+PAGE_TABS_TUPLE: Tuple[Tab, ...] = tuple(tab for tab in PAGE_TABS.values())
 
 
 def get_requested_user(user_id: int) -> User:
@@ -70,14 +44,10 @@ def get_base_url(user) -> str:
     return reverse("users:manage-user", kwargs={"user_id": user.id})
 
 
-def get_tabs() -> List[Tab]:
-    return [Tab(value=tab["value"], label=str(tab["label"])) for tab in PAGE_TABS.values()]
-
-
 def get_breadcrumbs(user) -> List[Breadcrumb]:
     return [
         Breadcrumb(label=str(_("Team")), url=reverse("users:manage-team")),
-        Breadcrumb(label=get_user_name(user)),
+        Breadcrumb(label=get_user_name(user), url=""),
     ]
 
 
