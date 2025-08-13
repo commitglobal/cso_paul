@@ -49,7 +49,7 @@ def _check_ngo_user_has_app_permissions(sociallogin: SocialLogin) -> None:
         raise ImmediateHttpResponse(redirect(reverse("error-app-missing")))
 
 
-def _set_user_name(*, user: User, user_profile: UserProfile, commit: bool = True) -> None:
+def _set_user_properties(*, user: User, user_profile: UserProfile, commit: bool = True) -> None:
     changes_made: bool = False
     if not user.first_name:
         user.first_name = user_profile.name
@@ -57,6 +57,11 @@ def _set_user_name(*, user: User, user_profile: UserProfile, commit: bool = True
 
     if user.last_name:
         user.last_name = ""
+        changes_made = commit
+
+    if not user.ngohub_id:
+        user.ngohub_id = user_profile.id
+        user.is_ngohub_user = True
         changes_made = commit
 
     if changes_made:
@@ -145,9 +150,9 @@ def user_create_or_update(sociallogin: SocialLogin) -> UserModel:
     if not _check_user_is_superadmin(user_profile):
         _check_ngo_user_has_app_permissions(sociallogin)
 
-    _set_user_name(user=user, user_profile=user_profile, commit=False)
+    _set_user_properties(user=user, user_profile=user_profile)
 
     user_ngohub_role: str = user_profile.role
-    _update_user_with_role(user=user, ngohub_role=user_ngohub_role, commit=True)
+    _update_user_with_role(user=user, ngohub_role=user_ngohub_role)
 
     return user
