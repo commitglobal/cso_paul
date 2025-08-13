@@ -50,7 +50,7 @@ def manage_user_permissions(__: HttpRequest, user_id: str) -> UserPermissionsPag
         items=[],
     )
 
-    page_props: UserPermissionsPageProps = UserPermissionsPageProps(
+    return UserPermissionsPageProps(
         title=get_title(user),
         description=get_description(),
         breadcrumbs=breadcrumbs,
@@ -60,5 +60,3 @@ def manage_user_permissions(__: HttpRequest, user_id: str) -> UserPermissionsPag
         tabTitle=str(PAGE_TABS["permissions"]["label"]),
         table=table,
     )
-
-    return page_props

@@ -44,7 +44,30 @@ def manage_user_info(__: HttpRequest, user_id: str) -> UserInfoPageProps:
         Breadcrumb(label=str(_("Info")), url=reverse("users:manage-user-info", kwargs={"user_id": user_id}))
     )
 
-    page_props: UserInfoPageProps = UserInfoPageProps(
+    user_properties = [
+        UserProperty(
+            label=str(_("Name")),
+            value=f"{user.first_name} {user.last_name}" if user.last_name else user.first_name,
+        ),
+        UserProperty(
+            label=str(_("Email")),
+            value=user.email,
+        ),
+        UserProperty(
+            label=str(_("Phone")),
+            value="user.phone",
+        ),
+        UserProperty(
+            label=str(_("Last Activity")),
+            value=display_dates.short_datetime(user.last_login),
+        ),
+        UserProperty(
+            label=str(_("Added Since")),
+            value=display_dates.short_date(user.date_joined),
+        ),
+    ]
+
+    return UserInfoPageProps(
         title=get_title(user),
         description=get_description(),
         breadcrumbs=breadcrumbs,
@@ -52,28 +75,5 @@ def manage_user_info(__: HttpRequest, user_id: str) -> UserInfoPageProps:
         baseUrl=get_base_url(user),
         currentTab=PAGE_TABS["info"]["value"],
         tabTitle=str(PAGE_TABS["info"]["label"]),
-        props=[
-            UserProperty(
-                label=str(_("Name")),
-                value=f"{user.first_name} {user.last_name}" if user.last_name else user.first_name,
-            ),
-            UserProperty(
-                label=str(_("Email")),
-                value=user.email,
-            ),
-            UserProperty(
-                label=str(_("Phone")),
-                value="user.phone",
-            ),
-            UserProperty(
-                label=str(_("Last Activity")),
-                value=display_dates.short_datetime(user.last_login),
-            ),
-            UserProperty(
-                label=str(_("Added Since")),
-                value=display_dates.short_date(user.date_joined),
-            ),
-        ],
+        props=user_properties,
     )
-
-    return page_props

@@ -90,7 +90,7 @@ def manage_user_role(request: HttpRequest, user_id: str) -> UserRolePageProps:
             )
         )
 
-    page_props_2 = UserRolePageProps(
+    return UserRolePageProps(
         title=get_title(user),
         description=get_description(),
         breadcrumbs=breadcrumbs,
@@ -102,5 +102,3 @@ def manage_user_role(request: HttpRequest, user_id: str) -> UserRolePageProps:
         roles=roles,
         errors=errors,
     )
-
-    return page_props_2

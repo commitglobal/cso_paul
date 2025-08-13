@@ -49,7 +49,7 @@ def manage_user_activity_log(__: HttpRequest, user_id: str) -> UserActivityLogPa
         items=[],
     )
 
-    page_props: UserActivityLogPageProps = UserActivityLogPageProps(
+    return UserActivityLogPageProps(
         title=get_title(user),
         description=get_description(),
         breadcrumbs=breadcrumbs,
@@ -59,5 +59,3 @@ def manage_user_activity_log(__: HttpRequest, user_id: str) -> UserActivityLogPa
         tabTitle=str(PAGE_TABS["activity-log"]["label"]),
         table=table,
     )
-
-    return page_props
