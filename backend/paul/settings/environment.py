@@ -54,6 +54,8 @@ env = environ.Env(
     SESSION_EXPIRY_IDLE_SECONDS=(int, 4 * HOUR),
     SESSION_EXPIRY_EXTENDED_SECONDS=(int, 4 * DAY),
     TIME_ZONE=(str, "Europe/Bucharest"),
+    # custom django settings
+    ENABLE_DJANGO_ADMIN=(bool, False),
     # db settings
     DATABASE_ENGINE=(str, "sqlite3"),
     DATABASE_HOST=(str, "localhost"),

@@ -49,6 +49,7 @@ if IS_CONTAINERIZED and VERSION == "edge" and REVISION == "develop":
 DJANGO_ADMIN_PASSWORD = env.str("DJANGO_ADMIN_PASSWORD", None)
 DJANGO_ADMIN_EMAIL = env.str("DJANGO_ADMIN_EMAIL", None)
 
+ENABLE_DJANGO_ADMIN = env.bool("ENABLE_DJANGO_ADMIN")
 
 # Security settings
 
