@@ -29,27 +29,28 @@ def _map_field_to_db(field: str, field_mapping: Dict[str, Union[List[str], str]]
         )
 
 
-def parse_order_parameter(sort: str, field_mapping: Dict[str, Union[List[str], str]]) -> List[str]:
+def parse_order_parameter(
+    *, sort_parameter: str, field_mapping: Dict[str, Union[List[str], str]], default_sort_option: str = "pk"
+) -> List[str]:
     """
     Parse the sort parameter into a field and direction.
     Args:
-        `sort` (str): The sort parameter in the format "field,direction".
+        `sort_parameter` (str): The sort parameter in the format "field,direction".
         `field_mapping` (Dict[str, Union[List[str], str]]): A mapping of field names to their database equivalents.
+        `default_sort_option` (str): The default sort option if the sort_parameter is invalid or empty.
 
     Returns:
         List[str]: A list of fields with direction prefix applied.
     """
-    default_sort_option = "pk"
-
-    if not sort:
+    if not sort_parameter:
         return [default_sort_option]
 
-    parts = sort.split(",")
+    parts: List[str] = sort_parameter.split(",")
 
     if 1 > len(parts) > 2:
         return [
             _log_and_return_default(
-                error_message=f"Invalid sort parameter: {sort}. Expected format 'field,direction'.",
+                error_message=f"Invalid sort parameter: {sort_parameter}. Expected format 'field,direction'.",
                 default=default_sort_option,
             )
         ]

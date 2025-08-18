@@ -1,20 +1,35 @@
 import { DataTable } from "@/components/data-table/data-table";
+import { mapHeaderToColumns } from "@/components/data-table/map-hader-to-columns";
 import { Separator } from "@/components/ui/separator";
 import { useValidatedProps } from "@/hooks/use-validated-props";
 import BaseLayout from "@/layouts/base-layout";
-import { ColumnsActivityLog } from "@/pages/users/team-user/columns-activity-log";
 import TabWrapper from "@/pages/users/team-user/tab-wrapper";
-import { type UserInfoProps, UserInfoPropsStruct } from "@/pages/users/team-user/user-page-props";
+import { UserInfoPropsStruct } from "@/pages/users/team-user/user-page-props";
+import { ActivityLogPropsStruct } from "@/types/activity-log";
+import { HeaderPropsStruct } from "@/types/table-header";
 import { useMemo } from "react";
-import { useTranslation } from "react-i18next";
+import { array, assign, type Infer, number, object } from "superstruct";
+
+const UserActivityLogPropsStruct = assign(
+  object({
+    table: object({
+      totalItems: number(),
+      totalPages: number(),
+      header: array(HeaderPropsStruct),
+      items: array(ActivityLogPropsStruct),
+    }),
+  }),
+  UserInfoPropsStruct
+);
+
+type UserActivityLogProps = Infer<typeof UserActivityLogPropsStruct>;
 
 export default function ActivityLog() {
-  const { t } = useTranslation();
   const {
-    props: { tabs, baseUrl, currentTab, tabTitle },
-  } = useValidatedProps<UserInfoProps>(UserInfoPropsStruct);
+    props: { tabs, baseUrl, currentTab, tabTitle, table },
+  } = useValidatedProps<UserActivityLogProps>(UserActivityLogPropsStruct);
 
-  const tableColumns = useMemo(() => ColumnsActivityLog(t), [t]);
+  const tableColumns = useMemo(() => mapHeaderToColumns(table.header), [table.header]);
 
   return (
     <TabWrapper tabs={tabs} defaultTab={currentTab} baseUrl={baseUrl}>
@@ -31,9 +46,9 @@ export default function ActivityLog() {
 
       <DataTable
         columns={tableColumns}
-        data={[]}
-        totalItems={10}
-        totalPages={10}
+        data={table.items}
+        totalItems={table.totalItems}
+        totalPages={table.totalPages}
         emptyState={<div>WORK IN PROGRESS</div>}
       />
     </TabWrapper>

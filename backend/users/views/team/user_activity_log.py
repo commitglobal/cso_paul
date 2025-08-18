@@ -1,13 +1,20 @@
-from typing import Tuple
+from typing import List, Tuple
 
+from auditlog.models import LogEntry
+from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.db.models import QuerySet
 from django.http import HttpRequest
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
 from inertia import inertia
+from pydantic import BaseModel
 
+from paul.common.sort_parser import parse_order_parameter
 from paul.views.data_model import Breadcrumb, DataTable, TableHeader, serialize_page_props_decorator
+from paul.views.pagination import paginate_queryset
 from users.views.team.data_model import UserPageProps
 from users.views.team.user import (
     PAGE_TABS,
@@ -19,20 +26,85 @@ from users.views.team.user import (
     get_user,
 )
 
+User = get_user_model()
+
+
+class ActionItem(BaseModel):
+    id: int
+    userId: int
+    action: str
+    date: str
+
 
 class UserActivityLogPageProps(UserPageProps):
     table: DataTable
+
+
+def _serialize_log_entries(log_entries: QuerySet[LogEntry], user_id: int) -> List[ActionItem]:
+    items: List[ActionItem] = [
+        ActionItem(
+            id=entry.pk,
+            userId=user_id,
+            action=str(LogEntry.Action.choices[entry.action][1] if entry.action in (0, 1, 2, 3) else "unknown_action!"),
+            date=entry.timestamp.strftime("%Y-%m-%d %H:%M:%S"),
+        )
+        for entry in log_entries
+    ]
+
+    return items
+
+
+def _get_table_data(request: HttpRequest, user_id: int) -> DataTable:
+    page_number = int(request.GET.get(settings.QUERY_PARAMS["PAGE"], 1))
+    page_size = request.GET.get(settings.QUERY_PARAMS["PAGE_SIZE"], 10)
+    sort = request.GET.get(settings.QUERY_PARAMS["SORT"], None)
+
+    field_mapping = {
+        "id": "pk",
+        "user": "user__pk",
+        "action": "action",
+        "date": "timestamp",
+    }
+    parsed_sorting: List[str] = parse_order_parameter(
+        sort_parameter=sort,
+        field_mapping=field_mapping,
+        default_sort_option="-timestamp",
+    )
+
+    action_items, paginator, pagination = paginate_queryset(
+        queryset=LogEntry.objects.get_for_objects(User.objects.filter(pk=user_id)).order_by(*parsed_sorting),
+        page_number=page_number,
+        page_size=page_size,
+        page_serializer=_serialize_log_entries,
+        serializer_kwargs={"user_id": user_id},
+    )
+
+    table: DataTable = DataTable(
+        totalItems=pagination.total_items,
+        totalPages=pagination.num_pages,
+        header=[
+            TableHeader(header=str(_("ID")), accessorKey="id", enableSorting=True),
+            TableHeader(header=str(_("User")), accessorKey="userId", enableSorting=True),
+            TableHeader(header=str(_("Action")), accessorKey="action", enableSorting=True),
+            TableHeader(header=str(_("Date")), accessorKey="date", enableSorting=True),
+        ],
+        items=action_items,
+    )
+
+    return table
 
 
 @login_required
 @cache_control(private=True)
 @inertia("users/team-user/activity-log")
 @serialize_page_props_decorator
-def manage_user_activity_log(__: HttpRequest, user_id: int) -> UserActivityLogPageProps:
+def manage_user_activity_log(request: HttpRequest, user_id: int) -> UserActivityLogPageProps:
     """
     Redirect to manage_user view for user activity log
     """
     user = get_user(user_id=user_id)
+
+    table: DataTable = _get_table_data(request=request, user_id=user_id)
 
     breadcrumbs: Tuple[Breadcrumb, ...] = get_breadcrumbs(
         user,
@@ -41,16 +113,6 @@ def manage_user_activity_log(__: HttpRequest, user_id: int) -> UserActivityLogPa
                 label=str(_("Activity Log")), url=reverse("users:manage-user-activity-log", kwargs={"user_id": user_id})
             ),
         ),
-    )
-
-    table: DataTable = DataTable(
-        totalItems=100,
-        totalPages=10,
-        header=[
-            TableHeader(label=str(_("Action")), value="action"),
-            TableHeader(label=str(_("Date")), value="date"),
-        ],
-        items=[],
     )
 
     return UserActivityLogPageProps(

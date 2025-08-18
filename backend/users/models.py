@@ -1,5 +1,6 @@
 from typing import List, Optional
 
+from auditlog.registry import auditlog
 from django.conf import settings
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractUser, Group, UserManager
@@ -8,7 +9,6 @@ from django.db.models import QuerySet
 from django.db.models.functions import Lower
 from django.forms.models import model_to_dict
 from django.utils.translation import gettext as _
-
 from utils.choices import CommonLabelValueChoices
 
 
@@ -141,3 +141,6 @@ class User(AbstractUser):
 
         new_group = Group.objects.get(name=self.main_role)
         self.groups.add(new_group)
+
+
+auditlog.register(User, exclude_fields=["password"])

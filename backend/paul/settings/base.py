@@ -66,3 +66,19 @@ CORS_ALLOW_ALL_ORIGINS = env.bool("CORS_ALLOW_ALL_ORIGINS")
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# Auditlog configuration
+
+AUDITLOG_EXPIRY_DAYS = env.int("AUDITLOG_EXPIRY_DAYS")
+AUDITLOG_INCLUDE_ALL_MODELS = True
+AUDITLOG_EXCLUDE_TRACKING_FIELDS = (
+    "created_at",
+    "updated_at",
+)
+AUDITLOG_EXCLUDE_TRACKING_MODELS = (
+    "auth.Group",
+    "django_q",
+    "sessions",
+    "usersessions",
+)

@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Dict, Tuple
 
 from django.core.exceptions import PermissionDenied
 from django.http import Http404
@@ -10,7 +10,7 @@ from paul.views.data_model import Breadcrumb
 from users.models import User
 from users.views.team.data_model import Tab
 
-PAGE_TABS = {
+PAGE_TABS: Dict[str, Tab] = {
     "info": Tab(value="info", label=str(_("Info"))),
     "role": Tab(value="role", label=str(_("User Role"))),
     "permissions": Tab(value="permissions", label=str(_("Permissions"))),

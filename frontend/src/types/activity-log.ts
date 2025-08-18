@@ -1,6 +1,10 @@
-export type ActivityLogProps = {
-  id: number;
-  user_id: number;
-  action: string;
-  date: string;
-};
+import { type Infer, number, object, string } from "superstruct";
+
+export const ActivityLogPropsStruct = object({
+  id: number(),
+  userId: number(),
+  action: string(),
+  date: string(),
+});
+
+export type ActivityLogProps = Infer<typeof ActivityLogPropsStruct>;
