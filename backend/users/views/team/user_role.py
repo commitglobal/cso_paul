@@ -9,9 +9,9 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
 from inertia import inertia
-from paul.views.data_model import Breadcrumb, serialize_page_props_decorator
 from pydantic import BaseModel
 
+from paul.views.data_model import Breadcrumb, serialize_page_props_decorator
 from users.forms import ChangeRoleForm
 from users.models import RoleChoices
 from users.views.team.data_model import UserPageProps

@@ -32,14 +32,6 @@ def get_user(user_id: int) -> User:
     return user
 
 
-def get_user_name(user) -> str:
-    user_name: str = user.first_name
-    if user.last_name:
-        user_name = f"{user_name} {user.last_name}"
-
-    return user_name
-
-
 def get_base_url(user) -> str:
     return reverse("users:manage-user", kwargs={"user_id": user.id})
 
@@ -48,14 +40,14 @@ def get_breadcrumbs(user, *, append_breadcrumbs: Tuple[Breadcrumb, ...]) -> Tupl
     default_breadcrumbs: Tuple[Breadcrumb, ...] = tuple(
         (
             Breadcrumb(label=str(_("Team")), url=reverse("users:manage-team")),
-            Breadcrumb(label=get_user_name(user), url=""),
+            Breadcrumb(label=user.name, url=""),
         )
     )
     return default_breadcrumbs + append_breadcrumbs
 
 
 def get_title(user) -> str:
-    return _("User: %s") % get_user_name(user)
+    return _("User: %s") % user.name
 
 
 def get_description() -> str:

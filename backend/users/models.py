@@ -9,6 +9,7 @@ from django.db.models import QuerySet
 from django.db.models.functions import Lower
 from django.forms.models import model_to_dict
 from django.utils.translation import gettext as _
+
 from utils.choices import CommonLabelValueChoices
 
 
@@ -116,6 +117,14 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.email
+
+    @property
+    def name(self) -> str:
+        user_name: str = self.first_name
+        if self.last_name:
+            user_name = f"{user_name} {self.last_name}"
+
+        return user_name
 
     def update_main_role(self, *, commit: bool = True) -> None:
         """

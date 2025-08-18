@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import Dict, List, Optional, Tuple
 
 from auditlog.models import LogEntry
 from django.conf import settings
@@ -65,11 +65,11 @@ def _serialize_log_entries(log_entries: QuerySet[LogEntry], user_id: int) -> Lis
 
 
 def _get_table_data(request: HttpRequest, user_id: int) -> DataTable:
-    page_number = int(request.GET.get(settings.QUERY_PARAMS["PAGE"], 1))
-    page_size = request.GET.get(settings.QUERY_PARAMS["PAGE_SIZE"], 10)
-    sort = request.GET.get(settings.QUERY_PARAMS["SORT"], None)
+    page_number: int = int(request.GET.get(settings.QUERY_PARAMS["PAGE"], 1))
+    page_size: int = int(request.GET.get(settings.QUERY_PARAMS["PAGE_SIZE"], 10))
+    sort: Optional[str] = request.GET.get(settings.QUERY_PARAMS["SORT"], None)
 
-    field_mapping = {
+    field_mapping: Dict[str, str] = {
         "id": "pk",
         "user": "user__pk",
         "action": "action",
@@ -112,7 +112,7 @@ def manage_user_activity_log(request: HttpRequest, user_id: int) -> UserActivity
     """
     Redirect to manage_user view for user activity log
     """
-    user = get_user(user_id=user_id)
+    user: User = get_user(user_id=user_id)
 
     table: DataTable = _get_table_data(request=request, user_id=user_id)
 
