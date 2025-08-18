@@ -10,6 +10,7 @@ def _choose_error_template(*, is_authenticated: bool) -> str:
 
     return "errors/public"
 
+
 @never_cache
 def custom_400_view(request: HttpRequest, exception: Exception = None) -> HttpResponse:
     """
