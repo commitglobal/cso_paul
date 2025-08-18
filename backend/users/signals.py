@@ -8,7 +8,17 @@ logger = logging.getLogger(__name__)
 
 
 def auditlog_to_output(action: int, changes: Dict, instance, log_entry: LogEntry, sender: ModelBase, **kwargs):
-    action_string: str = LogEntry.Action.choices[action][1] if action in (0, 1, 2, 3) else "unknown_action!"
+    action_string: str = str(
+        LogEntry.Action.choices[action][1]
+        if action
+        in (
+            LogEntry.Action.CREATE,
+            LogEntry.Action.UPDATE,
+            LogEntry.Action.DELETE,
+            LogEntry.Action.ACCESS,
+        )
+        else "unknown_action!"
+    )
 
     instance_pk: str = "#" + str(instance.pk if instance else None)
     changes: List[str] = list(changes.keys()) if changes else []

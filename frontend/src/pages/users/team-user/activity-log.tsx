@@ -1,5 +1,4 @@
 import { DataTable } from "@/components/data-table/data-table";
-import { mapHeaderToColumns } from "@/components/data-table/map-hader-to-columns";
 import { Separator } from "@/components/ui/separator";
 import { useValidatedProps } from "@/hooks/use-validated-props";
 import BaseLayout from "@/layouts/base-layout";
@@ -7,7 +6,6 @@ import TabWrapper from "@/pages/users/team-user/tab-wrapper";
 import { UserInfoPropsStruct } from "@/pages/users/team-user/user-page-props";
 import { ActivityLogPropsStruct } from "@/types/activity-log";
 import { HeaderPropsStruct } from "@/types/table-header";
-import { useMemo } from "react";
 import { array, assign, type Infer, number, object } from "superstruct";
 
 const UserActivityLogPropsStruct = assign(
@@ -29,8 +27,6 @@ export default function ActivityLog() {
     props: { tabs, baseUrl, currentTab, tabTitle, table },
   } = useValidatedProps<UserActivityLogProps>(UserActivityLogPropsStruct);
 
-  const tableColumns = useMemo(() => mapHeaderToColumns(table.header), [table.header]);
-
   return (
     <TabWrapper tabs={tabs} defaultTab={currentTab} baseUrl={baseUrl}>
       <div className="px-4 sm:px-6 lg:px-8">
@@ -45,7 +41,7 @@ export default function ActivityLog() {
       <Separator />
 
       <DataTable
-        columns={tableColumns}
+        columns={table.header}
         data={table.items}
         totalItems={table.totalItems}
         totalPages={table.totalPages}

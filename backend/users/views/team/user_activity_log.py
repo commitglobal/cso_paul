@@ -45,7 +45,17 @@ def _serialize_log_entries(log_entries: QuerySet[LogEntry], user_id: int) -> Lis
         ActionItem(
             id=entry.pk,
             userId=user_id,
-            action=str(LogEntry.Action.choices[entry.action][1] if entry.action in (0, 1, 2, 3) else "unknown_action!"),
+            action=str(
+                LogEntry.Action.choices[entry.action][1]
+                if entry.action
+                in (
+                    LogEntry.Action.CREATE,
+                    LogEntry.Action.UPDATE,
+                    LogEntry.Action.DELETE,
+                    LogEntry.Action.ACCESS,
+                )
+                else "unknown_action!"
+            ),
             date=entry.timestamp.strftime("%Y-%m-%d %H:%M:%S"),
         )
         for entry in log_entries
