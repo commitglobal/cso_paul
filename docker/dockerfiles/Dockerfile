@@ -1,9 +1,9 @@
-ARG NODE_VERSION=24.3.0
-ARG PYTHON_VERSION=3.13.5
+ARG NODE_VERSION=24.5.0
+ARG PYTHON_VERSION=3.13.6
 ARG S6_OVERLAY_VERSION=3.2.1.0
 
 
-FROM node:${NODE_VERSION}-bookworm-slim AS build_fe
+FROM node:${NODE_VERSION}-trixie-slim AS build_fe
 
 RUN apt-get update && apt-get upgrade -y
 
@@ -22,7 +22,7 @@ RUN npm ci --no-audit --ignore-scripts && \
     npm run prod
 
 
-FROM python:${PYTHON_VERSION}-slim-bookworm AS build_be
+FROM python:${PYTHON_VERSION}-slim-trixie AS build_be
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -53,7 +53,7 @@ COPY ./backend/pyproject.toml ./backend/uv.lock /build/
 RUN uv sync --locked --no-install-project --active --no-dev --compile-bytecode
 
 
-FROM python:${PYTHON_VERSION}-slim-bookworm
+FROM python:${PYTHON_VERSION}-slim-trixie
 
 ENV PYTHONUNBUFFERED=1
 

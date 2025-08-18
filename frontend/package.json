@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "vite",
     "prod": "tsc -b && vite build",
-    "lint": "eslint .",
     "preview": "vite preview",
+    "lint": "eslint .",
     "prettier:format": "prettier --config prettier.config.mjs --write src/**/*.{ts,tsx}",
     "prettier:check": "prettier --config prettier.config.mjs --check src/**/*.{ts,tsx}",
     "i18n:scan": "i18next-scanner --config i18next-scanner.config.cjs",
