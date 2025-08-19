@@ -152,7 +152,8 @@ class SeedGroupsCommandTestCase(TestCase):
         bad_permission = settings.USER_GROUPS["test_group_bad_perm"]["permissions"][0]
         # Check if the error for non-existent permission is logged
         self.assertIn(
-            f"{self.log_prefix}Permission '{bad_permission}' has incorrect naming format. Expected format: '<app_label>.<permission_label>'.",
+            f"{self.log_prefix}Permission '{bad_permission}' has incorrect naming format. "
+            "Expected format: '<app_label>.<permission_label>'.",
             log.output,
             msg="Expected log message for invalid permission format not found.",
         )

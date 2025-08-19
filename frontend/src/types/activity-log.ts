@@ -1,9 +1,9 @@
-import { type Infer, number, object, string } from "superstruct";
+import { array, type Infer, object, string } from "superstruct";
 
 export const ActivityLogPropsStruct = object({
-  id: number(),
-  userId: number(),
   action: string(),
+  changes: array(string()),
+  content_type: string(),
   date: string(),
 });
 

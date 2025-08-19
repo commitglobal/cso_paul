@@ -4,11 +4,13 @@ from auditlog.models import LogEntry
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.db.models import QuerySet
+from django.contrib.contenttypes.models import ContentType
+from django.db.models import Q, QuerySet
 from django.http import HttpRequest
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
+from django.views.decorators.http import require_http_methods
 from inertia import inertia
 from pydantic import BaseModel
 
@@ -30,9 +32,9 @@ User = get_user_model()
 
 
 class ActionItem(BaseModel):
-    id: int
-    userId: int
     action: str
+    changes: Tuple[str, ...]
+    content_type: str
     date: str
 
 
@@ -40,26 +42,50 @@ class UserActivityLogPageProps(UserPageProps):
     table: DataTable
 
 
-def _serialize_log_entries(log_entries: QuerySet[LogEntry], user_id: int) -> List[ActionItem]:
-    items: List[ActionItem] = [
-        ActionItem(
-            id=entry.pk,
-            userId=user_id,
-            action=str(
-                LogEntry.Action.choices[entry.action][1]
-                if entry.action
-                in (
-                    LogEntry.Action.CREATE,
-                    LogEntry.Action.UPDATE,
-                    LogEntry.Action.DELETE,
-                    LogEntry.Action.ACCESS,
-                )
-                else "unknown_action!"
-            ),
-            date=entry.timestamp.strftime("%Y-%m-%d %H:%M:%S"),
+def _serialize_modification(modification_group: List[str]) -> str:
+    serialized_modification: str = ""
+    if len(modification_group) > 2:
+        serialized_modification = ", ".join(modification_group)
+    elif len(modification_group) == 2:
+        initial: str = modification_group[0]
+        final: str = modification_group[1]
+
+        serialized_modification = final if initial == "None" else f"{initial} -> {final}"
+
+    return serialized_modification
+
+
+def _serialize_changes_field(changes: Dict[str, List[str]]) -> Tuple[str, ...]:
+    serialized_changes: List[str] = []
+
+    for field, modifications in changes.items():
+        modification: str = _serialize_modification(modifications)
+        serialized_changes.append(f"{field}: {modification}")
+
+    return tuple(serialized_changes)
+
+
+def _serialize_log_entries(log_entries: QuerySet[LogEntry]) -> List[ActionItem]:
+    items: List[ActionItem] = []
+    for entry in log_entries:
+        items.append(
+            ActionItem(
+                action=str(
+                    LogEntry.Action.choices[entry.action][1]
+                    if entry.action
+                    in (
+                        LogEntry.Action.CREATE,
+                        LogEntry.Action.UPDATE,
+                        LogEntry.Action.DELETE,
+                        LogEntry.Action.ACCESS,
+                    )
+                    else "unknown_action!"
+                ),
+                changes=_serialize_changes_field(entry.changes_display_dict),
+                content_type=entry.content_type.name,
+                date=entry.timestamp.strftime("%Y-%m-%d %H:%M:%S"),
+            )
         )
-        for entry in log_entries
-    ]
 
     return items
 
@@ -70,9 +96,8 @@ def _get_table_data(request: HttpRequest, user_id: int) -> DataTable:
     sort: Optional[str] = request.GET.get(settings.QUERY_PARAMS["SORT"], None)
 
     field_mapping: Dict[str, str] = {
-        "id": "pk",
-        "user": "user__pk",
         "action": "action",
+        "content_type": "content_type__pk",
         "date": "timestamp",
     }
     parsed_sorting: List[str] = parse_order_parameter(
@@ -81,21 +106,26 @@ def _get_table_data(request: HttpRequest, user_id: int) -> DataTable:
         default_sort_option="-timestamp",
     )
 
+    base_qs: QuerySet[LogEntry] = (
+        LogEntry.objects.get_for_objects(User.objects.filter(pk=user_id))
+        .order_by(*parsed_sorting)
+        # exclude log entries that show the user's creation
+        .exclude(Q(content_type__pk=ContentType.objects.get(model="user").pk) & Q(action=LogEntry.Action.CREATE))
+    )
     action_items, paginator, pagination = paginate_queryset(
-        queryset=LogEntry.objects.get_for_objects(User.objects.filter(pk=user_id)).order_by(*parsed_sorting),
+        queryset=base_qs,
         page_number=page_number,
         page_size=page_size,
         page_serializer=_serialize_log_entries,
-        serializer_kwargs={"user_id": user_id},
     )
 
     table: DataTable = DataTable(
         totalItems=pagination.total_items,
         totalPages=pagination.num_pages,
         header=[
-            TableHeader(header=str(_("ID")), accessorKey="id", enableSorting=True),
-            TableHeader(header=str(_("User")), accessorKey="userId", enableSorting=True),
             TableHeader(header=str(_("Action")), accessorKey="action", enableSorting=True),
+            TableHeader(header=str(_("Content Type")), accessorKey="content_type", enableSorting=True),
+            TableHeader(header=str(_("Changes")), accessorKey="changes", enableSorting=False),
             TableHeader(header=str(_("Date")), accessorKey="date", enableSorting=True),
         ],
         items=action_items,
@@ -105,6 +135,7 @@ def _get_table_data(request: HttpRequest, user_id: int) -> DataTable:
 
 
 @login_required
+@require_http_methods(["GET"])
 @cache_control(private=True)
 @inertia("users/team-user/activity-log")
 @serialize_page_props_decorator

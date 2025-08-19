@@ -7,6 +7,9 @@
 - Write modular code: split logic into reusable functions and classes.
 - Add concise docstrings to all public functions and classes.
 - Don't use hardcoded strings, if possible. If a function exists to generate that string, use it. If the string is a constant, define it in its (or another appropriate) module.
+- Never use `__future__` imports.
+- Use type hints for all arguments and return values.
+- Use type annotations for all variables, and functions.
 
 ## Testing Requirements
 - Store tests in `tests.py` or a `tests/` directory within each app.
@@ -14,10 +17,6 @@
 - Write tests for every new feature, model, and view.
 - Ensure tests are independent and do not rely on external state.
 - Name test methods clearly and assert expected results.
-
-## Code Formatting
-- Format all Python code with ruff: `ruff format .` before commit.
-- Check and fix linting issues with `ruff check .`.
 
 ## Dependency Management
 - Add dependencies using uv: `uv pip install <package>`.
