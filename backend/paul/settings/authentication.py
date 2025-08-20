@@ -61,15 +61,16 @@ manager_permissions = [] + user_permissions
 admin_permissions = [
     "users.add_user",
     "users.change_user",
-    "users.delete_user",
+    "auditlog.view_logentry",
 ] + manager_permissions
+
+super_admin_permissions = admin_permissions
 
 support_admin_permissions = [
     "users.view_user",
     "auth.view_group",
+    "auditlog.view_logentry",
 ]
-
-super_admin_permissions = admin_permissions
 
 
 # Define user groups with their respective permissions and roles

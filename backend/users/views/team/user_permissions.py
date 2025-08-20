@@ -47,9 +47,9 @@ def manage_user_permissions(__: HttpRequest, user_id: int) -> UserPermissionsPag
         totalItems=100,
         totalPages=10,
         header=[
-            TableHeader(label=str(_("Entity")), value="entity"),
-            TableHeader(label=str(_("Type")), value="entity_type"),
-            TableHeader(label=str(_("Permission")), value="permission"),
+            TableHeader(header=str(_("Entity")), accessorKey="entity"),
+            TableHeader(header=str(_("Type")), accessorKey="entity_type"),
+            TableHeader(header=str(_("Permission")), accessorKey="permission"),
         ],
         items=[],
     )

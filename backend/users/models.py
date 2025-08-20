@@ -1,5 +1,6 @@
 from typing import List, Optional
 
+from auditlog.registry import auditlog
 from django.conf import settings
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractUser, Group, UserManager
@@ -117,6 +118,14 @@ class User(AbstractUser):
     def __str__(self):
         return self.email
 
+    @property
+    def name(self) -> str:
+        user_name: str = self.first_name
+        if self.last_name:
+            user_name = f"{user_name} {self.last_name}"
+
+        return user_name
+
     def update_main_role(self, *, commit: bool = True) -> None:
         """
         Update the user's role based on the highest-ranked group they belong to.
@@ -141,3 +150,6 @@ class User(AbstractUser):
 
         new_group = Group.objects.get(name=self.main_role)
         self.groups.add(new_group)
+
+
+auditlog.register(User, exclude_fields=["password"])

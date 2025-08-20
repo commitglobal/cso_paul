@@ -82,7 +82,7 @@ def _request_users(request):
         "added_since": "date_joined",
         "last_activity": "last_login",
     }
-    parsed_parameters = parse_order_parameter(sort, field_mapping)
+    parsed_parameters: List[str] = parse_order_parameter(sort_parameter=sort, field_mapping=field_mapping)
     users_qs = users_qs.order_by(*parsed_parameters)
 
     if search_query:

@@ -4,12 +4,12 @@ version = "2.0.0a1"
 requires-python = ">=3.13"
 
 dependencies = [
-  "django~=5.2.0",
-  "django-allauth[socialaccount]~=65.9.0",
-  "django-auditlog~=3.1.2",
+  "django~=5.2.5",
+  "django-allauth[socialaccount]~=65.10.0",
+  "django-auditlog~=3.2.1",
   "django-cors-headers~=4.7.0",
   "django-environ~=0.12.0",
-  "django-localflavor~=4.0.0",
+  "django-localflavor~=5.0.0",
   "django-vite~=3.1.0",
   "inertia-django~=1.2.0",
   "unidecode~=1.4.0",
@@ -19,7 +19,7 @@ dependencies = [
   "django-recaptcha~=4.1.0",
   "django-ses~=4.4.0",
   "django-storages[azure,s3]~=1.14.6",
-  "sentry-sdk[django]~=2.30.0",
+  "sentry-sdk[django]~=2.34.1",
   "requests~=2.32.3",
   "psycopg2-binary~=2.9.10",
   "gevent~=25.5.1",
@@ -33,14 +33,14 @@ dependencies = [
 
 [dependency-groups]
 test = [
-  "coverage~=7.10.1",
+  "coverage~=7.10.3",
   "tblib~=3.1.0",
 ]
-ruff = ["ruff~=0.12.7"]
+ruff = ["ruff~=0.12.8"]
 dev = [
-  "faker~=37.1.1",
-  "pre-commit~=4.2.0",
-  "debugpy~=1.8.15",
+  "faker~=37.5.3",
+  "pre-commit~=4.3.0",
+  "debugpy~=1.8.16",
   { include-group = "ruff" },
   { include-group = "test" },
 ]

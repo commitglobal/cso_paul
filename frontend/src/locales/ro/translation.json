@@ -84,9 +84,11 @@
     },
     "user": {
       "addPermission": "Add permission",
-      "activity_log": {
-        "action": "users.user.activity_log.action",
-        "date": "users.user.activity_log.date"
+      "activityLog": {
+        "action": "users.user.activityLog.action",
+        "date": "users.user.activityLog.date",
+        "id": "users.user.activityLog.id",
+        "user_id": "users.user.activityLog.user_id"
       },
       "permissions": {
         "entity": "users.user.permissions.entity",
