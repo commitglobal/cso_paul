@@ -1,6 +1,6 @@
 import json
 import logging
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -114,6 +114,13 @@ def _request_users(request):
     return data
 
 
+def _get_is_add_user_enabled(user: User) -> bool:
+    if not settings.ENABLE_EMAIL_AUTH:
+        return False
+
+    return user.has_perm("users.add_user")
+
+
 @login_required
 @cache_control(private=True)
 @inertia("users/team/index")
@@ -132,33 +139,29 @@ def manage_team(request: HttpRequest) -> InertiaResponse:
             {subtitle_cta_text}
         </a>"""
 
-    has_add_permission = request.user.has_perm("users.add_user")
+    user = request.user
+
+    add_user_enabled: bool = _get_is_add_user_enabled(user)
+    assignable_roles: Tuple[str, ...] = tuple(
+        choice for choice in RoleChoices.label_value_choices() if choice["value"] in settings.USER_GROUPS_ASSIGNABLE
+    )
 
     page_props = {
         "title": _("Team members"),
         "description": subtitle,
-        "breadcrumbs": [
-            {"label": _("Team"), "url": reverse("users:manage-team")},
-        ],
-        "permissions": {
-            "team_add_user": has_add_permission,
-        },
-        "role_choices": RoleChoices.label_value_choices(),
+        "breadcrumbs": [{"label": _("Team"), "url": reverse("users:manage-team")}],
+        "role_choices": assignable_roles,
         "is_ngohub_auth_enabled": settings.ENABLE_NGOHUB_AUTH,
-        "is_email_auth_enabled": settings.ENABLE_EMAIL_AUTH,
+        "is_add_user_button_enabled": add_user_enabled,
     }
 
     if request.method == "POST":
-        if not has_add_permission:
+        if not add_user_enabled:
             raise PermissionDenied()
 
         form = AddTeamUserForm(json.loads(request.body))
         if not form.is_valid():
-            page_props.update(
-                {
-                    "errors": {"team": form.errors},
-                }
-            )
+            page_props.update({"errors": {"team": form.errors}})
         else:
             form.save()
 

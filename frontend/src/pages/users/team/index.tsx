@@ -8,9 +8,9 @@ import { useValidatedProps } from "@/hooks/use-validated-props";
 import BaseLayout from "@/layouts/base-layout";
 import { MainContent } from "@/layouts/main-content";
 import { type TeamPageProps, TeamPagePropsStruct } from "@/pages/users/team/team-page-props-struct";
-import { ArrowPathIcon, UserPlusIcon } from "@heroicons/react/20/solid";
+import { ArrowPathIcon } from "@heroicons/react/20/solid";
 import { parseAsString, useQueryState } from "nuqs";
-import { useCallback, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 import { AddTeamUserDialog } from "./add-team-user-dialog";
@@ -18,19 +18,10 @@ import { Columns } from "./columns";
 
 export default function TeamPage() {
   const {
-    props: { users, pagination, filters, is_ngohub_auth_enabled, is_email_auth_enabled },
+    props: { users, pagination, filters, is_ngohub_auth_enabled, is_add_user_button_enabled },
   } = useValidatedProps<TeamPageProps>(TeamPagePropsStruct);
 
   const { t } = useTranslation();
-
-  const [open, setOpen] = useState(false);
-  const handleCloseDialog = useCallback(() => {
-    setOpen(false);
-  }, []);
-
-  const handleOpenDialog = useCallback(() => {
-    setOpen(true);
-  }, []);
 
   // Pass t to Columns to avoid calling hooks inside useMemo
   const tableColumns = useMemo(() => Columns(t), [t]);
@@ -49,12 +40,7 @@ export default function TeamPage() {
               <div className="mt-4 flex gap-4 sm:mt-0 sm:ml-16 sm:flex-none">
                 {is_ngohub_auth_enabled && <NgoHubRefreshButton />}
 
-                {is_email_auth_enabled && (
-                  <Button variant="default" size="sm" className="gap-x-1.5" onClick={handleOpenDialog}>
-                    <UserPlusIcon aria-hidden="true" className="h-5 w-5 -ml-0.5" />
-                    {t("users.team.addUser")}
-                  </Button>
-                )}
+                {is_add_user_button_enabled && <AddTeamUserDialog />}
               </div>
             </div>
           </div>
@@ -96,7 +82,6 @@ export default function TeamPage() {
             }
           />
         </div>
-        <AddTeamUserDialog open={open} onClose={handleCloseDialog} />
       </>
     </MainContent>
   );

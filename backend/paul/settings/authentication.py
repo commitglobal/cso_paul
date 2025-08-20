@@ -1,5 +1,5 @@
 from datetime import timedelta
-from typing import List
+from typing import List, Tuple
 
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
@@ -123,7 +123,10 @@ USER_GROUPS = {
 }
 
 USER_GROUPS_ORDERING: List[str] = [key for key, item in sorted(USER_GROUPS.items(), key=lambda x: x[1]["order"])]
-USER_GROUPS_CHOICES = [(key, item["label"]) for key, item in USER_GROUPS.items()]
+USER_GROUPS_CHOICES: List[Tuple[str, str]] = [(key, item["label"]) for key, item in USER_GROUPS.items()]
+USER_GROUPS_ASSIGNABLE: Tuple[str, ...] = tuple(
+    key for key, item in USER_GROUPS.items() if item["is_assignable_by_ngo_user"]
+)
 
 # Expiration times and limits for various authentication-related actions
 EMAIL_VERIFICATION_EXPIRY_TIME = timedelta(hours=env.int("EMAIL_VERIFICATION_EXPIRY_HOURS"))

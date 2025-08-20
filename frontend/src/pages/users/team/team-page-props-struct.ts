@@ -27,6 +27,7 @@ export const TeamPagePropsStruct = assign(
     filters: Filters,
     is_ngohub_auth_enabled: boolean(),
     is_email_auth_enabled: boolean(),
+    is_add_user_button_enabled: boolean(),
   }),
   CommonProps
 );
