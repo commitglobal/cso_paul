@@ -4,8 +4,7 @@ from auditlog.models import LogEntry
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.contrib.contenttypes.models import ContentType
-from django.db.models import Q, QuerySet
+from django.db.models import QuerySet
 from django.http import HttpRequest
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
@@ -33,36 +32,13 @@ User = get_user_model()
 
 class ActionItem(BaseModel):
     action: str
-    changes: Tuple[str, ...]
+    changes: str
     content_type: str
     date: str
 
 
 class UserActivityLogPageProps(UserPageProps):
     table: DataTable
-
-
-def _serialize_modification(modification_group: List[str]) -> str:
-    serialized_modification: str = ""
-    if len(modification_group) > 2:
-        serialized_modification = ", ".join(modification_group)
-    elif len(modification_group) == 2:
-        initial: str = modification_group[0]
-        final: str = modification_group[1]
-
-        serialized_modification = final if initial == "None" else f"{initial} -> {final}"
-
-    return serialized_modification
-
-
-def _serialize_changes_field(changes: Dict[str, List[str]]) -> Tuple[str, ...]:
-    serialized_changes: List[str] = []
-
-    for field, modifications in changes.items():
-        modification: str = _serialize_modification(modifications)
-        serialized_changes.append(f"{field}: {modification}")
-
-    return tuple(serialized_changes)
 
 
 def _serialize_log_entries(log_entries: QuerySet[LogEntry]) -> List[ActionItem]:
@@ -81,7 +57,7 @@ def _serialize_log_entries(log_entries: QuerySet[LogEntry]) -> List[ActionItem]:
                     )
                     else "unknown_action!"
                 ),
-                changes=_serialize_changes_field(entry.changes_display_dict),
+                changes=str(entry),
                 content_type=entry.content_type.name,
                 date=entry.timestamp.strftime("%Y-%m-%d %H:%M:%S"),
             )
@@ -90,7 +66,7 @@ def _serialize_log_entries(log_entries: QuerySet[LogEntry]) -> List[ActionItem]:
     return items
 
 
-def _get_table_data(request: HttpRequest, user_id: int) -> DataTable:
+def _get_table_data(request: HttpRequest, user: User) -> DataTable:
     page_number: int = int(request.GET.get(settings.QUERY_PARAMS["PAGE"], 1))
     page_size: int = int(request.GET.get(settings.QUERY_PARAMS["PAGE_SIZE"], 10))
     sort: Optional[str] = request.GET.get(settings.QUERY_PARAMS["SORT"], None)
@@ -106,12 +82,7 @@ def _get_table_data(request: HttpRequest, user_id: int) -> DataTable:
         default_sort_option="-timestamp",
     )
 
-    base_qs: QuerySet[LogEntry] = (
-        LogEntry.objects.get_for_objects(User.objects.filter(pk=user_id))
-        .order_by(*parsed_sorting)
-        # exclude log entries that show the user's creation
-        .exclude(Q(content_type__pk=ContentType.objects.get(model="user").pk) & Q(action=LogEntry.Action.CREATE))
-    )
+    base_qs: QuerySet[LogEntry] = LogEntry.objects.filter(actor=user).order_by(*parsed_sorting)
     action_items, paginator, pagination = paginate_queryset(
         queryset=base_qs,
         page_number=page_number,
@@ -145,7 +116,7 @@ def manage_user_activity_log(request: HttpRequest, user_id: int) -> UserActivity
     """
     user: User = get_user(user_id=user_id)
 
-    table: DataTable = _get_table_data(request=request, user_id=user_id)
+    table: DataTable = _get_table_data(request=request, user=user)
 
     breadcrumbs: Tuple[Breadcrumb, ...] = get_breadcrumbs(
         user,
