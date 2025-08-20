@@ -13,6 +13,7 @@ from django.views.decorators.http import require_http_methods
 from inertia import inertia
 from pydantic import BaseModel
 
+from paul.common.audit_log_action_string import get_action_string
 from paul.common.sort_parser import parse_order_parameter
 from paul.views.data_model import Breadcrumb, DataTable, TableHeader, serialize_page_props_decorator
 from paul.views.pagination import paginate_queryset
@@ -46,17 +47,7 @@ def _serialize_log_entries(log_entries: QuerySet[LogEntry]) -> List[ActionItem]:
     for entry in log_entries:
         items.append(
             ActionItem(
-                action=str(
-                    LogEntry.Action.choices[entry.action][1]
-                    if entry.action
-                    in (
-                        LogEntry.Action.CREATE,
-                        LogEntry.Action.UPDATE,
-                        LogEntry.Action.DELETE,
-                        LogEntry.Action.ACCESS,
-                    )
-                    else "unknown_action!"
-                ),
+                action=get_action_string(entry.action),
                 changes=str(entry),
                 content_type=entry.content_type.name,
                 date=entry.timestamp.strftime("%Y-%m-%d %H:%M:%S"),
