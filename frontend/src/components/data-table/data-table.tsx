@@ -82,7 +82,7 @@ export function DataTable<TData, TValue>({
         </TableBody>
       </Table>
 
-      <PaginationFooter totalItems={totalItems} totalPages={totalPages} />
+      <PaginationFooter totalItems={totalItems} totalPages={totalPages} className="mt-4" />
     </div>
   );
 }
