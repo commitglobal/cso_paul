@@ -1,20 +1,20 @@
 import { type FormEventHandler } from "react";
-import { type TeamUserFormData } from "@/types/team-user-form-data";
+import { type TeamAddUserFormData } from "@/types/team-add-user-form-data";
 import { handleChange } from "@/utils/handle-change";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useTranslation } from "react-i18next";
 import { useValidatedProps } from "@/hooks/use-validated-props";
-import { TeamUserProps } from "./team-user-props";
+import { TeamUserProps } from "../team-user-props";
 
 type TeamUserFormProps = {
-  data: TeamUserFormData;
+  data: TeamAddUserFormData;
   handleSubmit: FormEventHandler;
-  setData: (key: keyof TeamUserFormData, value: unknown) => void;
+  setData: (key: keyof TeamAddUserFormData, value: unknown) => void;
 };
 
-export function TeamUserForm({ data, handleSubmit, setData }: TeamUserFormProps) {
+export function TeamAddUserForm({ data, handleSubmit, setData }: TeamUserFormProps) {
   const {
     props: { errors, role_choices },
   } = useValidatedProps<TeamUserProps>(TeamUserProps);
@@ -30,7 +30,7 @@ export function TeamUserForm({ data, handleSubmit, setData }: TeamUserFormProps)
             id="first_name"
             name="first_name"
             value={data.first_name}
-            onChange={handleChange<TeamUserFormData>("first_name", setData)}
+            onChange={handleChange<TeamAddUserFormData>("first_name", setData)}
           />
           {errors?.team?.first_name && (
             <p id="first_name_errors" className="text-destructive text-sm">
@@ -44,7 +44,7 @@ export function TeamUserForm({ data, handleSubmit, setData }: TeamUserFormProps)
             id="last_name"
             name="last_name"
             value={data.last_name}
-            onChange={handleChange<TeamUserFormData>("last_name", setData)}
+            onChange={handleChange<TeamAddUserFormData>("last_name", setData)}
           />
           {errors?.team?.last_name && (
             <p id="last_name_errors" className="text-destructive text-sm">
@@ -58,7 +58,7 @@ export function TeamUserForm({ data, handleSubmit, setData }: TeamUserFormProps)
             id="email"
             name="email"
             value={data.email}
-            onChange={handleChange<TeamUserFormData>("email", setData)}
+            onChange={handleChange<TeamAddUserFormData>("email", setData)}
           />
           {errors?.team?.email && (
             <p id="email_errors" className="text-destructive text-sm">

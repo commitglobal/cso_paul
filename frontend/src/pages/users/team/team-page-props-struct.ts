@@ -8,12 +8,14 @@ import { array, assign, boolean, type Infer, number, object, string } from "supe
 const UserStruct = object({
   id: number(),
   email: string(),
+  name: string(),
   first_name: string(),
   last_name: string(),
   role: string(),
   is_current_user: boolean(),
   added_since: string(),
   last_activity: string(),
+  ngohub_id: number(),
 });
 
 export const TeamPagePropsStruct = assign(

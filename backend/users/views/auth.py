@@ -6,12 +6,12 @@ from django.contrib import auth, messages
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse
-from django.utils.http import url_has_allowed_host_and_scheme
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
 from inertia import InertiaResponse, inertia
 from inertia import render as inertia_render
 
+from paul.common.url_parser import make_url_safe
 from users.forms import LoginForm
 from utils.types import RedirectionResponse
 
@@ -26,20 +26,6 @@ def _login_endpoints():
         "is_email_auth_enabled": settings.ENABLE_EMAIL_AUTH,
         "email_url": reverse("users:login-by-email"),
     }
-
-
-def _make_next_url_safe(request, next_url):
-    """
-    Make sure that the destination of next_url is on an allowed host
-    """
-    if url_has_allowed_host_and_scheme(
-        url=next_url,
-        allowed_hosts=request.get_host(),
-        require_https=request.is_secure(),
-    ):
-        return next_url
-
-    return reverse("dashboard:home")
 
 
 @cache_control(private=False)
@@ -116,7 +102,7 @@ def email_login(request: HttpRequest) -> Union[InertiaResponse, RedirectionRespo
             request.session.set_expiry(0)
 
     if next_url:
-        return redirect(_make_next_url_safe(request, next_url))
+        return redirect(make_url_safe(request=request, url=next_url))
     else:
         return redirect(reverse("dashboard:home"))
 
@@ -153,7 +139,7 @@ def ngohub_login(request: HttpRequest) -> Union[InertiaResponse, RedirectionResp
     # Determine the desired post-auth frontend destination
     next_url = request.GET.get("next") or ""
     if next_url:
-        next_url = _make_next_url_safe(request, next_url)
+        next_url = make_url_safe(request=request, url=next_url)
     else:
         next_url = reverse("dashboard:home")
 

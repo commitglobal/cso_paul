@@ -1,20 +1,57 @@
 {
+  "components": {
+    "breadcrumb": {
+      "more": ""
+    },
+    "sidebar": {
+      "sidebarMobileDescription": "Displays the mobile sidebar.",
+      "sidebarTitle": "Sidebar",
+      "toggle": "Toggle"
+    }
+  },
+  "dialog": {
+    "cancel": "Cancel",
+    "save": "Save",
+    "yes": "Yes"
+  },
+  "errors": {
+    "ngohub": {
+      "appMissingMessage": "The user does not have access to this app. The admin must add the user to the app.",
+      "appMissingTitle": "App not found",
+      "userInvalidMessage": "The account is not part of the NGO that is associated with this platform.",
+      "userInvalidTitle": "User not found"
+    }
+  },
+  "input": {
+    "search": {
+      "clear": "Clear search",
+      "focus": "Focus on search input",
+      "label": "Search input",
+      "placeholder": "Search..."
+    }
+  },
   "login": {
-    "title": "Login to PAUL",
     "forgotPassword": "Forgot Password?",
+    "input": {
+      "emailTitle": "Email",
+      "passwordTitle": "Password",
+      "rememberMe": "Remember me"
+    },
     "loginPrompt": "Login",
     "ngohub": {
       "redirecting": {
-        "title": "Redirecting to authentication...",
         "desc": "You are being redirected to the NGO Hub login portal.",
-        "manual": "If you are not redirected automatically, please click the button below."
+        "manual": "If you are not redirected automatically, please click the button below.",
+        "title": "Redirecting to authentication..."
       }
     },
-    "input": {
-      "passwordTitle": "Password",
-      "emailTitle": "Email",
-      "rememberMe": "Remember me"
-    }
+    "title": "Login to PAUL"
+  },
+  "loginChoice": {
+    "loginTitle": "Login to PAUL",
+    "loginWithEmail": "Login with Email",
+    "loginWithNgoHub": "Login with NGO Hub",
+    "or": "OR"
   },
   "loginRegister": {
     "newHere": "Are you new here?",
@@ -27,14 +64,39 @@
   "navigation": {
     "actions": "Actions",
     "apps": "Apps",
+    "dashboard": "Dashboard",
     "datasets": "Datasets",
     "help": "Help",
     "home": "Home",
     "processedData": "Processed Data",
     "team": "Team",
     "test1": "Test 1",
-    "test2": "Test 2",
-    "dashboard": "Dashboard"
+    "test2": "Test 2"
+  },
+  "ngohub": {
+    "title": "NGO Hub"
+  },
+  "pagination": {
+    "all": "All",
+    "indicator": "Showing {{from}} to {{to}} of {{total}} items",
+    "next": "Next",
+    "previous": "Previous",
+    "rowsPerPage": "per page"
+  },
+  "table": {
+    "filter": {
+      "calendar": {
+        "cancel": "Cancel",
+        "clear": "Clear filter",
+        "fromDate": "From date",
+        "ok": "OK",
+        "toDate": "To date"
+      },
+      "noResults": "No results found for the applied filter."
+    },
+    "filterBy": "Filter by {{column}}",
+    "noData": "No results.",
+    "sortBy": "Sort by {{column}}"
   },
   "topbar": {
     "openMainMenu": "Open main menu",
@@ -45,12 +107,6 @@
     "viewNotifications": "View notifications",
     "yourProfile": "Your profile"
   },
-  "loginChoice": {
-    "loginWithNgoHub": "Login with NGO Hub",
-    "or": "OR",
-    "loginWithEmail": "Login with Email",
-    "loginTitle": "Login to PAUL"
-  },
   "users": {
     "team": {
       "add": {
@@ -60,100 +116,81 @@
         "userRole": "User Role"
       },
       "addUser": "Add team member",
-      "title": "All team members",
-      "ngohub_refresh": "Sync with NGO Hub",
       "current_user_marker": "(you)",
-      "menu": {
-        "viewUserInfo": "View user info",
-        "changeUserRole": "Change user role",
-        "deleteFromTeam": "Delete from team",
-        "actions": "Actions"
-      },
       "empty": {
-        "title": "No team members found",
-        "description": "No team members found. You can sync your team from NGO Hub. All members with access will appear here, and you will be able to manage roles and permissions."
-      },
-      "table": {
-        "user": "User",
-        "role": "Role",
-        "added_since": "Added Since",
-        "last_activity": "Last Activity"
+        "description": "No team members found. You can sync your team from NGO Hub. All members with access will appear here, and you will be able to manage roles and permissions.",
+        "title": "No team members found"
       },
       "filterOptions": "Filters",
-      "searchPlaceholder": "Search team members..."
+      "menu": {
+        "actions": "Actions",
+        "changeUserRole": "Change user role",
+        "removeFromTeam": "Delete from team",
+        "viewUserInfo": "View user info"
+      },
+      "ngohub_refresh": "Sync with NGO Hub",
+      "removeUser": {
+        "button": "users.team.removeUser.button",
+        "deleteDescription": "users.team.removeUser.deleteDescription",
+        "dialog": {
+          "cancel": "Cancel",
+          "confirm": "Remove",
+          "goToFiles": "Go to files"
+        },
+        "formLabel": "users.team.removeUser.formLabel",
+        "local": {
+          "callToAction": "Go to {{userName}}'s files to review and transfer ownership if needed.",
+          "description": "By removing <userName>{{userName}}</userName>, they will no longer be able to access the platfom and won't be able to access any data."
+        },
+        "ngohub": {
+          "callToAction": "Go to {{userName}}'s files to review and transfer ownership if needed.",
+          "description": "This user can only be removed via <ngoHubLink>{{ngoHubTitle}}</ngoHubLink>. Before removing <userName>{{userName}}</userName>, make sure to transfer ownership of any entities they own."
+        },
+        "ngohubDescription": "This user can only be removed via NGO Hub. Before removing {{userName}}, make sure to transfer ownership of any entities they own.",
+        "notifications": {
+          "success": "users.team.removeUser.notifications.success"
+        },
+        "title": "Delete {{userName}} from the team"
+      },
+      "searchPlaceholder": "Search team members...",
+      "table": {
+        "added_since": "Added Since",
+        "last_activity": "Last Activity",
+        "role": "Role",
+        "user": "User"
+      },
+      "title": "All team members"
     },
     "user": {
-      "addPermission": "Add permission",
       "activityLog": {
         "action": "users.user.activityLog.action",
         "date": "users.user.activityLog.date",
         "id": "users.user.activityLog.id",
         "user_id": "users.user.activityLog.user_id"
       },
+      "addPermission": "Add permission",
       "permissions": {
+        "action": {
+          "remove": "users.user.permissions.action.remove",
+          "transfer": "users.user.permissions.action.transfer",
+          "view": "users.user.permissions.action.view"
+        },
         "entity": "users.user.permissions.entity",
         "entity_type": "users.user.permissions.entity_type",
-        "permission": "users.user.permissions.permission",
-        "action": {
-          "view": "users.user.permissions.action.view",
-          "transfer": "users.user.permissions.action.transfer",
-          "remove": "users.user.permissions.action.remove"
-        }
+        "permission": "users.user.permissions.permission"
       },
       "role": {
-        "selectLabel": "Change user role",
-        "selectPlaceholder": "Select user role",
-        "submitConfirmation": "Role has been successfully changed.",
-        "selectDescription": "users.user.role.selectDescription",
-        "selectLink": "users.user.role.selectLink",
-        "roleRequired": "A role is required",
         "buttonCancel": "Cancel",
         "buttonSubmit": "Submit",
+        "noRoleDescription": "No role has been assigned to this user. You can assign a role to manage their permissions.",
         "noRoleTitle": "No role assigned",
-        "noRoleDescription": "No role has been assigned to this user. You can assign a role to manage their permissions."
+        "roleRequired": "A role is required",
+        "selectDescription": "users.user.role.selectDescription",
+        "selectLabel": "Change user role",
+        "selectLink": "users.user.role.selectLink",
+        "selectPlaceholder": "Select user role",
+        "submitConfirmation": "Role has been successfully changed."
       }
-    }
-  },
-  "pagination": {
-    "previous": "Previous",
-    "next": "Next",
-    "indicator": "Showing {{from}} to {{to}} of {{total}} items",
-    "rowsPerPage": "per page",
-    "all": "All"
-  },
-  "input": {
-    "search": {
-      "clear": "Clear search",
-      "placeholder": "Search...",
-      "focus": "Focus on search input",
-      "label": "Search input"
-    }
-  },
-  "dialog": {
-    "cancel": "Cancel",
-    "save": "Save"
-  },
-  "table": {
-    "noData": "No results.",
-    "sortBy": "Sort by {{column}}",
-    "filterBy": "Filter by {{column}}",
-    "filter": {
-      "noResults": "No results found for the applied filter.",
-      "calendar": {
-        "fromDate": "From date",
-        "toDate": "To date",
-        "clear": "Clear filter",
-        "cancel": "Cancel",
-        "ok": "OK"
-      }
-    }
-  },
-  "errors": {
-    "ngohub": {
-      "appMissingMessage": "The user does not have access to this app. The admin must add the user to the app.",
-      "appMissingTitle": "App not found",
-      "userInvalidMessage": "The account is not part of the NGO that is associated with this platform.",
-      "userInvalidTitle": "User not found"
     }
   }
 }

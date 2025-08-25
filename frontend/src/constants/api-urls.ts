@@ -9,6 +9,8 @@ const buildUsersUrl = buildUrlFactory(["users"]);
 const buildTeamUrl = buildUrlFactory(["users", "team"]);
 const buildNGOHubRefreshUrl = buildUrlFactory(["users", "team", "ngohub-refresh"]);
 
+const buildTeamUserUrl = buildUrlFactory(["users", "team"]);
+
 export const apiGetUrls = {
   teamIndex: buildTeamUrl([]),
   ngohubRefresh: buildNGOHubRefreshUrl([]),
@@ -18,4 +20,8 @@ export const apiPostUrls = {
   teamAddUser: buildTeamUrl(),
   userEmailLogin: buildUsersUrl(["login", "email"]),
   userLogout: () => buildUsersUrl(["logout"]),
+};
+
+export const apiDeleteUrls = {
+  teamUserRemove: (id: number) => buildTeamUserUrl([id, "remove"]),
 };

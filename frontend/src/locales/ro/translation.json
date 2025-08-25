@@ -1,20 +1,56 @@
 {
+  "components": {
+    "breadcrumb": {
+      "more": "Mai mult"
+    },
+    "sidebar": {
+      "sidebarMobileDescription": "Afișează bara de sidebar-ul pe mobil",
+      "sidebarTitle": "Sidebar",
+      "toggle": "Afișează/ascunde"
+    }
+  },
+  "dialog": {
+    "cancel": "Cancel",
+    "save": "Save"
+  },
+  "errors": {
+    "ngohub": {
+      "appMissingMessage": "Utilizatorul nu are acces la această aplicație. Administratorul trebuie să adauge utilizatorul la aplicație.",
+      "appMissingTitle": "Aplicație negăsită",
+      "userInvalidMessage": "Contul nu face parte din ONG-ul asociat cu această platformă.",
+      "userInvalidTitle": "Utilizator negăsit"
+    }
+  },
+  "input": {
+    "search": {
+      "clear": "Șterge căutarea",
+      "focus": "Focus pe căutare",
+      "label": "Căutare",
+      "placeholder": "Caută..."
+    }
+  },
   "login": {
-    "title": "Login to PAUL",
     "forgotPassword": "Ai uitat parola?",
+    "input": {
+      "emailTitle": "Email",
+      "passwordTitle": "Parolă",
+      "rememberMe": "Ține-mă minte"
+    },
     "loginPrompt": "Conectează-te",
     "ngohub": {
       "redirecting": {
-        "title": "Redirecționare către autentificare...",
         "desc": "Ești redirecționat către portalul de autentificare al NGO Hub.",
-        "manual": "Dacă nu ești redirecționat automat, te rugăm să dai click pe butonul de mai jos."
+        "manual": "Dacă nu ești redirecționat automat, te rugăm să dai click pe butonul de mai jos.",
+        "title": "Redirecționare către autentificare..."
       }
     },
-    "input": {
-      "passwordTitle": "Parolă",
-      "emailTitle": "Email",
-      "rememberMe": "Ține-mă minte"
-    }
+    "title": "Login to PAUL"
+  },
+  "loginChoice": {
+    "loginTitle": "Conectează-te la PAUL",
+    "loginWithEmail": "Conectează-te cu email",
+    "loginWithNgoHub": "Conectează-te cu NGO Hub",
+    "or": "SAU"
   },
   "loginRegister": {
     "newHere": "Nou aici?",
@@ -27,14 +63,39 @@
   "navigation": {
     "actions": "Acțiuni",
     "apps": "Aplicații",
+    "dashboard": "Tablou de bord",
     "datasets": "Seturi de date",
     "help": "Ajutor",
     "home": "Acasă",
     "processedData": "Date procesate",
     "team": "Echipa",
     "test1": "Test 1",
-    "test2": "Test 2",
-    "dashboard": "Tablou de bord"
+    "test2": "Test 2"
+  },
+  "ngohub": {
+    "title": ""
+  },
+  "pagination": {
+    "all": "Tot",
+    "indicator": "Arată {{from}} la {{to}} din {{total}} itemi",
+    "next": "Următorul",
+    "previous": "Anterior",
+    "rowsPerPage": "per pagină"
+  },
+  "table": {
+    "filter": {
+      "calendar": {
+        "cancel": "Anulează",
+        "clear": "Elimină filtrul",
+        "fromDate": "De la",
+        "ok": "OK",
+        "toDate": "Până la"
+      },
+      "noResults": "Nu s-au găsit rezultate pentru filtrul aplicat."
+    },
+    "filterBy": "Filtrează după {{column}}",
+    "noData": "Nu sunt rezultate.",
+    "sortBy": "Sortează după {{column}}"
   },
   "topbar": {
     "openMainMenu": "Meniul principal",
@@ -45,12 +106,6 @@
     "viewNotifications": "Vezi notificările",
     "yourProfile": "Profilul tău"
   },
-  "loginChoice": {
-    "loginWithNgoHub": "Conectează-te cu NGO Hub",
-    "or": "SAU",
-    "loginWithEmail": "Conectează-te cu email",
-    "loginTitle": "Conectează-te la PAUL"
-  },
   "users": {
     "team": {
       "add": {
@@ -60,100 +115,70 @@
         "userRole": "User Role"
       },
       "addUser": "Adaugă membru în echipă",
-      "title": "Toți membrii echipei",
-      "ngohub_refresh": "Sincronizează cu NGO Hub",
       "current_user_marker": "(tu)",
-      "menu": {
-        "viewUserInfo": "Vezi informațiile utilizatorului",
-        "changeUserRole": "Schimbă rolul utilizatorului",
-        "deleteFromTeam": "Șterge din echipă",
-        "actions": "Acțiuni"
-      },
       "empty": {
-        "title": "Nu a fost găsit niciun membru în echipă",
-        "description": "Nu a fost găsit niciun membru în echipă. Poți să-ți sincronizezi echipa din NGO Hub. Toți membrii cu acces vor apărea aici, iar tu vei putea gestiona rolurile și permisiunile."
-      },
-      "table": {
-        "user": "Utilizator",
-        "role": "Rol",
-        "added_since": "Adăugat din",
-        "last_activity": "Ultima activitate"
+        "description": "Nu a fost găsit niciun membru în echipă. Poți să-ți sincronizezi echipa din NGO Hub. Toți membrii cu acces vor apărea aici, iar tu vei putea gestiona rolurile și permisiunile.",
+        "title": "Nu a fost găsit niciun membru în echipă"
       },
       "filterOptions": "Filtre",
-      "searchPlaceholder": "Caută membrii echipei..."
+      "menu": {
+        "actions": "Acțiuni",
+        "changeUserRole": "Schimbă rolul utilizatorului",
+        "removeFromTeam": "Șterge din echipă",
+        "viewUserInfo": "Vezi informațiile utilizatorului"
+      },
+      "ngohub_refresh": "Sincronizează cu NGO Hub",
+      "removeUser": {
+        "dialog": {
+          "cancel": "",
+          "confirm": "",
+          "goToFiles": ""
+        },
+        "formLabel": "",
+        "notifications": {
+          "success": ""
+        },
+        "title": ""
+      },
+      "searchPlaceholder": "Caută membrii echipei...",
+      "table": {
+        "added_since": "Adăugat din",
+        "last_activity": "Ultima activitate",
+        "role": "Rol",
+        "user": "Utilizator"
+      },
+      "title": "Toți membrii echipei"
     },
     "user": {
-      "addPermission": "Add permission",
       "activityLog": {
         "action": "users.user.activityLog.action",
         "date": "users.user.activityLog.date",
         "id": "users.user.activityLog.id",
         "user_id": "users.user.activityLog.user_id"
       },
+      "addPermission": "Add permission",
       "permissions": {
+        "action": {
+          "remove": "users.user.permissions.action.remove",
+          "transfer": "users.user.permissions.action.transfer",
+          "view": "users.user.permissions.action.view"
+        },
         "entity": "users.user.permissions.entity",
         "entity_type": "users.user.permissions.entity_type",
-        "permission": "users.user.permissions.permission",
-        "action": {
-          "view": "users.user.permissions.action.view",
-          "transfer": "users.user.permissions.action.transfer",
-          "remove": "users.user.permissions.action.remove"
-        }
+        "permission": "users.user.permissions.permission"
       },
       "role": {
-        "selectLabel": "Schimbă rolul utilizatorului",
-        "selectPlaceholder": "Selectează rolul utilizatorului",
-        "submitConfirmation": "Rolul utilizatorului a fost schimbat cu succes.",
-        "selectDescription": "users.user.role.selectDescription",
-        "selectLink": "users.user.role.selectLink",
-        "roleRequired": "Un rol este necesar",
         "buttonCancel": "Anulează",
         "buttonSubmit": "Trimite",
+        "noRoleDescription": "Nu a fost atribuit niciun rol acestui utilizator. Poți să-i atribui un rol pentru a-i gestiona permisiunile.",
         "noRoleTitle": "Nu a fost atribuit niciun rol",
-        "noRoleDescription": "Nu a fost atribuit niciun rol acestui utilizator. Poți să-i atribui un rol pentru a-i gestiona permisiunile."
+        "roleRequired": "Un rol este necesar",
+        "selectDescription": "users.user.role.selectDescription",
+        "selectLabel": "Schimbă rolul utilizatorului",
+        "selectLink": "users.user.role.selectLink",
+        "selectPlaceholder": "Selectează rolul utilizatorului",
+        "submitConfirmation": "Rolul utilizatorului a fost schimbat cu succes."
       }
-    }
-  },
-  "pagination": {
-    "previous": "Anterior",
-    "next": "Următorul",
-    "indicator": "Arată {{from}} la {{to}} din {{total}} itemi",
-    "rowsPerPage": "per pagină",
-    "all": "Tot"
-  },
-  "input": {
-    "search": {
-      "clear": "Șterge căutarea",
-      "placeholder": "Caută...",
-      "focus": "Focus pe căutare",
-      "label": "Căutare"
-    }
-  },
-  "dialog": {
-    "cancel": "Cancel",
-    "save": "Save"
-  },
-  "table": {
-    "noData": "Nu sunt rezultate.",
-    "sortBy": "Sortează după {{column}}",
-    "filterBy": "Filtrează după {{column}}",
-    "filter": {
-      "noResults": "Nu s-au găsit rezultate pentru filtrul aplicat.",
-      "calendar": {
-        "fromDate": "De la",
-        "toDate": "Până la",
-        "clear": "Elimină filtrul",
-        "cancel": "Anulează",
-        "ok": "OK"
-      }
-    }
-  },
-  "errors": {
-    "ngohub": {
-      "appMissingMessage": "Utilizatorul nu are acces la această aplicație. Administratorul trebuie să adauge utilizatorul la aplicație.",
-      "appMissingTitle": "Aplicație negăsită",
-      "userInvalidMessage": "Contul nu face parte din ONG-ul asociat cu această platformă.",
-      "userInvalidTitle": "Utilizator negăsit"
     }
   }
 }
