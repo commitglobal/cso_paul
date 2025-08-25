@@ -1,4 +1,14 @@
 {
+  "components": {
+    "breadcrumb": {
+      "more": "Mai mult"
+    },
+    "sidebar": {
+      "sidebarMobileDescription": "Afișează bara de sidebar-ul pe mobil",
+      "sidebarTitle": "Sidebar",
+      "toggle": "Afișează/ascunde"
+    }
+  },
   "dialog": {
     "cancel": "Cancel",
     "save": "Save"

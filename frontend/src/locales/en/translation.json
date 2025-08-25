@@ -1,4 +1,14 @@
 {
+  "components": {
+    "breadcrumb": {
+      "more": ""
+    },
+    "sidebar": {
+      "sidebarMobileDescription": "Displays the mobile sidebar.",
+      "sidebarTitle": "Sidebar",
+      "toggle": "Toggle"
+    }
+  },
   "dialog": {
     "cancel": "Cancel",
     "save": "Save",
