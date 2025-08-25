@@ -7,6 +7,7 @@ import users.views.team.listing
 import users.views.team.user_activity_log
 import users.views.team.user_info
 import users.views.team.user_permissions
+import users.views.team.user_remove
 import users.views.team.user_role
 
 app_name = "users"
@@ -35,6 +36,11 @@ urlpatterns = [
         "team/<int:user_id>/activity-log/",
         users.views.team.user_activity_log.manage_user_activity_log,
         name="manage-user-activity-log",
+    ),
+    path(
+        "team/<int:user_id>/remove/",
+        users.views.team.user_remove.remove_user,
+        name="remove-user",
     ),
     path("team/<int:user_id>/", RedirectView.as_view(pattern_name="users:manage-user-info"), name="manage-user"),
     path("team/ngohub-refresh/", users.views.ngohub.sync_from_ngohub, name="ngohub-refresh"),

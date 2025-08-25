@@ -9,18 +9,19 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { apiPostUrls } from "@/constants/api-urls";
-import { useTeamUserForm } from "@/hooks/use-team-user-form";
+import { useTeamAddUserForm } from "@/hooks/use-team-add-user-form";
 import { useNotifyActions } from "@/stores/use-notify-store";
 import { UserPlusIcon } from "@heroicons/react/20/solid";
 import { Link } from "@inertiajs/react";
-import { type FormEventHandler, useCallback, useState } from "react";
+import * as React from "react";
+import { type FormEventHandler, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { TeamUserForm } from "./team-user-form";
+import { TeamAddUserForm } from "../forms/team-add-user-form";
 
-export function AddTeamUserDialog() {
+export function TeamAddUserDialog() {
   const { t } = useTranslation();
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = React.useState(false);
   const handleCloseDialog = useCallback(() => {
     setOpen(false);
   }, []);
@@ -28,7 +29,7 @@ export function AddTeamUserDialog() {
     setOpen(true);
   }, []);
 
-  const { data, post, processing, reset, setData } = useTeamUserForm();
+  const { data, post, processing, reset, setData } = useTeamAddUserForm();
 
   const { notifySuccess } = useNotifyActions();
   const handleSubmit = useCallback<FormEventHandler>(
@@ -61,7 +62,7 @@ export function AddTeamUserDialog() {
               Lorem ipsum. <Link href="#">Understand user roles</Link>
             </DialogDescription>
           </DialogHeader>
-          <TeamUserForm data={data} handleSubmit={handleSubmit} setData={setData} />
+          <TeamAddUserForm data={data} handleSubmit={handleSubmit} setData={setData} />
           <DialogFooter>
             <DialogClose asChild>
               <Button disabled={processing} variant="outline" onClick={handleCloseDialog}>

@@ -12,9 +12,9 @@ import { ArrowPathIcon } from "@heroicons/react/20/solid";
 import { parseAsString, useQueryState } from "nuqs";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-
-import { AddTeamUserDialog } from "./add-team-user-dialog";
 import { Columns } from "./columns";
+
+import { TeamAddUserDialog } from "./dialogs/team-add-user-dialog";
 
 export default function TeamPage() {
   const {
@@ -40,7 +40,7 @@ export default function TeamPage() {
               <div className="mt-4 flex gap-4 sm:mt-0 sm:ml-16 sm:flex-none">
                 {is_ngohub_auth_enabled && <NgoHubRefreshButton />}
 
-                {is_add_user_button_enabled && <AddTeamUserDialog />}
+                {is_add_user_button_enabled && <TeamAddUserDialog />}
               </div>
             </div>
           </div>

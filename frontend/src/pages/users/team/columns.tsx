@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,20 +8,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { apiGetUrls } from "@/constants/api-urls";
+import { TeamRemoveUserDialog } from "@/pages/users/team/dialogs/team-remove-user-dialog";
 import type { UserProps } from "@/pages/users/team/team-page-props-struct";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { Link } from "@inertiajs/react";
 import { type ColumnDef } from "@tanstack/react-table";
-
-// function onChangeUserRole(id: number) {
-//   // TODO: Implement role change logic
-//   console.log("changeUserRole", id);
-// }
-//
-// function onDeleteFromTeam(id: number) {
-//   // TODO: Implement deletion logic
-//   console.log("deleteFromTeam", id);
-// }
+import { useState } from "react";
 
 export const Columns: (t: (key: string) => string) => ColumnDef<UserProps>[] = (t) => {
   return [
@@ -59,24 +52,42 @@ export const Columns: (t: (key: string) => string) => ColumnDef<UserProps>[] = (
     },
     {
       id: "actions",
-      cell: ({ row }) => (
-        <DropdownMenu>
-          <DropdownMenuTrigger aria-label={t("users.team.menu.actions")}>
-            <EllipsisVerticalIcon className="w-[24px] h-[24px] text-gray-500 hover:bg-gray-50 rounded-full" />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem>
-              <Link href={`${apiGetUrls.teamIndex}${row.original.id}/`}>{t("users.team.menu.viewUserInfo")}</Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Link href="#">{t("users.team.menu.changeUserRole")}</Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Link href="#">{t("users.team.menu.deleteFromTeam")}</Link>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      ),
+      cell: function ActionsCell({ row }) {
+        const [openRemoveDialog, setOpenRemoveDialog] = useState(false);
+
+        return (
+          <>
+            <DropdownMenu>
+              <DropdownMenuTrigger aria-label={t("users.team.menu.actions")}>
+                <EllipsisVerticalIcon className="w-[24px] h-[24px] text-gray-500 hover:bg-gray-50 rounded-full" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem>
+                  <Button variant="menu" size="wrapped">
+                    <Link href={`${apiGetUrls.teamIndex}${row.original.id}/`}>{t("users.team.menu.viewUserInfo")}</Link>
+                  </Button>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Button variant="menu" size="wrapped">
+                    {t("users.team.menu.changeUserRole")}
+                  </Button>
+                </DropdownMenuItem>
+                <DropdownMenuItem onSelect={() => setOpenRemoveDialog(true)}>
+                  {t("users.team.menu.removeFromTeam")}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <TeamRemoveUserDialog
+              userId={row.original.id}
+              userName={`${row.original.first_name} ${row.original.last_name}`}
+              isNgoHubUser={row.original.ngohub_id !== null}
+              open={openRemoveDialog}
+              setOpen={setOpenRemoveDialog}
+            />
+          </>
+        );
+      },
     },
   ];
 };

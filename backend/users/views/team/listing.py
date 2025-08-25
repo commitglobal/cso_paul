@@ -36,6 +36,7 @@ def _serialize_users(users_page: Page[User], user_id: int) -> List[Dict]:
             "role": RoleChoices(user.main_role).label,
             "added_since": display_dates.short_date(user.date_joined),
             "last_activity": display_dates.short_datetime(user.last_login),
+            "ngohub_id": user.ngohub_id,
         }
         for user in users_page
     ]
@@ -83,7 +84,7 @@ def _request_users(request):
         "last_activity": "last_login",
     }
     parsed_parameters: List[str] = parse_order_parameter(sort_parameter=sort, field_mapping=field_mapping)
-    users_qs = users_qs.order_by(*parsed_parameters)
+    users_qs = users_qs.exclude(is_active=False).order_by(*parsed_parameters)
 
     if search_query:
         users_qs = search(
@@ -152,6 +153,7 @@ def manage_team(request: HttpRequest) -> InertiaResponse:
         "breadcrumbs": [{"label": _("Team"), "url": reverse("users:manage-team")}],
         "role_choices": assignable_roles,
         "is_ngohub_auth_enabled": settings.ENABLE_NGOHUB_AUTH,
+        "is_email_auth_enabled": settings.ENABLE_EMAIL_AUTH,
         "is_add_user_button_enabled": add_user_enabled,
     }
 

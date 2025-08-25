@@ -124,17 +124,24 @@ class TeamAddMemberTests(TestCase):
     def test_add_member_admin_can_add_user(self):
         self.client.login(email=self.admin_email, password=self.pswd)
 
-        response: InertiaResponse = self.client.post(
-            reverse("users:manage-team"), data=json.dumps(self.valid_new_user_data), content_type="application/json"
-        )
-        self.assertEqual(response.status_code, 200)
-        self.assertNotIn("errors", response.props)
+        for role in settings.USER_GROUPS_ASSIGNABLE:
+            with self.subTest(role=role):
+                user_data = deepcopy(self.valid_new_user_data)
+                user_data["email"] = self.new_user_email.replace("@", f"+{role}@")
+                user_data["role"] = role
 
-        new_user = User.objects.get(email=self.new_user_email)
-        self.assertEqual(new_user.first_name, self.new_user_f_name)
-        self.assertEqual(new_user.last_name, self.new_user_l_name)
-        self.assertEqual(new_user.groups.count(), 1)
-        self.assertEqual(new_user.groups.first().name, "user")
+                response: InertiaResponse = self.client.post(
+                    reverse("users:manage-team"), data=json.dumps(user_data), content_type="application/json"
+                )
+                self.assertEqual(response.status_code, 200)
+                self.assertNotIn("errors", response.props)
+
+                new_user = User.objects.get(email=user_data["email"])
+                self.assertEqual(new_user.first_name, user_data["first_name"])
+                self.assertEqual(new_user.last_name, user_data["last_name"])
+                self.assertEqual(new_user.groups.count(), 1)
+                self.assertEqual(new_user.groups.first().name, role)
+                self.assertEqual(new_user.main_role, role)
 
     @override_settings(ENABLE_EMAIL_AUTH=False)
     def test_add_member_disabled_email_auth_not_allowed(self):
