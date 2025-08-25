@@ -112,6 +112,10 @@ class User(AbstractUser):
             models.UniqueConstraint(Lower("email"), name="email_unique"),
         ]
 
+        permissions = [
+            ("change_role", _("Can change a user's role")),
+        ]
+
     def to_dict(self):
         return model_to_dict(self, exclude=("password", "is_superuser", "is_staff", "groups", "user_permissions"))
 
@@ -125,6 +129,23 @@ class User(AbstractUser):
             user_name = f"{user_name} {self.last_name}"
 
         return user_name
+
+    def set_main_role(self, *, role: str, commit: bool = True) -> None:
+        self.main_role = role
+
+        if commit:
+            self.save(update_fields=["main_role"])
+
+            self.refresh_groups_after_main_role_update()
+
+    def refresh_groups_after_main_role_update(self) -> None:
+        """
+        Update the user's groups based on the assigned main role.
+        """
+        self.groups.clear()
+
+        new_group: Group = Group.objects.get(name=self.main_role)
+        self.groups.add(new_group)
 
     def update_main_role(self, *, commit: bool = True) -> None:
         """
@@ -141,15 +162,6 @@ class User(AbstractUser):
 
         if commit:
             self.save(update_fields=["main_role"])
-
-    def refresh_groups_after_main_role_update(self) -> None:
-        """
-        Update the user's groups based on the assigned main role.
-        """
-        self.groups.clear()
-
-        new_group = Group.objects.get(name=self.main_role)
-        self.groups.add(new_group)
 
 
 auditlog.register(User, exclude_fields=["password"])

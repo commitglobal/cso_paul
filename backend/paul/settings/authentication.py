@@ -1,7 +1,8 @@
 from datetime import timedelta
-from typing import List, Tuple
+from typing import List, Tuple, Union
 
 from django.urls import reverse_lazy
+from django.utils.functional import lazy
 from django.utils.translation import gettext_lazy as _
 
 from .base import ENABLE_EMAIL_AUTH, ENABLE_NGOHUB_AUTH
@@ -52,24 +53,28 @@ SUPER_ADMIN_ROLE_NAME = "super admin"
 SUPPORT_ADMIN_ROLE_NAME = "support admin"
 
 user_permissions = [
-    "users.view_user",
     "auth.view_group",
+    "users.view_user",
 ]
 
 manager_permissions = [] + user_permissions
 
 admin_permissions = [
-    "users.add_user",
-    "users.change_user",
     "auditlog.view_logentry",
+    "users.add_user",
+    "users.change_role",
+    "users.change_user",
+    "users.delete_user",
 ] + manager_permissions
 
 super_admin_permissions = admin_permissions
 
 support_admin_permissions = [
-    "users.view_user",
-    "auth.view_group",
     "auditlog.view_logentry",
+    "auth.view_group",
+    "users.change_role",
+    "users.delete_user",
+    "users.view_user",
 ]
 
 
@@ -123,10 +128,11 @@ USER_GROUPS = {
 }
 
 USER_GROUPS_ORDERING: List[str] = [key for key, item in sorted(USER_GROUPS.items(), key=lambda x: x[1]["order"])]
-USER_GROUPS_CHOICES: List[Tuple[str, str]] = [(key, item["label"]) for key, item in USER_GROUPS.items()]
-USER_GROUPS_ASSIGNABLE: Tuple[str, ...] = tuple(
-    key for key, item in USER_GROUPS.items() if item["is_assignable_by_ngo_user"]
-)
+
+USER_GROUPS_CHOICES: List[Tuple[str, Union[lazy, str]]] = [(key, item["label"]) for key, item in USER_GROUPS.items()]
+
+USER_GROUPS_ASSIGNABLE: Tuple[str, ...] = tuple(k for k, i in USER_GROUPS.items() if i["is_assignable_by_ngo_user"])
+USER_GROUPS_UNASSIGNABLE: Tuple[str, ...] = tuple(u for u in USER_GROUPS.keys() if u not in USER_GROUPS_ASSIGNABLE)
 
 # Expiration times and limits for various authentication-related actions
 EMAIL_VERIFICATION_EXPIRY_TIME = timedelta(hours=env.int("EMAIL_VERIFICATION_EXPIRY_HOURS"))
