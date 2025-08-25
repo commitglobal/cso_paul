@@ -17,7 +17,6 @@ import { useTranslation } from "react-i18next";
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { t } = useTranslation();
 
-  // Create data with translated strings
   const data = {
     navHome: [
       {
