@@ -1,9 +1,10 @@
 import json
-from typing import List, Tuple, Union
+from typing import Any, Dict, List, Tuple, Union
 
 from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import PermissionDenied
 from django.http import HttpRequest, HttpResponseRedirect
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
@@ -11,9 +12,9 @@ from django.views.decorators.cache import cache_control
 from inertia import inertia
 from pydantic import BaseModel
 
+from paul.common.serializers import serialize_form_errors
 from paul.views.data_model import Breadcrumb, serialize_page_props_decorator
 from users.forms import ChangeRoleForm
-from users.models import RoleChoices
 from users.views.team.data_model import UserPageProps
 from users.views.team.user import (
     PAGE_TABS,
@@ -24,6 +25,8 @@ from users.views.team.user import (
     get_title,
     get_user,
 )
+
+User = get_user_model()
 
 
 class RoleChoicesModel(BaseModel):
@@ -38,6 +41,33 @@ class UserRolePageProps(UserPageProps):
     userRole: str
 
 
+def _change_user_role(request: HttpRequest, user: User) -> Union[Dict[str, Any], User]:
+    props: Dict[str, Any] = {"userRole": user.main_role}
+
+    if user == request.user:
+        error_message = _("You cannot change your own role.")
+        props["errors"] = {"role": serialize_form_errors({"main_role": [error_message]})}
+        messages.error(request, error_message)
+        return props
+
+    if user.has_perm("users.change_role"):
+        error_message = _("You don't have the permission to change this user's role.")
+        props["errors"] = {"role": serialize_form_errors({"main_role": [error_message]})}
+        messages.error(request, error_message)
+        return props
+
+    form = ChangeRoleForm(json.loads(request.body), instance=user)
+    if not form.is_valid():
+        props["errors"] = {"role": serialize_form_errors(form.errors)}
+        return props
+
+    user = form.save()
+    user.refresh_groups_after_main_role_update()
+    user.refresh_from_db()
+
+    return user
+
+
 @login_required
 @cache_control(private=True)
 @inertia("users/team-user/role")
@@ -46,29 +76,16 @@ def manage_user_role(request: HttpRequest, user_id: int) -> Union[UserRolePagePr
     """
     Redirect to manage_user view for user role
     """
-    user = get_user(user_id=user_id)
+    user: User = get_user(user_id=user_id)
 
-    breadcrumbs: Tuple[Breadcrumb, ...] = get_breadcrumbs(
-        user,
-        append_breadcrumbs=(
-            Breadcrumb(
-                label=str(_("Activity Log")), url=reverse("users:manage-user-activity-log", kwargs={"user_id": user_id})
-            ),
-        ),
-    )
-
-    errors = None
+    errors = {}
     if request.method == "POST":
-        if user.main_role in (RoleChoices.SUPER_ADMIN, RoleChoices.SUPPORT_ADMIN):
-            raise PermissionDenied(_("You cannot change the role of this user."))
+        result = _change_user_role(request=request, user=user)
 
-        form = ChangeRoleForm(json.loads(request.body), instance=user)
-        if not form.is_valid():
-            errors = {"role": dict(form.errors)}
+        if isinstance(result, dict) and "errors" in result:
+            errors.update(result["errors"])
         else:
-            user = form.save()
-            user.refresh_groups_after_main_role_update()
-            user.refresh_from_db()
+            user: User = result
 
     user_role = user.main_role
 
@@ -91,6 +108,15 @@ def manage_user_role(request: HttpRequest, user_id: int) -> Union[UserRolePagePr
                 description=str(role_description),
             )
         )
+
+    breadcrumbs: Tuple[Breadcrumb, ...] = get_breadcrumbs(
+        user,
+        append_breadcrumbs=(
+            Breadcrumb(
+                label=str(_("Activity Log")), url=reverse("users:manage-user-activity-log", kwargs={"user_id": user_id})
+            ),
+        ),
+    )
 
     return UserRolePageProps(
         title=get_title(user),

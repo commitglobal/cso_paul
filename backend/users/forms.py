@@ -1,6 +1,5 @@
 from django import forms
 from django.conf import settings
-from django.contrib.auth.models import Group
 from django.utils.translation import gettext_lazy as _
 
 from users.common import normalize_email
@@ -44,19 +43,12 @@ class AddTeamUserForm(forms.ModelForm):
         user = super().save(commit=False)
 
         user_group_name = self.cleaned_data.get("role", "")
-        try:
-            user_group = Group.objects.get(name=user_group_name)
-        except Group.DoesNotExist:
-            user_group = None
-            self.main_role = RoleChoices.USER
-        else:
-            user.main_role = RoleChoices(user_group_name)
+        user.set_main_role(role=RoleChoices(user_group_name), commit=False)
 
         if commit:
             user.save()
             self.save_m2m()
-            if user_group:
-                user_group.user_set.add(user)
+            user.refresh_groups_after_main_role_update()
 
         return user
 
