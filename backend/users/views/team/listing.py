@@ -29,15 +29,15 @@ def _serialize_users(users_page: Page[User], user_id: int) -> List[Dict]:
     return [
         {
             "id": user.id,
-            "first_name": user.first_name,
-            "last_name": user.last_name,
+            "firstName": user.first_name,
+            "lastName": user.last_name,
             "email": user.email,
-            "is_current_user": user.id == user_id,
+            "isCurrentUser": user.id == user_id,
             "roleLabel": RoleChoices(user.main_role).label,
             "roleValue": RoleChoices(user.main_role).value,
-            "added_since": display_dates.short_date(user.date_joined),
-            "last_activity": display_dates.short_datetime(user.last_login),
-            "ngohub_id": user.ngohub_id,
+            "addedSince": display_dates.short_date(user.date_joined),
+            "lastActivity": display_dates.short_datetime(user.last_login),
+            "ngohubId": user.ngohub_id,
         }
         for user in users_page
     ]

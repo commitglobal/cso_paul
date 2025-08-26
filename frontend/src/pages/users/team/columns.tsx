@@ -25,8 +25,8 @@ export const Columns: (t: (key: string) => string) => ColumnDef<UserProps>[] = (
         <Link href={`${apiGetUrls.teamIndex}${row.original.id}/`} className="flex items-center gap-2">
           <div className="flex flex-col gap-2">
             <span>
-              {row.original.first_name} {row.original.last_name}
-              {row.original.is_current_user && (
+              {row.original.firstName} {row.original.lastName}
+              {row.original.isCurrentUser && (
                 <span className="font-medium"> {t("users.team.current_user_marker")}</span>
               )}
             </span>
@@ -42,12 +42,12 @@ export const Columns: (t: (key: string) => string) => ColumnDef<UserProps>[] = (
       enableSorting: true,
     },
     {
-      accessorKey: "added_since",
+      accessorKey: "addedSince",
       header: t("users.team.table.added_since"),
       enableSorting: true,
     },
     {
-      accessorKey: "last_activity",
+      accessorKey: "lastActivity",
       header: t("users.team.table.last_activity"),
       enableSorting: true,
     },
@@ -84,7 +84,7 @@ export const Columns: (t: (key: string) => string) => ColumnDef<UserProps>[] = (
 
             <TeamChangeUserRoleDialog
               userId={row.original.id}
-              userName={`${row.original.first_name} ${row.original.last_name}`}
+              userName={`${row.original.firstName} ${row.original.lastName}`}
               userRole={row.original.roleValue}
               open={openChangeRoleDialog}
               setOpen={setOpenChangeRoleDialog}
@@ -92,8 +92,8 @@ export const Columns: (t: (key: string) => string) => ColumnDef<UserProps>[] = (
 
             <TeamRemoveUserDialog
               userId={row.original.id}
-              userName={`${row.original.first_name} ${row.original.last_name}`}
-              isNgoHubUser={row.original.ngohub_id !== null}
+              userName={`${row.original.firstName} ${row.original.lastName}`}
+              isNgoHubUser={row.original.ngohubId !== null}
               open={openRemoveDialog}
               setOpen={setOpenRemoveDialog}
             />
