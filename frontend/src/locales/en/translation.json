@@ -116,6 +116,14 @@
         "userRole": "User Role"
       },
       "addUser": "Add team member",
+      "changeRole": {
+        "dialog": {
+          "cancel": "Cancel",
+          "save": "Save"
+        },
+        "success": "{{userName}}'s role is now {{newRole}}.",
+        "title": "Change Role"
+      },
       "current_user_marker": "(you)",
       "empty": {
         "description": "No team members found. You can sync your team from NGO Hub. All members with access will appear here, and you will be able to manage roles and permissions.",

@@ -1,6 +1,5 @@
 from typing import Dict, Tuple
 
-from django.core.exceptions import PermissionDenied
 from django.http import Http404
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
@@ -21,13 +20,18 @@ PAGE_TABS_TUPLE: Tuple[Tab, ...] = tuple(tab for tab in PAGE_TABS.values())
 
 
 def get_user(user_id: int) -> User:
+    response_404 = Http404(_("User not found."))
+
     try:
         user = User.objects.get(id=user_id)
     except User.DoesNotExist:
-        raise Http404(_("User not found."))
+        raise response_404
 
     if not user:
-        raise PermissionDenied(_("User not found."))
+        raise response_404
+
+    if not user.is_active:
+        raise response_404
 
     return user
 

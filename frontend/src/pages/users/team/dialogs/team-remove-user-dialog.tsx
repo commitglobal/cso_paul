@@ -40,7 +40,7 @@ export function NgoHubDialogDescription({ userName }: { userName: string }) {
         />
       </span>
       <span className="mt-2">
-        <Link href="#" className=" font-medium text-sky-700">
+        <Link href="#" className="font-medium text-sky-700">
           <Trans i18nKey="users.team.removeUser.ngohub.callToAction" values={{ userName }} />
         </Link>
       </span>
