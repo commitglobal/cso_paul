@@ -3,6 +3,7 @@ import logging
 from typing import Dict, List, Tuple
 
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Page
@@ -12,13 +13,13 @@ from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
 from inertia import InertiaResponse, inertia
 from inertia import render as inertia_render
+
 from paul.common.sort_parser import parse_order_parameter
 from paul.display import format_dates as display_dates
 from paul.display.build_url import build_ngohub_url
-from paul.views.filtering import FilterField, FilterItem, build_filters_mapping, build_filters_display, filter_qs
+from paul.views.filtering import FilterField, FilterItem, build_filters_display, build_filters_mapping, filter_qs
 from paul.views.pagination import paginate_queryset
 from paul.views.search import search
-
 from users.forms import AddTeamUserForm
 from users.models import RoleChoices, User
 
@@ -158,13 +159,16 @@ def manage_team(request: HttpRequest) -> InertiaResponse:
 
     if request.method == "POST":
         if not add_user_enabled:
+            messages.error(request, _("You do not have permission to add users to the team."))
             raise PermissionDenied()
 
         form = AddTeamUserForm(json.loads(request.body))
         if not form.is_valid():
             page_props.update({"errors": {"team": form.errors}})
+            messages.error(request, _("There was an error adding the user to the team."))
         else:
-            form.save()
+            user: User = form.save()
+            messages.success(request, _("User %(user_name)s added successfully.") % {"user_name": user.name})
 
     page_props.update(_request_users(request))
 

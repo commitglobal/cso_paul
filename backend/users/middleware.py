@@ -3,12 +3,12 @@ from typing import Callable
 from django.conf import settings
 from django.contrib.messages import get_messages
 from django.http import HttpRequest, HttpResponse
-from inertia import share
+from inertia import InertiaResponse, share
 
 from users.models import User
 
 
-def global_state(get_response: Callable[[HttpRequest], HttpResponse]) -> Callable[[HttpRequest], HttpResponse]:
+def global_state(get_response: Callable[[HttpRequest], InertiaResponse]) -> Callable[[HttpRequest], HttpResponse]:
     """
     Properties made available to every request response
     """
@@ -50,10 +50,10 @@ def global_state(get_response: Callable[[HttpRequest], HttpResponse]) -> Callabl
         share(
             request=request,
             # Computed properties:
-            flash_messages=_extract_messages(request),
+            flashMessages=_extract_messages(request),
             language=_extract_language(request),
             # Lazily computed properties:
-            is_authenticated=lambda: request.user.is_authenticated,
+            isAuthenticated=lambda: request.user.is_authenticated,
             user=lambda: User.to_dict(request.user) if request.user.is_authenticated else None,
         )
         return get_response(request)
