@@ -12,13 +12,13 @@ from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
 from inertia import InertiaResponse, inertia
 from inertia import render as inertia_render
-
 from paul.common.sort_parser import parse_order_parameter
 from paul.display import format_dates as display_dates
 from paul.display.build_url import build_ngohub_url
-from paul.views.filtering import FilterField, FilterItem, Filters, filter_qs
+from paul.views.filtering import FilterField, FilterItem, build_filters_mapping, build_filters_display, filter_qs
 from paul.views.pagination import paginate_queryset
 from paul.views.search import search
+
 from users.forms import AddTeamUserForm
 from users.models import RoleChoices, User
 
@@ -43,31 +43,29 @@ def _serialize_users(users_page: Page[User], user_id: int) -> List[Dict]:
     ]
 
 
-def _get_filter_options() -> Filters:
+def _get_filter_options() -> List[FilterField]:
     role_options = FilterField(
+        label="roleLabel",
+        value="main_role",
         kind="combobox",
         items=[FilterItem(value=key, label=str(label)) for key, label in settings.USER_GROUPS_CHOICES],
     )
 
     added_since_options = FilterField(
+        label="addedSince",
+        value="date_joined",
         kind="calendar",
         items=[],
     )
 
     last_activity_options = FilterField(
+        label="lastActivity",
+        value="last_login",
         kind="calendar",
         items=[],
     )
 
-    return Filters(
-        role=role_options,
-        added_since=added_since_options,
-        added_since__lte=added_since_options,
-        added_since__gte=added_since_options,
-        last_activity=last_activity_options,
-        last_activity__lte=last_activity_options,
-        last_activity__gte=last_activity_options,
-    )
+    return [role_options, added_since_options, last_activity_options]
 
 
 def _request_users(request):
@@ -80,9 +78,9 @@ def _request_users(request):
 
     field_mapping = {
         "user": ["first_name", "last_name", "email"],
-        "role": "main_role",
-        "added_since": "date_joined",
-        "last_activity": "last_login",
+        "roleLabel": "main_role",
+        "addedSince": "date_joined",
+        "lastActivity": "last_login",
     }
     parsed_parameters: List[str] = parse_order_parameter(sort_parameter=sort, field_mapping=field_mapping)
     users_qs = users_qs.exclude(is_active=False).order_by(*parsed_parameters)
@@ -96,7 +94,7 @@ def _request_users(request):
         )
 
     filters = _get_filter_options()
-    users_qs = filter_qs(field_mapping, filters, request, users_qs)
+    users_qs = filter_qs(build_filters_mapping(filters), request, users_qs)
 
     users_page, paginator, pagination = paginate_queryset(
         queryset=users_qs,
@@ -110,7 +108,7 @@ def _request_users(request):
         "users": users_page,
         "search_query": search_query,
         "pagination": pagination.model_dump(),
-        "filters": filters.model_dump(mode="json"),
+        "filters": build_filters_display(filters),
     }
 
     return data
