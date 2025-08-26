@@ -9,6 +9,7 @@
     "lint": "eslint .",
     "prettier:format": "prettier --config prettier.config.mjs --write src/**/*.{ts,tsx}",
     "prettier:check": "prettier --config prettier.config.mjs --check src/**/*.{ts,tsx}",
+    "prettier:version": "prettier --version",
     "i18n:scan": "i18next-scanner --config i18next-scanner.config.cjs",
     "i18n:generate-types": "i18next-resources-for-ts interface -i src/locales -o src/types/i18n.d.ts -c \"This file is generated automatically by i18next-resources-for-ts\"",
     "i18n:check-missing": "node scripts/i18n/check-missing.cjs",
