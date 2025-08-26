@@ -173,3 +173,52 @@ class TeamUserRoleViewTests(TestCase):
             enabled_role = enabled_roles[0]
             self.assertEqual(enabled_role["value"], role)
             self.assertIn("This user can't be assigned to any other role.", str(enabled_role["description"]))
+
+
+class TeamUserRoleDialogTests(TestCase):
+    def setUp(self):
+        call_command("seed_groups")
+        self.admin_email = "test@example.com"
+        self.user_email = "user@example.com"
+        self.user_password = "test_pass"
+
+        self.admin: User = UserModel.objects.create_user(
+            email=self.admin_email,
+            password=self.user_password,
+            first_name="Admin",
+            last_name="User",
+        )
+
+        super_admin_group = Group.objects.get(name=settings.SUPER_ADMIN_ROLE_NAME)
+        self.admin.groups.add(super_admin_group)
+        self.admin.update_main_role()
+
+        self.user: User = UserModel.objects.create_user(
+            email=self.user_email,
+            password=self.user_password,
+            first_name="User",
+            last_name="Test",
+        )
+
+        user_group = Group.objects.get(name=settings.USER_ROLE_NAME)
+        self.user.groups.add(user_group)
+        self.user.update_main_role()
+
+        self.client = Client()
+
+    def test_post_with_next_url_redirects(self):
+        next_url: str = reverse("users:manage-team")
+
+        self.client.login(email=self.admin_email, password=self.user_password)
+
+        target_groups = settings.USER_GROUPS_UNASSIGNABLE
+        for new_role in target_groups:
+            response: InertiaResponse = self.client.post(
+                reverse("users:manage-user-role", kwargs={"user_id": self.user.id}, query={"next": next_url}),
+                data={"main_role": new_role},
+                content_type="application/json",
+            )
+
+            self.user.refresh_from_db()
+            self.assertEqual(self.user.main_role, new_role)
+            self.assertRedirects(response, next_url)

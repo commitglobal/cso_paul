@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
+    path("api/", include("paul.api_urls")),
     path("users/", include("users.urls")),
     path("data/", include("datastore.urls")),
     path("allauth/", include("allauth.urls")),

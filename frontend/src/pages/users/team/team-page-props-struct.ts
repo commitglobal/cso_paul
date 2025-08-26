@@ -9,13 +9,14 @@ const UserStruct = object({
   id: number(),
   email: string(),
   name: string(),
-  first_name: string(),
-  last_name: string(),
-  role: string(),
-  is_current_user: boolean(),
+  firstName: string(),
+  lastName: string(),
+  roleLabel: string(),
+  roleValue: string(),
+  isCurrentUser: boolean(),
   added_since: string(),
-  last_activity: string(),
-  ngohub_id: number(),
+  lastActivity: string(),
+  ngohubId: number(),
 });
 
 export const TeamPagePropsStruct = assign(

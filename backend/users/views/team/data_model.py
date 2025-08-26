@@ -18,3 +18,10 @@ class UserPageProps(BasePageProps):
     tabTitle: str
 
     errors: Optional[dict[str, dict[str, list[str]]]] = []
+
+
+class RoleChoicesModel(BaseModel):
+    value: str
+    label: str
+    disabled: bool = False
+    description: str = ""

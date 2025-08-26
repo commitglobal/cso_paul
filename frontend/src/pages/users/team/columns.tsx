@@ -8,6 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { apiGetUrls } from "@/constants/api-urls";
+import { TeamChangeUserRoleDialog } from "@/pages/users/team/dialogs/team-change-user-role-dialog";
 import { TeamRemoveUserDialog } from "@/pages/users/team/dialogs/team-remove-user-dialog";
 import type { UserProps } from "@/pages/users/team/team-page-props-struct";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
@@ -24,8 +25,8 @@ export const Columns: (t: (key: string) => string) => ColumnDef<UserProps>[] = (
         <Link href={`${apiGetUrls.teamIndex}${row.original.id}/`} className="flex items-center gap-2">
           <div className="flex flex-col gap-2">
             <span>
-              {row.original.first_name} {row.original.last_name}
-              {row.original.is_current_user && (
+              {row.original.firstName} {row.original.lastName}
+              {row.original.isCurrentUser && (
                 <span className="font-medium"> {t("users.team.current_user_marker")}</span>
               )}
             </span>
@@ -36,23 +37,24 @@ export const Columns: (t: (key: string) => string) => ColumnDef<UserProps>[] = (
       enableSorting: true,
     },
     {
-      accessorKey: "role",
+      accessorKey: "roleLabel",
       header: t("users.team.table.role"),
       enableSorting: true,
     },
     {
-      accessorKey: "added_since",
+      accessorKey: "addedSince",
       header: t("users.team.table.added_since"),
       enableSorting: true,
     },
     {
-      accessorKey: "last_activity",
+      accessorKey: "lastActivity",
       header: t("users.team.table.last_activity"),
       enableSorting: true,
     },
     {
       id: "actions",
       cell: function ActionsCell({ row }) {
+        const [openChangeRoleDialog, setOpenChangeRoleDialog] = useState(false);
         const [openRemoveDialog, setOpenRemoveDialog] = useState(false);
 
         return (
@@ -67,21 +69,31 @@ export const Columns: (t: (key: string) => string) => ColumnDef<UserProps>[] = (
                     <Link href={`${apiGetUrls.teamIndex}${row.original.id}/`}>{t("users.team.menu.viewUserInfo")}</Link>
                   </Button>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+
+                <DropdownMenuItem onSelect={() => setOpenChangeRoleDialog(true)}>
                   <Button variant="menu" size="wrapped">
                     {t("users.team.menu.changeUserRole")}
                   </Button>
                 </DropdownMenuItem>
+
                 <DropdownMenuItem onSelect={() => setOpenRemoveDialog(true)}>
                   {t("users.team.menu.removeFromTeam")}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 
+            <TeamChangeUserRoleDialog
+              userId={row.original.id}
+              userName={`${row.original.firstName} ${row.original.lastName}`}
+              userRole={row.original.roleValue}
+              open={openChangeRoleDialog}
+              setOpen={setOpenChangeRoleDialog}
+            />
+
             <TeamRemoveUserDialog
               userId={row.original.id}
-              userName={`${row.original.first_name} ${row.original.last_name}`}
-              isNgoHubUser={row.original.ngohub_id !== null}
+              userName={`${row.original.firstName} ${row.original.lastName}`}
+              isNgoHubUser={row.original.ngohubId !== null}
               open={openRemoveDialog}
               setOpen={setOpenRemoveDialog}
             />

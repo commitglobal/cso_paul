@@ -18,6 +18,7 @@ export const apiGetUrls = {
 
 export const apiPostUrls = {
   teamAddUser: buildTeamUrl(),
+  teamChangeUserRole: (id: number) => buildTeamUserUrl([id, "role"]),
   userEmailLogin: buildUsersUrl(["login", "email"]),
   userLogout: () => buildUsersUrl(["logout"]),
 };

@@ -1,5 +1,5 @@
 import json
-from typing import Any, Dict, List, Tuple, Union
+from typing import Any, Dict, Tuple, Union
 
 from django.conf import settings
 from django.contrib import messages
@@ -10,12 +10,14 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
 from inertia import inertia
-from pydantic import BaseModel
 
 from paul.common.serializers import serialize_form_errors
+from paul.common.url_parser import make_url_safe
 from paul.views.data_model import Breadcrumb, serialize_page_props_decorator
 from users.forms import ChangeRoleForm
-from users.views.team.data_model import UserPageProps
+from users.models import RoleChoices
+from users.views.common import build_role_choices_for_user
+from users.views.team.data_model import RoleChoicesModel, UserPageProps
 from users.views.team.user import (
     PAGE_TABS,
     PAGE_TABS_TUPLE,
@@ -27,13 +29,6 @@ from users.views.team.user import (
 )
 
 User = get_user_model()
-
-
-class RoleChoicesModel(BaseModel):
-    value: str
-    label: str
-    disabled: bool = False
-    description: str = ""
 
 
 class UserRolePageProps(UserPageProps):
@@ -50,7 +45,7 @@ def _change_user_role(request: HttpRequest, user: User) -> Union[Dict[str, Any],
         messages.error(request, error_message)
         return props
 
-    if user.has_perm("users.change_role"):
+    if not request.user.has_perm("users.change_role"):
         error_message = _("You don't have the permission to change this user's role.")
         props["errors"] = {"role": serialize_form_errors({"main_role": [error_message]})}
         messages.error(request, error_message)
@@ -76,6 +71,9 @@ def manage_user_role(request: HttpRequest, user_id: int) -> Union[UserRolePagePr
     """
     Redirect to manage_user view for user role
     """
+
+    current_page = reverse("users:manage-user-role", kwargs={"user_id": user_id})
+
     user: User = get_user(user_id=user_id)
 
     errors = {}
@@ -87,27 +85,20 @@ def manage_user_role(request: HttpRequest, user_id: int) -> Union[UserRolePagePr
         else:
             user: User = result
 
-    user_role = user.main_role
+        if request.GET.get("next"):
+            next_url: str = make_url_safe(
+                request=request,
+                url=request.GET.get("next"),
+                default_next=current_page,
+            )
+            if next_url != current_page:
+                return HttpResponseRedirect(next_url)
+
+    user_role = str(RoleChoices(user.main_role).value)
 
     main_role_is_unassignable = not settings.USER_GROUPS.get(user_role)["is_assignable_by_ngo_user"]
 
-    roles: List[RoleChoicesModel] = []
-    for role in settings.USER_GROUPS:
-        is_role_disabled = not settings.USER_GROUPS[role]["is_assignable_by_ngo_user"]
-        role_description = settings.USER_GROUPS[role].get("description", "")
-
-        if main_role_is_unassignable:
-            is_role_disabled = role != user_role
-            role_description = _("This user can't be assigned to any other role.") + " " + role_description
-
-        roles.append(
-            RoleChoicesModel(
-                value=role,
-                label=str(settings.USER_GROUPS[role]["label"]),
-                disabled=is_role_disabled,
-                description=str(role_description),
-            )
-        )
+    roles = build_role_choices_for_user(current_role=user_role, main_role_is_unassignable=main_role_is_unassignable)
 
     breadcrumbs: Tuple[Breadcrumb, ...] = get_breadcrumbs(
         user,
