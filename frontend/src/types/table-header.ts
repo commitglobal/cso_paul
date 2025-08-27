@@ -7,4 +7,3 @@ export const HeaderPropsStruct = object({
 });
 
 export type HeaderProps = Infer<typeof HeaderPropsStruct>;
-

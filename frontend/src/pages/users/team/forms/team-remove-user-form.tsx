@@ -24,7 +24,9 @@ export function TeamRemoveUserForm({ data, handleSubmit, setData }: TeamRemoveUs
     <form className="" onSubmit={handleSubmit}>
       <div className="grid gap-4">
         <div className="grid gap-3">
-          <Label className="sr-only" htmlFor="pk">{t("users.team.removeUser.formLabel")}</Label>
+          <Label className="sr-only" htmlFor="pk">
+            {t("users.team.removeUser.formLabel")}
+          </Label>
           <Input
             hidden
             id="pk"

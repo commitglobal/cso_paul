@@ -59,10 +59,10 @@ export function TeamAddUserDialog() {
           <DialogHeader>
             <DialogTitle>{t("users.team.addUser")}</DialogTitle>
             <DialogDescription>
-            Lorem ipsum.{" "}
-            <Link className="font-medium text-sky-700" href="#">
-              Understand user roles
-            </Link>
+              Lorem ipsum.{" "}
+              <Link className="font-medium text-sky-700" href="#">
+                Understand user roles
+              </Link>
             </DialogDescription>
           </DialogHeader>
           <TeamAddUserForm data={data} handleSubmit={handleSubmit} setData={setData} />

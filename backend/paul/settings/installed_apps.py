@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     # paul apps:
     "dashboard",
     "datastore",
+    "inertia_django_utils",
     "users",
 ]
 
