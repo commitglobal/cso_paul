@@ -4,7 +4,7 @@ from typing import Dict, List
 from auditlog.models import LogEntry
 from django.db.models.base import ModelBase
 
-from paul.common.audit_log_action_string import get_action_string
+from tools.utils.audit_log_action_string import get_action_string
 
 logger = logging.getLogger(__name__)
 

@@ -7,7 +7,8 @@ from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
 from inertia import inertia
 
-from paul.views.data_model import Breadcrumb, DataTable, TableHeader, serialize_page_props_decorator
+from tools.data_models.page import Breadcrumb, serialize_page_props_decorator
+from tools.data_models.table import DataTable, TableHeader
 from users.views.team.data_model import UserPageProps
 from users.views.team.user import (
     PAGE_TABS,

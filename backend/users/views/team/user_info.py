@@ -8,8 +8,8 @@ from django.views.decorators.cache import cache_control
 from inertia import inertia
 from pydantic import BaseModel
 
-from paul.display import format_dates as display_dates
-from paul.views.data_model import Breadcrumb, serialize_page_props_decorator
+from tools.data_models.page import Breadcrumb, serialize_page_props_decorator
+from tools.display import format_dates as display_dates
 from users.views.team.data_model import UserPageProps
 from users.views.team.user import (
     PAGE_TABS,

@@ -1,4 +1,4 @@
-from paul.constants.time import HOUR, MINUTE
+from tools.constants.time import HOUR, MINUTE
 
 from .base import DEBUG
 from .environment import env

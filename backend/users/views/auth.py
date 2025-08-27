@@ -11,9 +11,9 @@ from django.views.decorators.cache import cache_control
 from inertia import InertiaResponse, inertia
 from inertia import render as inertia_render
 
-from paul.common.url_parser import make_url_safe
+from tools.data_models.common_types import RedirectionResponse
+from tools.utils.url_parser import make_url_safe
 from users.forms import LoginForm
-from utils.types import RedirectionResponse
 
 
 def _login_endpoints():

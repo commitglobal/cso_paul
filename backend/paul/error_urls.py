@@ -1,6 +1,6 @@
 from django.urls import path
 
-from paul.views import errors
+from .views import errors
 
 app_name = "error"
 urlpatterns = [

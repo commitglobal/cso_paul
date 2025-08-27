@@ -11,9 +11,9 @@ from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
 from inertia import inertia
 
-from paul.common.serializers import serialize_form_errors
-from paul.common.url_parser import make_url_safe
-from paul.views.data_model import Breadcrumb, serialize_page_props_decorator
+from tools.data_models.page import Breadcrumb, serialize_page_props_decorator
+from tools.utils.serializers import serialize_form_errors
+from tools.utils.url_parser import make_url_safe
 from users.forms import ChangeRoleForm
 from users.models import RoleChoices
 from users.views.common import build_role_choices_for_user
