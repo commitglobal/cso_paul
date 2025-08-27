@@ -4,6 +4,8 @@ import { AppTopbar } from "@/components/paul/app-topbar";
 import { Breadcrumbs } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { Toaster } from "@/components/ui/sonner";
+import { renderToast } from "@/layouts/render-toast";
 import type { Breadcrumb } from "@/types/breadcrumb";
 import { CommonProps } from "@/types/common-props";
 import { type Page } from "@inertiajs/core";
@@ -19,6 +21,8 @@ function renderDescription(description: string | undefined) {
 }
 
 export default function BaseLayout(page: Page<CommonProps>) {
+  (page.props.flashMessages ?? []).forEach(renderToast);
+
   return (
     <SidebarProvider>
       {/* Side navigation */}
@@ -48,6 +52,9 @@ export default function BaseLayout(page: Page<CommonProps>) {
 
             {page as unknown as ReactNode}
           </div>
+
+          {/* Notification toasts */}
+          <Toaster />
         </main>
       </SidebarInset>
     </SidebarProvider>

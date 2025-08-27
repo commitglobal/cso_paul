@@ -6,10 +6,8 @@ export type CommonProps = Infer<typeof CommonProps>;
 
 export const CommonProps = object({
   errors: optional(nullable(any())),
-  flash_messages: optional(array(FlashMessage)),
-  has_add_permission: optional(boolean()),
-  has_change_permission: optional(boolean()),
-  is_authenticated: optional(boolean()),
+  flashMessages: optional(array(FlashMessage)),
+  isAuthenticated: optional(boolean()),
   language: optional(string()),
   user: optional(nullable(User)),
 });
