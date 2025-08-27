@@ -30,26 +30,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check out Git repository
-      uses: actions/checkout@v4
+      - name: Check out Git repository
+        uses: actions/checkout@v5
 
-    - name: Install uv
-      uses: astral-sh/setup-uv@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: 'true'
+          cache-suffix: 'formatting'
+          cache-dependency-glob: |
+            backend/uv.lock
+            backend/pyproject.toml
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version-file: "./backend/pyproject.toml"
+      - name: Install Ruff with uv
+        working-directory: ./backend
+        run: |
+          uv sync --only-group ruff
 
-    - name: Install Ruff with uv
-      working-directory: ./backend
-      run: |
-        uv sync --only-group ruff
-
-    - name: Check formatting with Ruff
-      working-directory: ./backend
-      run: |
-        uv run ruff format --check .
+      - name: Check formatting with Ruff
+        working-directory: ./backend
+        run: |
+          uv run ruff format --check .
 
 
   linting:
@@ -57,26 +58,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check out Git repository
-      uses: actions/checkout@v4
+      - name: Check out Git repository
+        uses: actions/checkout@v5
 
-    - name: Install uv
-      uses: astral-sh/setup-uv@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: 'true'
+          cache-suffix: 'linting'
+          cache-dependency-glob: |
+            backend/uv.lock
+            backend/pyproject.toml
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version-file: "./backend/pyproject.toml"
+      - name: Install Ruff with uv
+        working-directory: ./backend
+        run: |
+          uv sync --only-group ruff
 
-    - name: Install Ruff with uv
-      working-directory: ./backend
-      run: |
-        uv sync --only-group ruff
-
-    - name: Lint files using Ruff
-      working-directory: ./backend
-      run: |
-        uv run ruff check .
+      - name: Lint files using Ruff
+        working-directory: ./backend
+        run: |
+          uv run ruff check --select=I .
+          uv run ruff check .
 
 
   checking_migrations:
@@ -84,28 +87,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check out Git repository
-      uses: actions/checkout@v4
+      - name: Check out Git repository
+        uses: actions/checkout@v5
 
-    - name: Install uv
-      uses: astral-sh/setup-uv@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: 'true'
+          cache-suffix: 'checking_migrations'
+          cache-dependency-glob: |
+            backend/uv.lock
+            backend/pyproject.toml
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version-file: "./backend/pyproject.toml"
+      - name: Install dependencies
+        working-directory: ./backend
+        run: |
+          uv sync
 
-    - name: Install dependencies
-      working-directory: ./backend
-      run: |
-        uv sync
-
-    - name: Check for migrations
-      working-directory: ./backend
-      run: |
-        set -a
-        uv run ./manage.py makemigrations --check --dry-run
-        set +a
+      - name: Check for migrations
+        working-directory: ./backend
+        run: |
+          set -a
+          uv run ./manage.py makemigrations --check --dry-run
+          set +a
 
 
   tests:
@@ -124,36 +128,36 @@ jobs:
           - 5432:5432
 
     steps:
-    - name: Check out Git repository
-      uses: actions/checkout@v4
+      - name: Check out Git repository
+        uses: actions/checkout@v5
 
-    - name: Install uv
-      uses: astral-sh/setup-uv@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: 'true'
+          cache-suffix: 'tests'
+          cache-dependency-glob: |
+            backend/uv.lock
+            backend/pyproject.toml
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version-file: "./backend/pyproject.toml"
+      - name: Install dependencies
+        working-directory: ./backend
+        run: |
+          uv sync --frozen
+          sudo apt-get install gettext
+          uv run ./manage.py compilemessages
 
-    - name: Install dependencies
-      working-directory: ./backend
-      run: |
-        uv sync
-        sudo apt-get update
-        sudo apt-get install gettext
-        uv run ./manage.py compilemessages
-
-    - name: Run tests
-      env:
-        ENV_FILE_NAME: ".env.example"
-        DATABASE_NAME: "paul"
-        DATABASE_USER: "user"
-        DATABASE_PASSWORD: "secret"
-        DATABASE_HOST: "0.0.0.0"
-        DATABASE_PORT: "5432"
-      working-directory: ./backend
-      run: |
-        uv run ./manage.py test --parallel
+      - name: Run tests
+        env:
+          ENV_FILE_NAME: ".env.example"
+          DATABASE_NAME: "paul"
+          DATABASE_USER: "user"
+          DATABASE_PASSWORD: "secret"
+          DATABASE_HOST: "0.0.0.0"
+          DATABASE_PORT: "5432"
+        working-directory: ./backend
+        run: |
+          uv run ./manage.py test --parallel
 
 
   codeql_analysis:
@@ -167,7 +171,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
