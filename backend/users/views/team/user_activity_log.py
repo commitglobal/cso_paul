@@ -13,10 +13,11 @@ from django.views.decorators.http import require_http_methods
 from inertia import inertia
 from pydantic import BaseModel
 
-from paul.common.audit_log_action_string import get_action_string
-from paul.common.sort_parser import parse_order_parameter
-from paul.views.data_model import Breadcrumb, DataTable, TableHeader, serialize_page_props_decorator
-from paul.views.pagination import paginate_queryset
+from tools.data_models.page import Breadcrumb, serialize_page_props_decorator
+from tools.data_models.table import DataTable, TableHeader
+from tools.utils.audit_log_action_string import get_action_string
+from tools.utils.pagination import paginate_queryset
+from tools.utils.sort_parser import parse_order_parameter
 from users.views.team.data_model import UserPageProps
 from users.views.team.user import (
     PAGE_TABS,

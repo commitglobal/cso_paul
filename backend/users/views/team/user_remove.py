@@ -8,7 +8,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
 from inertia import inertia
 
-from paul.common.url_parser import make_url_safe
+from tools.utils.url_parser import make_url_safe
 from users.views.team.user import get_user
 
 User = get_user_model()

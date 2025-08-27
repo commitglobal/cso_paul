@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 from django.dispatch import receiver
 from django.http import HttpRequest
 
-from paul.social_adapters.helpers import user_create_or_update
+from .helpers import user_create_or_update
 
 UserModel = get_user_model()
 

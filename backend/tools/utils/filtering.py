@@ -3,22 +3,10 @@ from typing import Dict, List, Union
 
 from django.db.models import QuerySet
 from django.http import HttpRequest
-from pydantic import BaseModel
+
+from tools.data_models.filtering import FilterField
 
 logger = logging.getLogger(__name__)
-
-
-class FilterItem(BaseModel):
-    value: str
-    label: str
-
-
-class FilterField(BaseModel):
-    label: str
-    value: str
-
-    kind: str
-    items: List[FilterItem]
 
 
 def build_filters_display(fields: List[FilterField]) -> Dict[str, Dict[str, Union[str, List[str]]]]:

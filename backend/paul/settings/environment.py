@@ -3,8 +3,8 @@ from pathlib import Path
 
 import environ
 
-from paul.constants.sizes import MEBIBYTE
-from paul.constants.time import DAY, HOUR
+from tools.constants.sizes import MEBIBYTE
+from tools.constants.time import DAY, HOUR
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 root = Path(__file__).resolve().parent.parent.parent.parent

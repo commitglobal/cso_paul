@@ -10,7 +10,7 @@ from django.db.models.functions import Lower
 from django.forms.models import model_to_dict
 from django.utils.translation import gettext as _
 
-from utils.choices import CommonLabelValueChoices
+from tools.utils.choices import CommonLabelValueChoices
 
 
 def get_highest_ranked_group(user_groups: QuerySet[Group]) -> Optional[str]:

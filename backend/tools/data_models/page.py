@@ -1,20 +1,7 @@
-from typing import Any, Optional, Union
+from typing import Optional, Union
 
 from django.http import HttpResponse
 from pydantic import BaseModel
-
-
-class TableHeader(BaseModel):
-    header: str
-    accessorKey: str
-    enableSorting: bool = False
-
-
-class DataTable(BaseModel):
-    totalItems: int
-    totalPages: int
-    header: list[TableHeader]
-    items: list[Any]
 
 
 class Breadcrumb(BaseModel):

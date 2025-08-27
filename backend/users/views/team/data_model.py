@@ -2,7 +2,7 @@ from typing import Optional
 
 from pydantic import BaseModel
 
-from paul.views.data_model import BasePageProps
+from tools.data_models.page import BasePageProps
 
 
 class Tab(BaseModel):

@@ -14,12 +14,13 @@ from django.views.decorators.cache import cache_control
 from inertia import InertiaResponse, inertia
 from inertia import render as inertia_render
 
-from paul.common.sort_parser import parse_order_parameter
-from paul.display import format_dates as display_dates
-from paul.display.build_url import build_ngohub_url
-from paul.views.filtering import FilterField, FilterItem, build_filters_display, build_filters_mapping, filter_qs
-from paul.views.pagination import paginate_queryset
-from paul.views.search import search
+from tools.data_models.filtering import FilterField, FilterItem
+from tools.display import format_dates as display_dates
+from tools.display.build_url import build_ngohub_url
+from tools.utils.filtering import build_filters_display, build_filters_mapping, filter_qs
+from tools.utils.pagination import paginate_queryset
+from tools.utils.search import search
+from tools.utils.sort_parser import parse_order_parameter
 from users.forms import AddTeamUserForm
 from users.models import RoleChoices, User
 

@@ -4,8 +4,8 @@ from django.http import Http404
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-from paul.display.build_url import build_ngohub_url
-from paul.views.data_model import Breadcrumb
+from tools.data_models.page import Breadcrumb
+from tools.display.build_url import build_ngohub_url
 from users.models import User
 from users.views.team.data_model import Tab
 

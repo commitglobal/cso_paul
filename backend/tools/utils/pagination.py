@@ -2,18 +2,8 @@ from typing import Dict, List, Optional, Tuple, Union
 
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db.models import QuerySet
-from pydantic import BaseModel
 
-
-class PaginationInfo(BaseModel):
-    has_next: bool
-    has_previous: bool
-    num_pages: int
-    current_page: int
-    next_page_number: Optional[int]
-    previous_page_number: Optional[int]
-    total_items: int
-    per_page: int
+from tools.data_models.pagination import PaginationInfo
 
 
 def paginate_queryset(

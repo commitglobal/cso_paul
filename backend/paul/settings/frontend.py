@@ -2,8 +2,7 @@
 import os
 from typing import Any, Dict
 
-from utils.encoders import CustomJsonEncoder
-
+from ..encoders import CustomJsonEncoder
 from .environment import BASE_DIR, env
 
 # Where ViteJS assets are built
