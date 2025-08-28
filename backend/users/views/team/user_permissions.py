@@ -5,10 +5,10 @@ from django.http import HttpRequest
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
-from inertia import inertia
 
-from tools.data_models.page import Breadcrumb, serialize_page_props_decorator
+from tools.data_models.page import Breadcrumb
 from tools.data_models.table import DataTable, TableHeader
+from tools.utils.serializers import inertia_enhanced
 from users.views.team.data_model import UserPageProps
 from users.views.team.user import (
     PAGE_TABS,
@@ -27,8 +27,7 @@ class UserPermissionsPageProps(UserPageProps):
 
 @login_required
 @cache_control(private=True)
-@inertia("users/team-user/permissions")
-@serialize_page_props_decorator
+@inertia_enhanced("users/team-user/permissions")
 def manage_user_permissions(__: HttpRequest, user_id: int) -> UserPermissionsPageProps:
     """
     Redirect to manage_user view for user permissions

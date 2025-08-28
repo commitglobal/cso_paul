@@ -1,31 +1,18 @@
-from typing import Callable
+from typing import Callable, Union
 
 from django.conf import settings
-from django.contrib.messages import get_messages
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from inertia import InertiaResponse, share
 
 from users.models import User
 
 
-def global_state(get_response: Callable[[HttpRequest], InertiaResponse]) -> Callable[[HttpRequest], HttpResponse]:
+def global_state(
+    get_response: Callable[[HttpRequest], Union[InertiaResponse, HttpResponseRedirect]],
+) -> Callable[[HttpRequest], HttpResponse]:
     """
     Properties made available to every request response
     """
-
-    def _extract_messages(request: HttpRequest) -> list[dict]:
-        """
-        Extract flash messages from the session storage
-        """
-        messages = []
-        for message in get_messages(request):
-            messages.append(
-                {
-                    "message": message.message,
-                    "level_tag": message.level_tag,
-                }
-            )
-        return messages
 
     def _extract_language(request: HttpRequest) -> str:
         """
@@ -50,7 +37,6 @@ def global_state(get_response: Callable[[HttpRequest], InertiaResponse]) -> Call
         share(
             request=request,
             # Computed properties:
-            flashMessages=_extract_messages(request),
             language=_extract_language(request),
             # Lazily computed properties:
             isAuthenticated=lambda: request.user.is_authenticated,

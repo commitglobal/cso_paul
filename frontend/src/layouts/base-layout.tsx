@@ -9,7 +9,7 @@ import { renderToast } from "@/layouts/render-toast";
 import type { Breadcrumb } from "@/types/breadcrumb";
 import { CommonProps } from "@/types/common-props";
 import { type Page } from "@inertiajs/core";
-import { type ReactNode } from "react";
+import { type ReactNode, useEffect } from "react";
 
 function renderDescription(description: string | undefined) {
   if (!description) return null;
@@ -21,42 +21,46 @@ function renderDescription(description: string | undefined) {
 }
 
 export default function BaseLayout(page: Page<CommonProps>) {
-  (page.props.flashMessages ?? []).forEach(renderToast);
+  useEffect(() => {
+    (page.props.flashMessages ?? []).forEach(renderToast);
+  }, [page.props.flashMessages]);
 
   return (
-    <SidebarProvider>
-      {/* Side navigation */}
-      <AppSidebar />
+    <>
+      <SidebarProvider>
+        {/* Side navigation */}
+        <AppSidebar />
 
-      <SidebarInset>
-        {/* Top navigation */}
-        <AppTopbar />
+        <SidebarInset>
+          {/* Top navigation */}
+          <AppTopbar />
 
-        {/* Breadcrumbs */}
-        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
-          <div className="flex items-center gap-2 px-4">
-            <SidebarTrigger className="-ml-1" />
-            <Separator orientation="vertical" className="mr-2 data-[orientation=vertical]:h-4" />
-            <Breadcrumbs breadcrumbList={page.props.breadcrumbs as Breadcrumb[]} />
-          </div>
-        </header>
+          {/* Breadcrumbs */}
+          <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+            <div className="flex items-center gap-2 px-4">
+              <SidebarTrigger className="-ml-1" />
+              <Separator orientation="vertical" className="mr-2 data-[orientation=vertical]:h-4" />
+              <Breadcrumbs breadcrumbList={page.props.breadcrumbs as Breadcrumb[]} />
+            </div>
+          </header>
 
-        {/* Actual content */}
-        <main>
-          <div className="container mx-auto p-10 ">
-            <h1 className="text-2xl font-bold mb-4">
-              <>{page.props.title}</>
-            </h1>
+          {/* Actual content */}
+          <main>
+            <div className="container mx-auto p-10 ">
+              <h1 className="text-2xl font-bold mb-4">
+                <>{page.props.title}</>
+              </h1>
 
-            {renderDescription(page.props.description as string)}
+              {renderDescription(page.props.description as string)}
 
-            {page as unknown as ReactNode}
-          </div>
+              {page as unknown as ReactNode}
+            </div>
 
-          {/* Notification toasts */}
-          <Toaster />
-        </main>
-      </SidebarInset>
-    </SidebarProvider>
+            {/* Notification toasts */}
+          </main>
+        </SidebarInset>
+      </SidebarProvider>
+      <Toaster />
+    </>
   );
 }

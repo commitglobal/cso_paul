@@ -9,10 +9,9 @@ from django.http import HttpRequest, HttpResponseRedirect
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
-from inertia import inertia
 
-from tools.data_models.page import Breadcrumb, serialize_page_props_decorator
-from tools.utils.serializers import serialize_form_errors
+from tools.data_models.page import Breadcrumb
+from tools.utils.serializers import inertia_enhanced, serialize_form_errors
 from tools.utils.url_parser import make_url_safe
 from users.forms import ChangeRoleForm
 from users.models import RoleChoices
@@ -65,8 +64,7 @@ def _change_user_role(request: HttpRequest, user: User) -> Union[Dict[str, Any],
 
 @login_required
 @cache_control(private=True)
-@inertia("users/team-user/role")
-@serialize_page_props_decorator
+@inertia_enhanced("users/team-user/role")
 def manage_user_role(request: HttpRequest, user_id: int) -> Union[UserRolePageProps, HttpResponseRedirect]:
     """
     Redirect to manage_user view for user role
