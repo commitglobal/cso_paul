@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from tools.data_models.page import Breadcrumb
-from tools.display.build_url import build_ngohub_url
+from tools.display.url_build import build_ngohub_url
 from users.models import User
 from users.views.team.data_model import Tab
 

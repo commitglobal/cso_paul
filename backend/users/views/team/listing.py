@@ -16,7 +16,7 @@ from inertia import render as inertia_render
 
 from tools.data_models.filtering import FilterField, FilterItem
 from tools.display import format_dates as display_dates
-from tools.display.build_url import build_ngohub_url
+from tools.display.url_build import build_ngohub_url
 from tools.utils.filtering import build_filters_display, build_filters_mapping, filter_qs
 from tools.utils.pagination import paginate_queryset
 from tools.utils.search import search

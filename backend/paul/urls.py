@@ -3,12 +3,12 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
-    path("api/", include("paul.api_urls")),
+    path("api/", include("paul.urls_api")),
     path("users/", include("users.urls")),
     path("data/", include("datastore.urls")),
     path("allauth/", include("allauth.urls")),
     path("_allauth/", include("allauth.headless.urls")),
-    path("error/", include("paul.error_urls"), name="error"),
+    path("error/", include("paul.urls_error"), name="error"),
     path("", include("dashboard.urls")),
 ]
 
