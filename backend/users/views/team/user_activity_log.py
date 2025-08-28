@@ -10,13 +10,13 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
 from django.views.decorators.http import require_http_methods
-from inertia import inertia
 from pydantic import BaseModel
 
-from tools.data_models.page import Breadcrumb, serialize_page_props_decorator
+from tools.data_models.page import Breadcrumb
 from tools.data_models.table import DataTable, TableHeader
 from tools.utils.audit_log_action_string import get_action_string
 from tools.utils.pagination import paginate_queryset
+from tools.utils.serializers import inertia_enhanced
 from tools.utils.sort_parser import parse_order_parameter
 from users.views.team.data_model import UserPageProps
 from users.views.team.user import (
@@ -100,8 +100,7 @@ def _get_table_data(request: HttpRequest, user: User) -> DataTable:
 @login_required
 @require_http_methods(["GET"])
 @cache_control(private=True)
-@inertia("users/team-user/activity-log")
-@serialize_page_props_decorator
+@inertia_enhanced("users/team-user/activity-log")
 def manage_user_activity_log(request: HttpRequest, user_id: int) -> UserActivityLogPageProps:
     """
     Redirect to manage_user view for user activity log

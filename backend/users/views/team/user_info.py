@@ -5,11 +5,11 @@ from django.http import HttpRequest
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
-from inertia import inertia
 from pydantic import BaseModel
 
-from tools.data_models.page import Breadcrumb, serialize_page_props_decorator
+from tools.data_models.page import Breadcrumb
 from tools.display import format_dates as display_dates
+from tools.utils.serializers import inertia_enhanced
 from users.views.team.data_model import UserPageProps
 from users.views.team.user import (
     PAGE_TABS,
@@ -33,8 +33,7 @@ class UserInfoPageProps(UserPageProps):
 
 @login_required
 @cache_control(private=True)
-@inertia("users/team-user/info")
-@serialize_page_props_decorator
+@inertia_enhanced("users/team-user/info")
 def manage_user_info(__: HttpRequest, user_id: int) -> UserInfoPageProps:
     """
     Redirect to manage_user view for user info

@@ -1,17 +1,17 @@
 import json
-from typing import Any, Union
+from typing import Any, Dict, Union
 
 from django.conf import settings
 from django.contrib import auth, messages
 from django.http import Http404, HttpRequest, HttpResponse
+from django.middleware.csrf import get_token
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
-from inertia import InertiaResponse, inertia
-from inertia import render as inertia_render
 
 from tools.data_models.common_types import RedirectionResponse
+from tools.utils.serializers import inertia_enhanced
 from tools.utils.url_parser import make_url_safe
 from users.forms import LoginForm
 
@@ -29,7 +29,7 @@ def _login_endpoints():
 
 
 @cache_control(private=False)
-@inertia("users/auth/login-choice")
+@inertia_enhanced("users/auth/login-choice")
 def login_choice(request: HttpRequest) -> dict[str, Any]:
     """
     Screen for choosing the preferred login method
@@ -44,7 +44,8 @@ def login_choice(request: HttpRequest) -> dict[str, Any]:
 
 
 @cache_control(private=True)
-def email_login(request: HttpRequest) -> Union[InertiaResponse, RedirectionResponse]:
+@inertia_enhanced("users/auth/email-login")
+def email_login(request: HttpRequest) -> Union[Dict, RedirectionResponse]:
     """
     Login by using the email and password
     """
@@ -58,42 +59,36 @@ def email_login(request: HttpRequest) -> Union[InertiaResponse, RedirectionRespo
 
     if request.method == "GET":
         next_url = request.GET.get("next", "")
-        return inertia_render(
-            request,
-            "users/auth/email-login",
-            props={
-                "endpoints": _login_endpoints(),
-                "next_url": next_url,
-                # "re_captcha_key": settings.RECAPTCHA_PUBLIC_KEY,
-            },
-        )
+        return {
+            "endpoints": _login_endpoints(),
+            "next_url": next_url,
+            # "re_captcha_key": settings.RECAPTCHA_PUBLIC_KEY,
+        }
 
     login_user = None
 
     data = json.loads(request.body)
     next_url = data.get("next", "")
 
+    failed_login_message = _("The identification data could not be confirmed")
+
     form = LoginForm(data)
     if form.is_valid():
         email = form.cleaned_data.get("email")
         login_user = auth.authenticate(email=email, password=form.cleaned_data.get("password"))
         if login_user is None:
-            failed_login_message = _("The identification data could not be confirmed")
             form.add_error("email", failed_login_message)
             form.add_error("password", failed_login_message)
 
     remember: bool = form.cleaned_data.get("remember", False)
 
     if not login_user:
-        return inertia_render(
-            request,
-            "users/auth/email-login",
-            props={
-                "errors": {"login": form.errors},
-                "next_url": next_url,
-                # "re_captcha_key": settings.RECAPTCHA_PUBLIC_KEY,
-            },
-        )
+        messages.error(request, failed_login_message)
+        return {
+            "errors": {"login": form.errors},
+            "next_url": next_url,
+            # "re_captcha_key": settings.RECAPTCHA_PUBLIC_KEY,
+        }
     else:
         auth.login(request, login_user)
         if remember:
@@ -124,7 +119,8 @@ def logout(request: HttpRequest) -> HttpResponse:
 
 
 @cache_control(private=True)
-def ngohub_login(request: HttpRequest) -> Union[InertiaResponse, RedirectionResponse]:
+@inertia_enhanced("users/auth/ngohub-login")
+def ngohub_login(request: HttpRequest) -> Union[Dict, RedirectionResponse]:
     """
     Login by using NGO Hub.
 
@@ -146,22 +142,15 @@ def ngohub_login(request: HttpRequest) -> Union[InertiaResponse, RedirectionResp
     # Headless API requires an absolute callback_url back to the frontend
     callback_url = request.build_absolute_uri(next_url)
 
-    # CSRF token for the synchronous POST to the Headless API endpoint
-    from django.middleware.csrf import get_token
-
     csrf_token = get_token(request)
 
     redirect_endpoint = reverse("headless:browser:socialaccount:redirect_to_provider")
 
-    return inertia_render(
-        request,
-        "users/auth/ngohub-login",
-        props={
-            "redirect_endpoint": redirect_endpoint,
-            "provider": "amazon_cognito",
-            "process": "login",
-            "callback_url": callback_url,
-            "csrf_token": csrf_token,
-            "next_url": next_url,
-        },
-    )
+    return {
+        "redirect_endpoint": redirect_endpoint,
+        "provider": "amazon_cognito",
+        "process": "login",
+        "callback_url": callback_url,
+        "csrf_token": csrf_token,
+        "next_url": next_url,
+    }

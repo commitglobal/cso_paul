@@ -1,25 +1,24 @@
+from typing import Dict
+
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, JsonResponse
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views.decorators.cache import cache_control, never_cache
-from inertia import InertiaResponse
-from inertia import render as inertia_render
+
+from tools.utils.serializers import inertia_enhanced
 
 
 @cache_control(private=True)
 @login_required(login_url=reverse_lazy("users:login"))
-def home(request: HttpRequest) -> InertiaResponse:
+@inertia_enhanced("dashboard/home")
+def home(request: HttpRequest) -> Dict:
     """
     Main app dashboard
     """
 
-    return inertia_render(
-        request,
-        "dashboard/home",
-        props={"ok": True},
-    )
+    return {"ok": True}
 
 
 @never_cache

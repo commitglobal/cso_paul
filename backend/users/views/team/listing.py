@@ -11,8 +11,6 @@ from django.http import HttpRequest
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
-from inertia import InertiaResponse, inertia
-from inertia import render as inertia_render
 
 from tools.data_models.filtering import FilterField, FilterItem
 from tools.display import format_dates as display_dates
@@ -20,6 +18,7 @@ from tools.display.url_build import build_ngohub_url
 from tools.utils.filtering import build_filters_display, build_filters_mapping, filter_qs
 from tools.utils.pagination import paginate_queryset
 from tools.utils.search import search
+from tools.utils.serializers import inertia_enhanced
 from tools.utils.sort_parser import parse_order_parameter
 from users.forms import AddTeamUserForm
 from users.models import RoleChoices, User
@@ -125,8 +124,8 @@ def _get_is_add_user_enabled(user: User) -> bool:
 
 @login_required
 @cache_control(private=True)
-@inertia("users/team/index")
-def manage_team(request: HttpRequest) -> InertiaResponse:
+@inertia_enhanced("users/team/index")
+def manage_team(request: HttpRequest) -> Dict:
     """
     Manage the user team
     """
@@ -173,8 +172,4 @@ def manage_team(request: HttpRequest) -> InertiaResponse:
 
     page_props.update(_request_users(request))
 
-    return inertia_render(
-        request,
-        "users/team/index",
-        props=page_props,
-    )
+    return page_props
