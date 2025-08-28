@@ -10,6 +10,8 @@
 - Never use `__future__` imports.
 - Use type hints for all arguments and return values.
 - Use type annotations for all variables, and functions.
+- When having to run code, use uv to run the project and always use the `--active` flag: `uv run --active`.
+- The code is formatted using `ruff` exclusively. The most used command to run is: `ruff format . && ruff check --select I --fix ./ && ruff check --fix ./`
 
 ## Testing Requirements
 - Store tests in `tests.py` or a `tests/` directory within each app.
@@ -34,4 +36,5 @@
 - Write clear commit messages describing changes.
 
 ## Summary
-Follow these instructions to ensure code quality, maintainability, and reliability in the backend project. All code, tests, formatting, and dependencies must comply with these rules.
+Follow these instructions to ensure code quality, maintainability, and reliability in the backend project.
+All code, tests, formatting, and dependencies must comply with these rules.
