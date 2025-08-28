@@ -2,8 +2,8 @@ from datetime import datetime
 
 from django.test import SimpleTestCase, override_settings
 
-from tools.display.build_url import build_ngohub_url
 from tools.display.format_dates import short_date, short_datetime
+from tools.display.url_build import build_ngohub_url
 
 
 class TestBuildUrl(SimpleTestCase):
