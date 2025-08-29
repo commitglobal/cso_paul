@@ -1,13 +1,13 @@
-import { type Infer, any, array, boolean, nullable, object, optional, string } from "superstruct";
-import { User } from "./user";
+import { any, array, boolean, type Infer, nullable, object, optional, string } from "superstruct";
 import { FlashMessage } from "./flash-message";
-
-export type CommonProps = Infer<typeof CommonProps>;
+import { UserStruct } from "./user";
 
 export const CommonProps = object({
   errors: optional(nullable(any())),
   flashMessages: optional(array(FlashMessage)),
   isAuthenticated: optional(boolean()),
   language: optional(string()),
-  user: optional(nullable(User)),
+  user: optional(nullable(UserStruct)),
 });
+
+export type CommonProps = Infer<typeof CommonProps>;

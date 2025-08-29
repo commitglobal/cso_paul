@@ -1,116 +1,96 @@
-import { ExpandableNav } from "@/components/paul/expandable-nav";
-import { SingleNav } from "@/components/paul/single-nav";
+import { NavExpandable } from "@/components/paul/nav-expandable";
+import { NavLogo } from "@/components/paul/nav-logo";
+import { NavUser } from "@/components/paul/nav-user";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from "@/components/ui/sidebar";
-import { apiGetUrls } from "@/constants/api-urls";
+import type { UserProps } from "@/types/user";
 import {
   CircleStackIcon as Database,
   DocumentChartBarIcon as FileChartLine,
-  HomeIcon as House,
-  InformationCircleIcon as Info,
   SparklesIcon as Zap,
   TableCellsIcon as Grid2X2Plus,
-  UsersIcon as UsersRound,
 } from "@heroicons/react/24/outline";
 import * as React from "react";
 import { useTranslation } from "react-i18next";
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+type AppSidebarProps = {
+  user: UserProps | null | undefined;
+} & React.ComponentProps<typeof Sidebar>;
+
+export function AppSidebar({ user, ...props }: AppSidebarProps) {
   const { t } = useTranslation();
 
-  const data = {
-    navHome: [
-      {
-        title: t("navigation.home"),
-        url: "/",
-        icon: House,
-      },
-    ],
-    navMain: [
-      {
-        title: t("navigation.datasets"),
-        url: "#",
-        icon: Database,
-        items: [
-          {
-            title: t("navigation.test1"),
-            url: "#",
-          },
-          {
-            title: t("navigation.test2"),
-            url: "#",
-          },
-        ],
-      },
-      {
-        title: t("navigation.processedData"),
-        url: "#",
-        icon: FileChartLine,
-        items: [
-          {
-            title: t("navigation.test1"),
-            url: "#",
-          },
-          {
-            title: t("navigation.test2"),
-            url: "#",
-          },
-        ],
-      },
-      {
-        title: t("navigation.actions"),
-        url: "#",
-        icon: Zap,
-        items: [
-          {
-            title: t("navigation.test1"),
-            url: "#",
-          },
-          {
-            title: t("navigation.test2"),
-            url: "#",
-          },
-        ],
-      },
-      {
-        title: t("navigation.apps"),
-        url: "#",
-        icon: Grid2X2Plus,
-        items: [
-          {
-            title: t("navigation.test1"),
-            url: "#",
-          },
-          {
-            title: t("navigation.test2"),
-            url: "#",
-          },
-        ],
-      },
-    ],
-    navMore: [
-      {
-        title: t("navigation.team"),
-        url: apiGetUrls.teamIndex,
-        icon: UsersRound,
-      },
-      {
-        title: t("navigation.help"),
-        url: "#",
-        icon: Info,
-      },
-    ],
-  };
+  const navMain = [
+    {
+      title: t("navigation.datasets"),
+      url: "#",
+      icon: Database,
+      items: [
+        {
+          title: t("navigation.test1"),
+          url: "#",
+        },
+        {
+          title: t("navigation.test2"),
+          url: "#",
+        },
+      ],
+    },
+    {
+      title: t("navigation.processedData"),
+      url: "#",
+      icon: FileChartLine,
+      items: [
+        {
+          title: t("navigation.test1"),
+          url: "#",
+        },
+        {
+          title: t("navigation.test2"),
+          url: "#",
+        },
+      ],
+    },
+    {
+      title: t("navigation.actions"),
+      url: "#",
+      icon: Zap,
+      items: [
+        {
+          title: t("navigation.test1"),
+          url: "#",
+        },
+        {
+          title: t("navigation.test2"),
+          url: "#",
+        },
+      ],
+    },
+    {
+      title: t("navigation.apps"),
+      url: "#",
+      icon: Grid2X2Plus,
+      items: [
+        {
+          title: t("navigation.test1"),
+          url: "#",
+        },
+        {
+          title: t("navigation.test2"),
+          url: "#",
+        },
+      ],
+    },
+  ];
 
   return (
     <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader></SidebarHeader>
+      <SidebarHeader>
+        <NavLogo />
+      </SidebarHeader>
       <SidebarContent>
-        <SingleNav items={data.navHome} />
-        <ExpandableNav items={data.navMain} />
+        <NavExpandable items={navMain} />
       </SidebarContent>
-      <SidebarFooter>
-        <SingleNav items={data.navMore} />
-      </SidebarFooter>
+      <SidebarFooter>{user && <NavUser user={user} />}</SidebarFooter>
       <SidebarRail />
     </Sidebar>
   );

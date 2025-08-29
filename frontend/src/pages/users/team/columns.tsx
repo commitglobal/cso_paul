@@ -10,13 +10,13 @@ import {
 import { apiGetUrls } from "@/constants/api-urls";
 import { TeamChangeUserRoleDialog } from "@/pages/users/team/dialogs/team-change-user-role-dialog";
 import { TeamRemoveUserDialog } from "@/pages/users/team/dialogs/team-remove-user-dialog";
-import type { UserProps } from "@/pages/users/team/team-page-props-struct";
+import type { UsersProps } from "@/types/user";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { Link } from "@inertiajs/react";
 import { type ColumnDef } from "@tanstack/react-table";
 import { useState } from "react";
 
-export const Columns: (t: (key: string) => string) => ColumnDef<UserProps>[] = (t) => {
+export const Columns: (t: (key: string) => string) => ColumnDef<UsersProps>[] = (t) => {
   return [
     {
       accessorKey: "user",

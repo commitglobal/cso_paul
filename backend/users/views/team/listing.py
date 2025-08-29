@@ -13,7 +13,6 @@ from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control
 
 from tools.data_models.filtering import FilterField, FilterItem
-from tools.display import format_dates as display_dates
 from tools.display.url_build import build_ngohub_url
 from tools.utils.filtering import build_filters_display, build_filters_mapping, filter_qs
 from tools.utils.pagination import paginate_queryset
@@ -27,21 +26,14 @@ logger = logging.getLogger(__name__)
 
 
 def _serialize_users(users_page: Page[User], user_id: int) -> List[Dict]:
-    return [
-        {
-            "id": user.id,
-            "firstName": user.first_name,
-            "lastName": user.last_name,
-            "email": user.email,
-            "isCurrentUser": user.id == user_id,
-            "roleLabel": RoleChoices(user.main_role).label,
-            "roleValue": RoleChoices(user.main_role).value,
-            "addedSince": display_dates.short_date(user.date_joined),
-            "lastActivity": display_dates.short_datetime(user.last_login),
-            "ngohubId": user.ngohub_id,
-        }
-        for user in users_page
-    ]
+    users = []
+    for user in users_page:
+        new_user = user.to_json()
+        new_user["isCurrentUser"] = bool(user.id == user_id)
+
+        users.append(new_user)
+
+    return users
 
 
 def _get_filter_options() -> List[FilterField]:

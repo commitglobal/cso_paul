@@ -14,7 +14,7 @@ import { ChevronRightIcon as ChevronRight } from "@heroicons/react/24/outline";
 import { Link } from "@inertiajs/react";
 import { type LucideIcon } from "lucide-react";
 
-export function ExpandableNav({
+export function NavExpandable({
   items,
 }: {
   items: {

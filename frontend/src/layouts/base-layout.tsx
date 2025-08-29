@@ -1,6 +1,5 @@
 import { SanitizeHTML } from "@/components/helpers/sanitized-html";
 import { AppSidebar } from "@/components/paul/app-sidebar";
-import { AppTopbar } from "@/components/paul/app-topbar";
 import { Breadcrumbs } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
@@ -29,12 +28,9 @@ export default function BaseLayout(page: Page<CommonProps>) {
     <>
       <SidebarProvider>
         {/* Side navigation */}
-        <AppSidebar />
+        <AppSidebar user={page.props.user} />
 
         <SidebarInset>
-          {/* Top navigation */}
-          <AppTopbar />
-
           {/* Breadcrumbs */}
           <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
             <div className="flex items-center gap-2 px-4">

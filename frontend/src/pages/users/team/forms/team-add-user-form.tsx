@@ -29,8 +29,8 @@ export function TeamAddUserForm({ data, handleSubmit, setData }: TeamUserFormPro
           <Input
             id="first_name"
             name="first_name"
-            value={data.first_name}
-            onChange={handleChange<TeamAddUserFormData>("first_name", setData)}
+            value={data.firstName}
+            onChange={handleChange<TeamAddUserFormData>("firstName", setData)}
           />
           {errors?.team?.first_name && (
             <p id="first_name_errors" className="text-destructive text-sm">
@@ -43,8 +43,8 @@ export function TeamAddUserForm({ data, handleSubmit, setData }: TeamUserFormPro
           <Input
             id="last_name"
             name="last_name"
-            value={data.last_name}
-            onChange={handleChange<TeamAddUserFormData>("last_name", setData)}
+            value={data.lastName}
+            onChange={handleChange<TeamAddUserFormData>("lastName", setData)}
           />
           {errors?.team?.last_name && (
             <p id="last_name_errors" className="text-destructive text-sm">
