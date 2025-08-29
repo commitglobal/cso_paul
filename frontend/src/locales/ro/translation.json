@@ -67,10 +67,17 @@
     "datasets": "Seturi de date",
     "help": "Ajutor",
     "home": "Acasă",
+    "openMainMenu": "Meniul principal",
+    "openUserMenu": "Meniul utilizatorului",
     "processedData": "Date procesate",
+    "search": "Caută",
+    "settings": "Setări",
+    "signOut": "Deconectează-te",
     "team": "Echipa",
     "test1": "Test 1",
-    "test2": "Test 2"
+    "test2": "Test 2",
+    "viewNotifications": "Vezi notificările",
+    "yourProfile": "Profilul tău"
   },
   "ngohub": {
     "title": ""
@@ -96,15 +103,6 @@
     "filterBy": "Filtrează după {{column}}",
     "noData": "Nu sunt rezultate.",
     "sortBy": "Sortează după {{column}}"
-  },
-  "topbar": {
-    "openMainMenu": "Meniul principal",
-    "openUserMenu": "Meniul utilizatorului",
-    "search": "Caută",
-    "settings": "Setări",
-    "signOut": "Deconectează-te",
-    "viewNotifications": "Vezi notificările",
-    "yourProfile": "Profilul tău"
   },
   "users": {
     "team": {

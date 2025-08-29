@@ -1,6 +1,6 @@
-import { NavExpandable } from "@/components/paul/nav-expandable";
-import { NavLogo } from "@/components/paul/nav-logo";
-import { NavUser } from "@/components/paul/nav-user";
+import { NavExpandable } from "@/components/paul/navigation/nav-expandable";
+import { NavLogo } from "@/components/paul/navigation/nav-logo";
+import { NavUser } from "@/components/paul/navigation/nav-user";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from "@/components/ui/sidebar";
 import type { UserProps } from "@/types/user";
 import {

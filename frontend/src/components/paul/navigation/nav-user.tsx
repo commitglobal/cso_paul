@@ -1,7 +1,7 @@
 "use client";
 
 import { useSidebar } from "@/components/hooks/use-sidebar";
-import { NavIconLink } from "@/components/paul/nav-icon-link";
+import { NavIconLink } from "@/components/paul/navigation/nav-icon-link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -97,7 +97,7 @@ export function NavUser({ user }: { user: UserProps }) {
 
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <NavIconLink href="#" method="get" icon={BellIcon} label={t("topbar.viewNotifications")} />
+                <NavIconLink href="#" method="get" icon={BellIcon} label={t("navigation.viewNotifications")} />
               </DropdownMenuItem>
             </DropdownMenuGroup>
 
@@ -105,10 +105,10 @@ export function NavUser({ user }: { user: UserProps }) {
 
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <NavIconLink href="#" method="get" icon={PencilIcon} label={t("topbar.yourProfile")} />
+                <NavIconLink href="#" method="get" icon={PencilIcon} label={t("navigation.yourProfile")} />
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <NavIconLink href="#" method="get" icon={Cog8ToothIcon} label={t("topbar.settings")} />
+                <NavIconLink href="#" method="get" icon={Cog8ToothIcon} label={t("navigation.settings")} />
               </DropdownMenuItem>
             </DropdownMenuGroup>
 
@@ -119,7 +119,7 @@ export function NavUser({ user }: { user: UserProps }) {
                 href={apiPostUrls.userLogout()}
                 method="post"
                 icon={ArrowRightStartOnRectangleIcon}
-                label={t("topbar.signOut")}
+                label={t("navigation.signOut")}
               />
             </DropdownMenuItem>
           </DropdownMenuContent>

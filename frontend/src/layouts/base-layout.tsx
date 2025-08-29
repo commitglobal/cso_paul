@@ -1,6 +1,6 @@
 import { SanitizeHTML } from "@/components/helpers/sanitized-html";
-import { AppSidebar } from "@/components/paul/app-sidebar";
-import { AppTopbar } from "@/components/paul/app-topbar";
+import { AppSidebar } from "@/components/paul/navigation/app-sidebar";
+import { AppTopbar } from "@/components/paul/navigation/app-topbar";
 import { Breadcrumbs } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
