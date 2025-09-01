@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "vite",
     "prod": "tsc -b && vite build",
+    "tsc": "tsc -b",
     "preview": "vite preview",
     "lint": "eslint .",
     "prettier:format": "prettier --config prettier.config.mjs --write src/**/*.{ts,tsx}",

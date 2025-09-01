@@ -2,6 +2,7 @@ import { NavExpandable } from "@/components/paul/navigation/nav-expandable";
 import { NavLogo } from "@/components/paul/navigation/nav-logo";
 import { NavUser } from "@/components/paul/navigation/nav-user";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from "@/components/ui/sidebar";
+import { apiGetUrls } from "@/constants/api-urls";
 import type { UserProps } from "@/types/user";
 import {
   CircleStackIcon as Database,
@@ -22,8 +23,9 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
   const navMain = [
     {
       title: t("navigation.datasets"),
-      url: "#",
+      url: apiGetUrls.datasetIndex,
       icon: Database,
+      isActive: false,
       items: [
         {
           title: t("navigation.test1"),
@@ -39,6 +41,7 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
       title: t("navigation.processedData"),
       url: "#",
       icon: FileChartLine,
+      isActive: false,
       items: [
         {
           title: t("navigation.test1"),
@@ -54,6 +57,7 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
       title: t("navigation.actions"),
       url: "#",
       icon: Zap,
+      isActive: false,
       items: [
         {
           title: t("navigation.test1"),
@@ -69,6 +73,7 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
       title: t("navigation.apps"),
       url: "#",
       icon: Grid2X2Plus,
+      isActive: false,
       items: [
         {
           title: t("navigation.test1"),
