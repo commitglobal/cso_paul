@@ -1,4 +1,4 @@
-import { CommonProps } from "@/types/common-props";
+import { CommonPropsBlank } from "@/types/common-props";
 import { assign, type Infer, object, optional, string } from "superstruct";
 
 export const NgohubLoginProps = assign(
@@ -10,7 +10,7 @@ export const NgohubLoginProps = assign(
     csrf_token: string(),
     next_url: optional(string()),
   }),
-  CommonProps
+  CommonPropsBlank
 );
 
 export type NgohubLoginProps = Infer<typeof NgohubLoginProps>;

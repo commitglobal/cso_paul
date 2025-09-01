@@ -13,7 +13,7 @@ import * as React from "react";
 import { useTranslation } from "react-i18next";
 
 type AppSidebarProps = {
-  user: UserProps | null | undefined;
+  user: UserProps;
 } & React.ComponentProps<typeof Sidebar>;
 
 export function AppSidebar({ user, ...props }: AppSidebarProps) {
@@ -90,7 +90,9 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
       <SidebarContent>
         <NavExpandable items={navMain} />
       </SidebarContent>
-      <SidebarFooter>{user && <NavUser user={user} />}</SidebarFooter>
+      <SidebarFooter>
+        <NavUser user={user} />
+      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   );

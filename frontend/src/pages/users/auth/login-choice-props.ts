@@ -1,4 +1,4 @@
-import { CommonProps } from "@/types/common-props";
+import { CommonPropsBlank } from "@/types/common-props";
 import { assign, boolean, type Infer, object, optional, string } from "superstruct";
 
 export const LoginChoiceProps = assign(
@@ -11,7 +11,7 @@ export const LoginChoiceProps = assign(
     }),
     next_url: optional(string()),
   }),
-  CommonProps
+  CommonPropsBlank
 );
 
 export type LoginChoiceProps = Infer<typeof LoginChoiceProps>;

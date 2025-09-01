@@ -1,6 +1,6 @@
 import { CommonProps } from "@/types/common-props";
 import { SelectOption } from "@/types/select-option";
-import { type Infer, array, assign, object } from "superstruct";
+import { array, assign, type Infer, object } from "superstruct";
 
 export type TeamUserProps = Infer<typeof TeamUserProps>;
 
