@@ -1,14 +1,14 @@
+import type { Method } from "@inertiajs/core";
 import { Link } from "@inertiajs/react";
 import type { ComponentType, ReactElement, ReactNode } from "react";
 import * as React from "react";
 import { isValidElement } from "react";
 
-export type HttpMethod = "get" | "post" | "put" | "patch" | "delete";
 export type IconComponent = ComponentType<React.SVGProps<SVGSVGElement>>;
 
 export interface IconLinkProps {
   href: string;
-  method?: HttpMethod;
+  method?: Method;
   icon: IconComponent | ReactElement;
   label: ReactNode;
   className?: string;
