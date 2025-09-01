@@ -1,7 +1,7 @@
 import { Link } from "@inertiajs/react";
-import { isValidElement } from "react";
 import type { ComponentType, ReactElement, ReactNode } from "react";
 import * as React from "react";
+import { isValidElement } from "react";
 
 export type HttpMethod = "get" | "post" | "put" | "patch" | "delete";
 export type IconComponent = ComponentType<React.SVGProps<SVGSVGElement>>;

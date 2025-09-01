@@ -77,10 +77,10 @@ export function NavUser({ user }: { user: UserProps }) {
             <DropdownMenuSeparator />
 
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem asChild>
                 <NavIconLink href={apiGetUrls.teamIndex} icon={UsersIcon} label={t("navigation.team")} />
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem asChild>
                 <NavIconLink href="#" method="get" icon={QuestionMarkCircleIcon} label={t("navigation.help")} />
               </DropdownMenuItem>
             </DropdownMenuGroup>
@@ -88,7 +88,7 @@ export function NavUser({ user }: { user: UserProps }) {
             <DropdownMenuSeparator />
 
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem asChild>
                 <NavIconLink href="#" method="get" icon={BellIcon} label={t("navigation.viewNotifications")} />
               </DropdownMenuItem>
             </DropdownMenuGroup>
@@ -96,24 +96,26 @@ export function NavUser({ user }: { user: UserProps }) {
             <DropdownMenuSeparator />
 
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem asChild>
                 <NavIconLink href="#" method="get" icon={PencilIcon} label={t("navigation.yourProfile")} />
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem asChild>
                 <NavIconLink href="#" method="get" icon={Cog8ToothIcon} label={t("navigation.settings")} />
               </DropdownMenuItem>
             </DropdownMenuGroup>
 
             <DropdownMenuSeparator />
 
-            <DropdownMenuItem>
-              <NavIconLink
-                href={apiPostUrls.userLogout()}
-                method="post"
-                icon={ArrowRightStartOnRectangleIcon}
-                label={t("navigation.signOut")}
-              />
-            </DropdownMenuItem>
+            <DropdownMenuGroup>
+              <DropdownMenuItem asChild>
+                <NavIconLink
+                  href={apiPostUrls.userLogout()}
+                  method="post"
+                  icon={ArrowRightStartOnRectangleIcon}
+                  label={t("navigation.signOut")}
+                />
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
