@@ -1,8 +1,17 @@
 import { type SvgIcon } from "./svg-icon";
 
-export type NavigationItem = {
-  href?: string;
+type NavigationBaseItem = {
+  title: string;
+  url: string;
+  isActive?: boolean;
+};
+
+export type NavigationItem = NavigationBaseItem & {
   icon: SvgIcon;
-  name: string;
-  items?: NavigationItem[];
+};
+
+export type NavigationSubItem = NavigationBaseItem;
+
+export type NavigationItemExpandable = NavigationItem & {
+  items?: NavigationSubItem[];
 };

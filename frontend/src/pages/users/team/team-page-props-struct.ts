@@ -2,22 +2,8 @@ import { Breadcrumb } from "@/types/breadcrumb";
 import { CommonProps } from "@/types/common-props";
 import { Filters } from "@/types/filter";
 import { Pagination } from "@/types/pagination";
-import { array, assign, boolean, type Infer, number, object, string } from "superstruct";
-
-// TODO: This should be moved to types/user.ts when the user types are more in place
-const UserStruct = object({
-  id: number(),
-  email: string(),
-  name: string(),
-  firstName: string(),
-  lastName: string(),
-  roleLabel: string(),
-  roleValue: string(),
-  isCurrentUser: boolean(),
-  added_since: string(),
-  lastActivity: string(),
-  ngohubId: number(),
-});
+import { UsersStruct } from "@/types/user";
+import { array, assign, boolean, type Infer, object, string } from "superstruct";
 
 export const TeamPagePropsStruct = assign(
   object({
@@ -25,7 +11,7 @@ export const TeamPagePropsStruct = assign(
     description: string(),
     breadcrumbs: array(Breadcrumb),
     search_query: string(),
-    users: array(UserStruct),
+    users: array(UsersStruct),
     pagination: Pagination,
     filters: Filters,
     is_ngohub_auth_enabled: boolean(),
@@ -35,5 +21,4 @@ export const TeamPagePropsStruct = assign(
   CommonProps
 );
 
-export type UserProps = Infer<typeof UserStruct>;
 export type TeamPageProps = Infer<typeof TeamPagePropsStruct>;

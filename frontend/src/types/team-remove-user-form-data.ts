@@ -1,3 +1,3 @@
-import { User } from "./user";
+import { type UserProps } from "./user";
 
-export type TeamRemoveUserFormData = Pick<User, "id">;
+export type TeamRemoveUserFormData = Pick<UserProps, "id">;

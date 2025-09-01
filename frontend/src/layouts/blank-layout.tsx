@@ -1,10 +1,10 @@
 import { Toaster } from "@/components/ui/sonner";
 import { renderToast } from "@/layouts/render-toast";
-import { CommonProps } from "@/types/common-props";
+import { CommonPropsBlank } from "@/types/common-props";
 import { type Page } from "@inertiajs/core";
 import { type ReactNode, useEffect } from "react";
 
-export default function BlankLayout(page: Page<CommonProps>) {
+export default function BlankLayout(page: Page<CommonPropsBlank>) {
   useEffect(() => {
     (page.props.flashMessages ?? []).forEach(renderToast);
   }, [page.props.flashMessages]);

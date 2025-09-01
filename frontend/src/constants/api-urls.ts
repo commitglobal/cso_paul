@@ -11,9 +11,12 @@ const buildNGOHubRefreshUrl = buildUrlFactory(["users", "team", "ngohub-refresh"
 
 const buildTeamUserUrl = buildUrlFactory(["users", "team"]);
 
+const buildDatasetUrl = buildUrlFactory(["datasets"]);
+
 export const apiGetUrls = {
   teamIndex: buildTeamUrl([]),
   ngohubRefresh: buildNGOHubRefreshUrl([]),
+  datasetIndex: buildDatasetUrl([]),
 };
 
 export const apiPostUrls = {

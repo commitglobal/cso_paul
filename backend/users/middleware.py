@@ -40,7 +40,7 @@ def global_state(
             language=_extract_language(request),
             # Lazily computed properties:
             isAuthenticated=lambda: request.user.is_authenticated,
-            user=lambda: User.to_dict(request.user) if request.user.is_authenticated else None,
+            user=lambda: User.to_json(request.user) if request.user.is_authenticated else None,
         )
         return get_response(request)
 

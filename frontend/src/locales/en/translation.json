@@ -68,10 +68,17 @@
     "datasets": "Datasets",
     "help": "Help",
     "home": "Home",
+    "openMainMenu": "Open main menu",
+    "openUserMenu": "Open user menu",
     "processedData": "Processed Data",
+    "search": "Search",
+    "settings": "Settings",
+    "signOut": "Sign out",
     "team": "Team",
     "test1": "Test 1",
-    "test2": "Test 2"
+    "test2": "Test 2",
+    "viewNotifications": "View notifications",
+    "yourProfile": "Your profile"
   },
   "ngohub": {
     "title": "NGO Hub"
@@ -97,15 +104,6 @@
     "filterBy": "Filter by {{column}}",
     "noData": "No results.",
     "sortBy": "Sort by {{column}}"
-  },
-  "topbar": {
-    "openMainMenu": "Open main menu",
-    "openUserMenu": "Open user menu",
-    "search": "Search",
-    "settings": "Settings",
-    "signOut": "Sign out",
-    "viewNotifications": "View notifications",
-    "yourProfile": "Your profile"
   },
   "users": {
     "team": {

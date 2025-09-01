@@ -1,5 +1,5 @@
-import { User } from "./user";
+import { type UserProps } from "./user";
 
-export type TeamAddUserFormData = Pick<User, "first_name" | "last_name" | "email"> & {
+export type TeamAddUserFormData = Pick<UserProps, "firstName" | "lastName" | "email"> & {
   role?: string;
 };

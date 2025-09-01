@@ -10,6 +10,7 @@ from django.db.models.functions import Lower
 from django.forms.models import model_to_dict
 from django.utils.translation import gettext as _
 
+from tools.display import format_dates
 from tools.utils.choices import CommonLabelValueChoices
 
 
@@ -118,6 +119,20 @@ class User(AbstractUser):
 
     def to_dict(self):
         return model_to_dict(self, exclude=("password", "is_superuser", "is_staff", "groups", "user_permissions"))
+
+    def to_json(self):
+        return {
+            "id": self.id,
+            "firstName": self.first_name,
+            "lastName": self.last_name,
+            "fullName": self.name,
+            "email": self.email,
+            "roleLabel": RoleChoices(self.main_role).label,
+            "roleValue": RoleChoices(self.main_role).value,
+            "addedSince": format_dates.short_date(self.date_joined),
+            "lastActivity": format_dates.short_datetime(self.last_login),
+            "ngohubId": self.ngohub_id,
+        }
 
     def __str__(self):
         return self.email
