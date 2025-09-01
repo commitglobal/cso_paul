@@ -27,20 +27,26 @@ import {
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 import { useTranslation } from "react-i18next";
 
-function AvatarImageWithFallback({ user }: { user: UserProps }) {
+function UserMenuItem({ user }: { user: UserProps }) {
   return (
-    <Avatar className="h-8 w-8 rounded-lg">
-      <AvatarImage src={user.avatar} alt={user.fullName} />
-      <AvatarFallback className="rounded-lg">
-        <UserCircleIcon className="size-6" />
-      </AvatarFallback>
-    </Avatar>
+    <>
+      <Avatar className="h-8 w-8 rounded-lg">
+        <AvatarImage src={user.avatar} alt={user.fullName} />
+        <AvatarFallback className="rounded-lg">
+          <UserCircleIcon className="size-6" />
+        </AvatarFallback>
+      </Avatar>
+      <div className="grid flex-1 text-left text-sm leading-tight">
+        <span className="truncate font-medium">{user.fullName}</span>
+        <span className="truncate text-xs">{user.email}</span>
+      </div>
+    </>
   );
 }
 
 export function NavUser({ user }: { user: UserProps }) {
-  const { isMobile } = useSidebar();
   const { t } = useTranslation();
+  const { isMobile } = useSidebar();
 
   return (
     <SidebarMenu>
@@ -51,13 +57,7 @@ export function NavUser({ user }: { user: UserProps }) {
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
-              <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImageWithFallback user={user} />
-              </Avatar>
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user.fullName}</span>
-                <span className="truncate text-xs">{user.email}</span>
-              </div>
+              <UserMenuItem user={user} />
               <ChevronUpDownIcon className="ml-auto size-4" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
@@ -70,11 +70,7 @@ export function NavUser({ user }: { user: UserProps }) {
           >
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <AvatarImageWithFallback user={user} />
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.fullName}</span>
-                  <span className="truncate text-xs">{user.email}</span>
-                </div>
+                <UserMenuItem user={user} />
               </div>
             </DropdownMenuLabel>
 
@@ -82,11 +78,7 @@ export function NavUser({ user }: { user: UserProps }) {
 
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <NavIconLink
-                  href={apiGetUrls.teamIndex}
-                  icon={UsersIcon}
-                  label={t("navigation.team")}
-                />
+                <NavIconLink href={apiGetUrls.teamIndex} icon={UsersIcon} label={t("navigation.team")} />
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <NavIconLink href="#" method="get" icon={QuestionMarkCircleIcon} label={t("navigation.help")} />

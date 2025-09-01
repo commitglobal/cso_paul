@@ -1,6 +1,6 @@
 "use client";
 
-import { useSidebar, SidebarContext } from "@/components/hooks/use-sidebar";
+import { SidebarContext, useSidebar } from "@/components/hooks/use-sidebar";
 import type { SidebarContextProps } from "@/components/types/sidebarContextProps";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,9 +11,9 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
+import { RectangleStackIcon } from "@heroicons/react/24/outline";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
-import { PanelLeftIcon } from "lucide-react";
 import * as React from "react";
 import { useTranslation } from "react-i18next";
 
@@ -233,7 +233,7 @@ function SidebarTrigger({ className, onClick, ...props }: React.ComponentProps<t
       }}
       {...props}
     >
-      <PanelLeftIcon />
+      <RectangleStackIcon />
       <span className="sr-only">{t("components.sidebar.toggle")}</span>
     </Button>
   );
