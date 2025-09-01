@@ -15,6 +15,7 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         icon: "bg-transparent text-gray-400 hover:bg-accent hover:text-accent-foreground rounded-full",
         menu: "font-normal items-start justify-start justify-self-start hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
+        new: "absolute top-1.5 right-1 flex aspect-square w-5 items-center justify-center rounded-md outline-hidden transition-transform hover:bg-accent/50 focus-visible:ring-10 group-data-[collapsible=icon]:hidden",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",

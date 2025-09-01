@@ -74,16 +74,6 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
       url: "#",
       icon: Grid2X2Plus,
       isActive: false,
-      items: [
-        {
-          title: t("navigation.test1"),
-          url: "#",
-        },
-        {
-          title: t("navigation.test2"),
-          url: "#",
-        },
-      ],
     },
   ];
 
